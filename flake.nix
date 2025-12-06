@@ -13,6 +13,8 @@
     # Collected from __inputs
     helium-browser.url = "github:Alb-O/helium-browser-flake";
     helium-browser.inputs.nixpkgs.follows = "nixpkgs";
+    imp-fmt.url = "github:imp-nix/imp.fmt";
+    imp-fmt.inputs.nixpkgs.follows = "nixpkgs";
     mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
     mcp-servers-nix.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
