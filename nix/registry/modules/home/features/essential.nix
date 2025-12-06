@@ -1,0 +1,16 @@
+# Essential feature - baseline packages for all profiles
+{ pkgs, ... }:
+{
+  home.packages = with pkgs; [
+    alacritty
+    curl
+    fastfetch
+    firefox
+    git
+    jq
+    just
+    nano
+    nmap
+    lsof
+  ];
+}

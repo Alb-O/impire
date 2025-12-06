@@ -1,0 +1,23 @@
+# VM virtualisation settings
+{
+  memorySize = 4096;
+  cores = 2;
+  graphics = true;
+  qemu.options = [
+    "-vga virtio"
+    "-display gtk,zoom-to-fit=on"
+  ];
+  forwardPorts = [
+    {
+      from = "host";
+      host.port = 2222;
+      guest.port = 22;
+    }
+  ];
+  sharedDirectories = {
+    config = {
+      source = "$HOME/imp.devspace/tmp/impire";
+      target = "/mnt/config";
+    };
+  };
+}
