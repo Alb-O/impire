@@ -13,6 +13,17 @@
     registry.modules.home.features.cli
     registry.modules.home.features.ssh
     registry.modules.home.features.fonts
+    registry.modules.home.features.git
+    registry.modules.home.features.zoxide
+    registry.modules.home.features.fzf
+    registry.modules.home.features.tmux
+    registry.modules.home.features.lazygit
+    registry.modules.home.features.kitty
+    registry.modules.home.features.kakoune
+    registry.modules.home.features.xdg
+    registry.modules.home.features.yazi
+    registry.modules.home.features.firefox
+    registry.modules.home.features.opencode
   ];
 
   # User identity
@@ -27,6 +38,4 @@
     name = lib.mkDefault "Albert O'Shea";
     email = lib.mkDefault "albertoshea2@gmail.com";
   };
-
-  xdg.enable = true;
 }

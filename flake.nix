@@ -13,6 +13,10 @@
     # Collected from __inputs
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
+    nur.url = "github:nix-community/NUR";
+    nur.inputs.nixpkgs.follows = "nixpkgs";
+    opencode-flake.url = "github:sst/opencode/v1.0.134";
+    opencode-flake.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = inputs: import ./nix/flake inputs;
 }
