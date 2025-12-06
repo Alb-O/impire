@@ -30,17 +30,21 @@
     registry.modules.home.features.opencode
 
     # Universal tools
+    registry.modules.home.features.codex
     registry.modules.home.features.lsp
     registry.modules.home.features.mcp
     registry.modules.home.features.mpv
     registry.modules.home.features.nh
 
     # Desktop-only (graphical session)
+    registry.modules.home.features.blender
     registry.modules.home.features.clipboard
     registry.modules.home.features.gtk
     registry.modules.home.features.helium
     registry.modules.home.features.niri
     registry.modules.home.features.polkit
+    registry.modules.home.features.sillytavern
+    registry.modules.home.features.vscode
   ];
 
   # User identity
