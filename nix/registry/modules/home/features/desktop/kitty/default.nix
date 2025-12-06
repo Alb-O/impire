@@ -6,11 +6,10 @@
   programs.kitty = {
     enable = true;
 
-    # Font config - using Zed Mono Nerd Font as default
-    extraConfig = ''
-      font_family family='ZedMono Nerd Font' style='Regular'
-      font_size 13
-    '';
+    font = {
+      name = "ZedMono NFM";
+      size = 17;
+    };
 
     settings = {
       shell_integration = "enabled";
