@@ -13,10 +13,9 @@
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-color-emoji
-    nerd-fonts.jetbrains-mono
+    nerd-fonts.zed-mono
     fira-sans
     roboto
-    jetbrains-mono
   ];
 
   # Common desktop services

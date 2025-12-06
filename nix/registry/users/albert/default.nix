@@ -40,6 +40,7 @@
     registry.modules.home.features.desktop.kakoune
     registry.modules.home.features.desktop.kitty
     registry.modules.home.features.desktop.mpv
+    registry.modules.home.features.desktop.mako
     registry.modules.home.features.desktop.niri
     registry.modules.home.features.desktop.polkit
     registry.modules.home.features.desktop.sillytavern

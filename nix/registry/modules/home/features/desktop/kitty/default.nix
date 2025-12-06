@@ -6,10 +6,10 @@
   programs.kitty = {
     enable = true;
 
-    # Font config - using JetBrains Mono as default
+    # Font config - using Zed Mono Nerd Font as default
     extraConfig = ''
-      font_family family='JetBrainsMono Nerd Font' style='Regular'
-      font_size 11
+      font_family family='ZedMono Nerd Font' style='Regular'
+      font_size 13
     '';
 
     settings = {

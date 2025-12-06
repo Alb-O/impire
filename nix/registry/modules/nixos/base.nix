@@ -48,5 +48,6 @@
     htop
     ripgrep
     fd
+    home-manager
   ];
 }
