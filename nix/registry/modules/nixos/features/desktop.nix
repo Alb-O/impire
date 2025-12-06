@@ -35,6 +35,5 @@
   # Essential desktop packages
   environment.systemPackages = with pkgs; [
     alacritty
-    firefox
   ];
 }

@@ -5,7 +5,6 @@
     alacritty
     curl
     fastfetch
-    firefox
     git
     jq
     just
