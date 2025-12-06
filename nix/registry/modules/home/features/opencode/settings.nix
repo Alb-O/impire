@@ -2,6 +2,22 @@
 # Agent definitions, plugins, and provider configurations
 { ... }:
 {
+  # MCP server definitions
+  mcp = {
+    mcp-nixos = {
+      type = "local";
+      command = [ "mcp-nixos" ];
+      enabled = true;
+    };
+    # context7 requires API key - configure separately if needed
+    # context7 = {
+    #   type = "remote";
+    #   url = "https://mcp.context7.com/mcp";
+    #   headers = { "CONTEXT7_API_KEY" = "..."; };
+    #   enabled = true;
+    # };
+  };
+
   # Subagent definitions
   agent = {
     nixer = {

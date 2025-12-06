@@ -1,10 +1,20 @@
 # Git feature - version control with helpful defaults
-{ pkgs, lib, ... }:
+# Uses sops for gitea credentials when sops.secrets is available
+{ pkgs, lib, config, ... }:
+let
+  giteaCredentials = "git/gitea/credentials";
+  hasSops = config ? sops && config.sops ? secrets;
+in
 {
   home.packages = with pkgs; [
     difftastic
     git-toolbelt
   ];
+
+  # Declare sops secret if sops module is available
+  sops.secrets = lib.mkIf hasSops {
+    "${giteaCredentials}" = { };
+  };
 
   programs.git = {
     enable = true;
@@ -44,6 +54,10 @@
       help.autocorrect = 1;
       rerere.enabled = true;
       log.date = "relative";
+      # Gitea credentials via sops (when available)
+      credential.helper = lib.mkIf hasSops
+        "store --file ${config.sops.secrets."${giteaCredentials}".path}";
+      # GitHub credentials via gh CLI
       credential."https://github.com".helper = "${lib.getExe pkgs.gh} auth git-credential";
       credential."https://gist.github.com".helper = "${lib.getExe pkgs.gh} auth git-credential";
     };

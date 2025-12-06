@@ -11,6 +11,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     # Collected from __inputs
+    mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
+    mcp-servers-nix.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     neovim-nightly-overlay.inputs.nixpkgs.follows = "nixpkgs";
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
@@ -19,6 +21,8 @@
     nur.inputs.nixpkgs.follows = "nixpkgs";
     opencode-flake.url = "github:sst/opencode/v1.0.134";
     opencode-flake.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = inputs: import ./nix/flake inputs;
 }

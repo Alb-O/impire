@@ -15,5 +15,6 @@ lib.nixosSystem {
     registry.modules.nixos.base
     registry.modules.nixos.features.desktop
     registry.modules.nixos.features.shell-init
+    registry.modules.nixos.features.sops
   ];
 }

@@ -12,6 +12,7 @@
     registry.modules.home.features.essential
     registry.modules.home.features.cli
     registry.modules.home.features.fish
+    registry.modules.home.features.sops
     registry.modules.home.features.ssh
     registry.modules.home.features.fonts
     registry.modules.home.features.git
@@ -27,6 +28,18 @@
     registry.modules.home.features.yazi
     registry.modules.home.features.firefox
     registry.modules.home.features.opencode
+
+    # Universal tools
+    registry.modules.home.features.lsp
+    registry.modules.home.features.mcp
+    registry.modules.home.features.mpv
+    registry.modules.home.features.nh
+
+    # Desktop-only (graphical session)
+    registry.modules.home.features.clipboard
+    registry.modules.home.features.gtk
+    registry.modules.home.features.niri
+    registry.modules.home.features.polkit
   ];
 
   # User identity
@@ -35,6 +48,9 @@
     homeDirectory = "/home/albert";
     stateVersion = "24.05";
   };
+
+  # Sops secrets configuration
+  sops.defaultSopsFile = ./secrets.yaml;
 
   # Git identity
   programs.git.settings.user = {
