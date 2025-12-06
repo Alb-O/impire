@@ -1,6 +1,5 @@
 # Firefox browser configuration
 # Policies, profiles, extensions, and privacy settings
-{ inputs, ... }:
 let
   firefoxExtensions =
     pkgs:
@@ -23,74 +22,79 @@ in
     nur.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  __overlays.nur = inputs.nur.overlays.default;
-
-  __module =
+  __functor =
+    _:
+    { inputs, ... }:
     {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
-    let
-      inherit (config.home) username;
-      homeDir = config.home.homeDirectory;
+      __overlays.nur = inputs.nur.overlays.default;
 
-      xdgDirs = lib.attrByPath [ "xdg" "userDirs" ] { } config;
-      desktopDir =
+      __module =
+        {
+          config,
+          lib,
+          pkgs,
+          ...
+        }:
         let
-          rawDesktop = xdgDirs.desktop or "${homeDir}/Desktop";
+          inherit (config.home) username;
+          homeDir = config.home.homeDirectory;
+
+          xdgDirs = lib.attrByPath [ "xdg" "userDirs" ] { } config;
+          desktopDir =
+            let
+              rawDesktop = xdgDirs.desktop or "${homeDir}/Desktop";
+            in
+            lib.replaceStrings [ "$HOME" ] [ homeDir ] rawDesktop;
+          downloadDir =
+            let
+              rawDownload = xdgDirs.download or "${homeDir}/Downloads";
+            in
+            lib.replaceStrings [ "$HOME" "$XDG_DESKTOP_DIR" ] [ homeDir desktopDir ] rawDownload;
+
+          policiesConfig = import ./policies.nix { };
+          prefsConfig = import ./prefs.nix { inherit lib downloadDir; };
+          searchConfig = import ./search.nix { inherit lib pkgs; };
         in
-        lib.replaceStrings [ "$HOME" ] [ homeDir ] rawDesktop;
-      downloadDir =
-        let
-          rawDownload = xdgDirs.download or "${homeDir}/Downloads";
-        in
-        lib.replaceStrings [ "$HOME" "$XDG_DESKTOP_DIR" ] [ homeDir desktopDir ] rawDownload;
+        {
+          programs.firefox = {
+            enable = true;
+            inherit (policiesConfig) policies;
 
-      policiesConfig = import ./policies.nix { };
-      prefsConfig = import ./prefs.nix { inherit lib downloadDir; };
-      searchConfig = import ./search.nix { inherit lib pkgs; };
-    in
-    {
-      programs.firefox = {
-        enable = true;
-        inherit (policiesConfig) policies;
+            profiles.${username} = {
+              id = 0;
+              isDefault = true;
+              path = username;
+              settings = prefsConfig.profileSettings;
+              search = searchConfig.searchConfig;
+              extensions.packages = firefoxExtensions pkgs;
+            };
 
-        profiles.${username} = {
-          id = 0;
-          isDefault = true;
-          path = username;
-          settings = prefsConfig.profileSettings;
-          search = searchConfig.searchConfig;
-          extensions.packages = firefoxExtensions pkgs;
+            profiles.work = {
+              id = 1;
+              isDefault = false;
+              path = "work";
+              settings = prefsConfig.profileSettings;
+              search = searchConfig.searchConfig;
+              extensions.packages = firefoxExtensions pkgs;
+            };
+          };
+
+          xdg.mimeApps = {
+            enable = true;
+            defaultApplications = {
+              "text/html" = [ "firefox.desktop" ];
+              "text/xml" = [ "firefox.desktop" ];
+              "x-scheme-handler/http" = [ "firefox.desktop" ];
+              "x-scheme-handler/https" = [ "firefox.desktop" ];
+              "x-scheme-handler/about" = [ "firefox.desktop" ];
+              "x-scheme-handler/unknown" = [ "firefox.desktop" ];
+            };
+          };
+
+          home.sessionVariables = {
+            BROWSER = "${pkgs.firefox}/bin/firefox";
+            DEFAULT_BROWSER = "${pkgs.firefox}/bin/firefox";
+          };
         };
-
-        profiles.work = {
-          id = 1;
-          isDefault = false;
-          path = "work";
-          settings = prefsConfig.profileSettings;
-          search = searchConfig.searchConfig;
-          extensions.packages = firefoxExtensions pkgs;
-        };
-      };
-
-      xdg.mimeApps = {
-        enable = true;
-        defaultApplications = {
-          "text/html" = [ "firefox.desktop" ];
-          "text/xml" = [ "firefox.desktop" ];
-          "x-scheme-handler/http" = [ "firefox.desktop" ];
-          "x-scheme-handler/https" = [ "firefox.desktop" ];
-          "x-scheme-handler/about" = [ "firefox.desktop" ];
-          "x-scheme-handler/unknown" = [ "firefox.desktop" ];
-        };
-      };
-
-      home.sessionVariables = {
-        BROWSER = "${pkgs.firefox}/bin/firefox";
-        DEFAULT_BROWSER = "${pkgs.firefox}/bin/firefox";
-      };
     };
 }
