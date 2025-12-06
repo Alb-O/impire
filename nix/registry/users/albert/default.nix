@@ -38,6 +38,7 @@
     # Desktop-only (graphical session)
     registry.modules.home.features.clipboard
     registry.modules.home.features.gtk
+    registry.modules.home.features.helium
     registry.modules.home.features.niri
     registry.modules.home.features.polkit
   ];
