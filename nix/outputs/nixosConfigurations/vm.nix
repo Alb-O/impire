@@ -13,8 +13,8 @@ lib.nixosSystem {
   modules = imp.imports [
     registry.hosts.vm
     registry.modules.nixos.base
-    registry.modules.nixos.features.desktop
-    registry.modules.nixos.features.shell-init
-    registry.modules.nixos.features.sops
+    registry.modules.nixos.features.desktop.desktop
+    registry.modules.nixos.features.shared.shell-init
+    registry.modules.nixos.features.shared.sops
   ];
 }

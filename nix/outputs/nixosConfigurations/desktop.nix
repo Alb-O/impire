@@ -13,7 +13,7 @@ lib.nixosSystem {
   modules = imp.imports [
     registry.hosts.desktop
     registry.modules.nixos.base
-    registry.modules.nixos.features.netshare
-    registry.modules.nixos.features.tty
+    registry.modules.nixos.features.desktop.netshare
+    registry.modules.nixos.features.desktop.tty
   ];
 }
