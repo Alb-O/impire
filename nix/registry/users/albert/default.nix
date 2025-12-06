@@ -11,6 +11,7 @@
     registry.modules.home.base
     registry.modules.home.features.essential
     registry.modules.home.features.cli
+    registry.modules.home.features.fish
     registry.modules.home.features.ssh
     registry.modules.home.features.fonts
     registry.modules.home.features.git
@@ -20,6 +21,8 @@
     registry.modules.home.features.lazygit
     registry.modules.home.features.kitty
     registry.modules.home.features.kakoune
+    registry.modules.home.features.neovim
+    registry.modules.home.features.zed
     registry.modules.home.features.xdg
     registry.modules.home.features.yazi
     registry.modules.home.features.firefox

@@ -14,5 +14,6 @@ lib.nixosSystem {
     registry.hosts.vm
     registry.modules.nixos.base
     registry.modules.nixos.features.desktop
+    registry.modules.nixos.features.shell-init
   ];
 }
