@@ -34,19 +34,17 @@
 
           # Apply NUR overlay locally; avoids needing central overlay aggregation
           nurPkgs = pkgs.extend inputs.nur.overlays.default;
-          firefoxExtensions =
-            with nurPkgs.nur.repos.rycee.firefox-addons;
-            [
-              darkreader
-              ublock-origin
-              bitwarden
-              sponsorblock
-              web-clipper-obsidian
-              libredirect
-              violentmonkey
-              youtube-high-definition
-              youtube-nonstop
-            ];
+          firefoxExtensions = with nurPkgs.nur.repos.rycee.firefox-addons; [
+            darkreader
+            ublock-origin
+            bitwarden
+            sponsorblock
+            web-clipper-obsidian
+            libredirect
+            violentmonkey
+            youtube-high-definition
+            youtube-nonstop
+          ];
 
           xdgDirs = lib.attrByPath [ "xdg" "userDirs" ] { } config;
           desktopDir =

@@ -1,6 +1,11 @@
 # NixOS base configuration
 # Shared settings for all hosts - absorbs autix aspects: nix-settings, essential
-{ self, lib, pkgs, ... }:
+{
+  self,
+  lib,
+  pkgs,
+  ...
+}:
 {
   nix = {
     optimise.automatic = true;

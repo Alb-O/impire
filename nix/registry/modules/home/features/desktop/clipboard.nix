@@ -28,7 +28,7 @@ in
   ];
 
   systemd.user.services.cliphist = clipboardService;
-  
+
   home.sessionVariables = {
     CLIPHIST_DB_PATH = lib.mkDefault "$HOME/.local/share/cliphist/db";
   };

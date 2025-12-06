@@ -1,5 +1,10 @@
 # XDG feature - base directory layout and session environment
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 let
   cfgHome = config.xdg.configHome;
   inherit (config.xdg) dataHome stateHome cacheHome;
@@ -69,7 +74,8 @@ in
 
   home = {
     packages = lib.mkAfter (
-      with pkgs; [
+      with pkgs;
+      [
         kitty
         xdg-desktop-portal-termfilechooser
         # Thin wget wrapper that puts its litter file into .local/share

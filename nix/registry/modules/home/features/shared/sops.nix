@@ -11,7 +11,12 @@
     { inputs, ... }:
     {
       __module =
-        { pkgs, lib, config, ... }:
+        {
+          pkgs,
+          lib,
+          config,
+          ...
+        }:
         {
           imports = [ inputs.sops-nix.homeManagerModules.sops ];
 

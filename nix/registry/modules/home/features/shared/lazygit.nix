@@ -7,9 +7,15 @@
       gui = {
         theme = {
           authorColors."*" = "blue";
-          activeBorderColor = [ "default" "bold" ];
+          activeBorderColor = [
+            "default"
+            "bold"
+          ];
           inactiveBorderColor = [ "#373737" ];
-          selectedLineBgColor = [ "#303030" "bold" ];
+          selectedLineBgColor = [
+            "#303030"
+            "bold"
+          ];
           optionsTextColor = [ "default" ];
         };
         scrollHeight = 2;
@@ -40,7 +46,10 @@
           manualCommit = false;
           args = "";
         };
-        mainBranches = [ "master" "main" ];
+        mainBranches = [
+          "master"
+          "main"
+        ];
         autoFetch = true;
         autoRefresh = true;
         fetchAll = true;

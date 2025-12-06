@@ -6,19 +6,19 @@
     # TypeScript/JavaScript
     nodePackages.typescript-language-server
     vscode-langservers-extracted # html, css, json, eslint
-    
+
     # Web
     tailwindcss-language-server
-    
+
     # Markdown
     marksman
-    
+
     # Rust
     rust-analyzer
-    
+
     # Nix
     nixd
-    
+
     # Package versions
     package-version-server
   ];
