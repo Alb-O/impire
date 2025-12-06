@@ -67,6 +67,7 @@
         {
           programs.firefox = {
             enable = true;
+            package = nurPkgs.firefox; # Must match the pkgs used by NUR extensions
             inherit (policiesConfig) policies;
 
             profiles.${username} = {
@@ -101,8 +102,8 @@
           };
 
           home.sessionVariables = {
-            BROWSER = "${pkgs.firefox}/bin/firefox";
-            DEFAULT_BROWSER = "${pkgs.firefox}/bin/firefox";
+            BROWSER = "${config.programs.firefox.package}/bin/firefox";
+            DEFAULT_BROWSER = "${config.programs.firefox.package}/bin/firefox";
           };
         };
     };
