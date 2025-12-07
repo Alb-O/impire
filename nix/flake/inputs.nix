@@ -8,6 +8,7 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  # Registry migration tool (follows imp's bundled version)
-  imp-refactor.follows = "imp/imp-refactor";
+  # Registry migration tool
+  imp-refactor.url = "github:imp-nix/imp.refactor";
+  imp-refactor.inputs.nixpkgs.follows = "nixpkgs";
 }
