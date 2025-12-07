@@ -20,6 +20,6 @@ lib.nixosSystem {
   modules = imp.imports [
     registry.hosts.vm
     # Desktop profile: merges base + all shared + all desktop features
-    registry.modules.nixos.profiles.desktop
+    registry.mod.nixos.profiles.desktop
   ];
 }

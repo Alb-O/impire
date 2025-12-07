@@ -28,7 +28,7 @@
       modules = imp.imports [
         registry.hosts.wsl
         # Shared profile: base + common shared features
-        registry.modules.nixos.profiles.shared
+        registry.mod.nixos.profiles.shared
       ];
     };
 }

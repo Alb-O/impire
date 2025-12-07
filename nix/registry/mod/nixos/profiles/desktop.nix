@@ -5,10 +5,10 @@
 {
   imports =
     # Base shared profile
-    [ registry.modules.nixos.profiles.shared ]
+    [ registry.mod.nixos.profiles.shared ]
     ++ (imp.imports [
       # Desktop-specific features (common to all desktop hosts)
-      registry.modules.nixos.features.desktop.desktop
-      registry.modules.nixos.features.desktop.wayland
+      registry.mod.nixos.features.desktop.desktop
+      registry.mod.nixos.features.desktop.wayland
     ]);
 }

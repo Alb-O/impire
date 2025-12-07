@@ -21,8 +21,8 @@
   ]
   ++ (imp.imports [
     # Specific desktop features (keyboard and niri are host-specific)
-    registry.modules.nixos.features.desktop.keyboard
-    registry.modules.nixos.features.desktop.niri
+    registry.mod.nixos.features.desktop.keyboard
+    registry.mod.nixos.features.desktop.niri
   ]);
 
   home-manager = {

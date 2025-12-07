@@ -8,9 +8,9 @@
 }:
 {
   imports = imp.imports [
-    registry.modules.home.base
+    registry.mod.hm.base
     # Desktop profile: merges all shared + desktop features
-    registry.modules.home.profiles.desktop
+    registry.mod.hm.profiles.desktop
   ];
 
   # User identity
