@@ -7,4 +7,7 @@
     url = "github:nix-community/home-manager";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+
+  # Registry migration tool (follows imp's bundled version)
+  imp-refactor.follows = "imp/imp-refactor";
 }

@@ -211,17 +211,16 @@
         "flake-parts": "flake-parts_3",
         "imp-fmt": "imp-fmt",
         "imp-graph": "imp-graph",
+        "imp-refactor": "imp-refactor",
         "nix-unit": "nix-unit",
         "nixpkgs": "nixpkgs",
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1765012744,
-        "narHash": "sha256-Q+dFXzC9DC5f2AF83o5QDck9vOOs8bq+I2vGV9FSwRw=",
-        "owner": "imp-nix",
-        "repo": "imp.lib",
-        "rev": "a09bdee10655d780da0953d0fe90255754059074",
-        "type": "github"
+        "lastModified": 1765102924,
+        "narHash": "sha256-KghXGcD15CPA/7Y36ehqkU0q68tT5dOD3kNNw4vcI5I=",
+        "path": "/home/albert/imp.devspace/imp.lib",
+        "type": "path"
       },
       "original": {
         "owner": "imp-nix",
@@ -307,6 +306,39 @@
       "original": {
         "owner": "imp-nix",
         "repo": "imp.graph",
+        "type": "github"
+      }
+    },
+    "imp-refactor": {
+      "inputs": {
+        "imp-fmt": [
+          "imp",
+          "imp-fmt"
+        ],
+        "nix-unit": [
+          "imp",
+          "nix-unit"
+        ],
+        "nixpkgs": [
+          "imp",
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "imp",
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1765101865,
+        "narHash": "sha256-QDS8JqPUEdGHCuVPfkDjt9dS9sayuNULhM15BuXDjGs=",
+        "owner": "imp-nix",
+        "repo": "imp.refactor",
+        "rev": "ee04d4c11fc36322ac9adb06625b427afa5dba88",
+        "type": "github"
+      },
+      "original": {
+        "owner": "imp-nix",
+        "repo": "imp.refactor",
         "type": "github"
       }
     },
@@ -552,6 +584,10 @@
         "home-manager": "home-manager",
         "imp": "imp",
         "imp-fmt": "imp-fmt_2",
+        "imp-refactor": [
+          "imp",
+          "imp-refactor"
+        ],
         "mcp-servers-nix": "mcp-servers-nix",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixos-wsl": "nixos-wsl",
