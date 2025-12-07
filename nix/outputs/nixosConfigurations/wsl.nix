@@ -27,7 +27,8 @@
       };
       modules = imp.imports [
         registry.hosts.wsl
-        registry.modules.nixos.base
+        # Shared profile: base + common shared features
+        registry.modules.nixos.profiles.shared
       ];
     };
 }

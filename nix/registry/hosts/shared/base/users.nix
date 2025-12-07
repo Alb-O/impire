@@ -1,4 +1,4 @@
-# User accounts for WSL
+# Shared base user configuration for all hosts
 {
   users.albert = {
     isNormalUser = true;

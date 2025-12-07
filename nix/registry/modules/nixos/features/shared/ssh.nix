@@ -1,11 +1,11 @@
 # SSH feature - OpenSSH server with hardened defaults
-{ ... }:
+{ lib, ... }:
 {
   services.openssh = {
-    enable = true;
+    enable = lib.mkDefault true;
     settings = {
-      PermitRootLogin = "no";
-      PasswordAuthentication = false;
+      PermitRootLogin = lib.mkDefault "no";
+      PasswordAuthentication = lib.mkDefault false;
     };
   };
 }

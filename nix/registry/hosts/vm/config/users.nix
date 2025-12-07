@@ -1,12 +1,6 @@
-# User accounts for VM
+# VM-specific user config - extends shared base user
+# Base config provides albert user setup
+# This adds root user for VM testing
 {
-  users = {
-    albert = {
-      isNormalUser = true;
-      extraGroups = [ "wheel" ];
-      description = "Albert O'Shea";
-      initialPassword = "changeme";
-    };
-    root.initialPassword = "changeme";
-  };
+  users.root.initialPassword = "changeme";
 }

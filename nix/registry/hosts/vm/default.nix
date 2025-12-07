@@ -10,7 +10,12 @@
 {
   imports = [
     (modulesPath + "/virtualisation/qemu-vm.nix")
-    (imp.configTree ./config)
+    # Merge layered configs: base → desktop-base → host-specific
+    (imp.mergeConfigTrees [
+      registry.hosts.shared.base.__path # All hosts: time, base user
+      registry.hosts.shared.desktop-base.__path # Desktop hosts: audio/video groups
+      ./config # VM-specific: root user, services, etc
+    ])
     inputs.home-manager.nixosModules.home-manager
   ];
 

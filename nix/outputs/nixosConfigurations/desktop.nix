@@ -19,7 +19,9 @@ lib.nixosSystem {
   };
   modules = imp.imports [
     registry.hosts.desktop
-    registry.modules.nixos.base
+    # Desktop profile: merges base + all shared + all desktop features
+    registry.modules.nixos.profiles.desktop
+    # Additional desktop-specific features
     registry.modules.nixos.features.desktop.netshare
     registry.modules.nixos.features.desktop.tty
   ];

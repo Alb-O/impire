@@ -19,9 +19,7 @@ lib.nixosSystem {
   };
   modules = imp.imports [
     registry.hosts.vm
-    registry.modules.nixos.base
-    registry.modules.nixos.features.desktop.desktop
-    registry.modules.nixos.features.shared.shell-init
-    registry.modules.nixos.features.shared.sops
+    # Desktop profile: merges base + all shared + all desktop features
+    registry.modules.nixos.profiles.desktop
   ];
 }

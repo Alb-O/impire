@@ -9,7 +9,11 @@
 {
   imports = [
     inputs.nixos-wsl.nixosModules.default
-    (imp.configTree ./config)
+    # Merge shared base config with WSL-specific config
+    (imp.mergeConfigTrees [
+      registry.hosts.shared.base.__path
+      ./config
+    ])
     inputs.home-manager.nixosModules.home-manager
   ];
 
