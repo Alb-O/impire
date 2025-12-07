@@ -8,18 +8,17 @@
   ...
 }:
 {
-  imports =
-    [
-      (modulesPath + "/installer/scan/not-detected.nix")
-      (imp.configTree ./config)
-      inputs.home-manager.nixosModules.home-manager
-    ]
-    ++ (imp.imports [
-      registry.modules.nixos.features.desktop.desktop
-      registry.modules.nixos.features.desktop.keyboard
-      registry.modules.nixos.features.desktop.niri
-      registry.modules.nixos.features.desktop.wayland
-    ]);
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    (imp.configTree ./config)
+    inputs.home-manager.nixosModules.home-manager
+  ]
+  ++ (imp.imports [
+    registry.modules.nixos.features.desktop.desktop
+    registry.modules.nixos.features.desktop.keyboard
+    registry.modules.nixos.features.desktop.niri
+    registry.modules.nixos.features.desktop.wayland
+  ]);
 
   home-manager = {
     useGlobalPkgs = true;

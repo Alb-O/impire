@@ -13,7 +13,7 @@
     "hid-logitech-dj"
     "hid-logitech-hidpp"
     "k10temp"
-    "nct6779"
+    "nct6775"
   ];
 
   initrd.availableKernelModules = [

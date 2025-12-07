@@ -18,15 +18,18 @@
     roboto
   ];
 
-  # Common desktop services
-  services.printing.enable = true;
-
-  # Audio via PipeWire
-  services.pipewire = {
+  # Bluetooth
+  hardware.bluetooth = {
     enable = true;
-    alsa.enable = true;
-    pulse.enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+        Experimental = true;
+      };
+    };
   };
+  services.blueman.enable = true;
 
   # Security
   security.rtkit.enable = true;
