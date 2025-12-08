@@ -26,6 +26,11 @@
     users.albert = import registry.users.albert;
   };
 
+  # Enable desktop home profile inside the VM
+  home-manager.users.albert.imports = imp.imports [
+    registry.mod.hm.profiles.desktop
+  ];
+
   environment.etc."motd".text = ''
 
     ╔═══════════════════════════════════════════════════════════╗

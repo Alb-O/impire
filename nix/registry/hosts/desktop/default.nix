@@ -32,5 +32,10 @@
     users.albert = import registry.users.albert;
   };
 
+  # Enable desktop-specific home profile on the desktop host
+  home-manager.users.albert.imports = imp.imports [
+    registry.mod.hm.profiles.desktop
+  ];
+
   system.stateVersion = "24.11";
 }

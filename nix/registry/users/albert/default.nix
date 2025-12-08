@@ -9,8 +9,8 @@
 {
   imports = imp.imports [
     registry.mod.hm.base
-    # Desktop profile: merges all shared + desktop features
-    registry.mod.hm.profiles.desktop
+    # Shared profile: CLI tooling that works everywhere (desktop, WSL, VM)
+    registry.mod.hm.profiles.shared
   ];
 
   # User identity

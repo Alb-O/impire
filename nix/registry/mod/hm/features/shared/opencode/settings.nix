@@ -9,7 +9,6 @@
       command = [ "mcp-nixos" ];
       enabled = true;
     };
-    # context7 requires API key - configure separately if needed
     # context7 = {
     #   type = "remote";
     #   url = "https://mcp.context7.com/mcp";
