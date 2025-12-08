@@ -21,7 +21,7 @@
   # Subagent definitions
   agent = {
     nixer = {
-      disabled = false;
+      model = "opencode/big-pickle";
       description = ''
         Upstream nix researcher agent, give it a nix research task.
         IMPORTANT: You must ask it to use `mcp-nixos` tools in your description of the task.
@@ -38,12 +38,11 @@
         patch = false;
         bash = false;
         webfetch = false;
-        "atomic_*" = false;
         "mcp-nixos_*" = true;
       };
     };
     docfinder = {
-      disabled = false;
+      model = "opencode/big-pickle";
       description = ''
         Technical documentation researcher agent, give it any techincal research task (e.g. libraries, APIs, languages).
         IMPORTANT: You must ask it to use `context7` tools in your description of the task.
@@ -60,7 +59,6 @@
         patch = false;
         bash = false;
         webfetch = false;
-        "atomic_*" = false;
         "context7_*" = true;
       };
     };
