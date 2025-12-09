@@ -1,34 +1,38 @@
 /**
-  Desktop host entry point.
+  Desktop host - Albert's main workstation.
 
-  Albert's main workstation: AMD CPU, Nvidia GPU, Limine boot.
+  AMD CPU, Nvidia GPU, Limine boot.
 */
 {
-  imp,
-  inputs,
-  exports,
-  registry,
-  modulesPath,
-  ...
-}:
-{
-  imports =
-    [
-      (modulesPath + "/installer/scan/not-detected.nix")
-      (imp.mergeConfigTrees [
-        registry.hosts.shared.base.__path
-        registry.hosts.shared.desktop-base.__path
-        ./config
-      ])
-      inputs.home-manager.nixosModules.home-manager
-      exports.shared.nixos.__module
-      exports.desktop.nixos.__module
-    ]
-    ++ imp.imports [
-      registry.roles.nixos.home-desktop
-      registry.mod.nixos.features.desktop.keyboard
-      registry.mod.nixos.features.desktop.niri
+  __host = {
+    system = "x86_64-linux";
+    stateVersion = "24.11";
+    bases = [
+      "hosts.shared.base"
+      "hosts.shared.desktop-base"
     ];
+    sinks = [
+      "shared.nixos"
+      "desktop.nixos"
+    ];
+    hmSinks = [
+      "shared.hm"
+      "desktop.hm"
+    ];
+    modules = [
+      "mod.nixos.features.desktop.keyboard"
+      "mod.nixos.features.desktop.niri"
+      "mod.nixos.features.desktop.netshare"
+      "mod.nixos.features.desktop.tty"
+    ];
+    user = "albert";
+  };
 
-  system.stateVersion = "24.11";
+  config = ./config;
+
+  extraConfig =
+    { modulesPath, ... }:
+    {
+      imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+    };
 }

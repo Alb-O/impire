@@ -1,29 +1,21 @@
 /**
-  WSL host entry point.
-
-  Albert's Windows Subsystem for Linux configuration.
+  WSL host - Windows Subsystem for Linux.
 */
 {
-  imp,
-  inputs,
-  exports,
-  registry,
-  ...
-}:
-{
-  imports =
-    [
-      inputs.nixos-wsl.nixosModules.default
-      (imp.mergeConfigTrees [
-        registry.hosts.shared.base.__path
-        ./config
-      ])
-      inputs.home-manager.nixosModules.home-manager
-      exports.shared.nixos.__module
-    ]
-    ++ imp.imports [
-      registry.roles.nixos.home-wsl
-    ];
+  __inputs.nixos-wsl = {
+    url = "github:nix-community/NixOS-WSL";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 
-  system.stateVersion = "24.11";
+  __host = {
+    system = "x86_64-linux";
+    stateVersion = "24.11";
+    bases = [ "hosts.shared.base" ];
+    sinks = [ "shared.nixos" ];
+    hmSinks = [ "shared.hm" ];
+    modules = [ "@nixos-wsl.nixosModules.default" ];
+    user = "albert";
+  };
+
+  config = ./config;
 }

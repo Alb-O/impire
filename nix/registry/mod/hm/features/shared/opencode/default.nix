@@ -13,7 +13,12 @@
     _: _:
     let
       mod =
-        { inputs, pkgs, lib, ... }:
+        {
+          inputs,
+          pkgs,
+          lib,
+          ...
+        }:
         let
           schema = "https://opencode.ai/config.json";
           settings = import ./settings.nix { };

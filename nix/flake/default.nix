@@ -41,5 +41,15 @@ flake-parts.lib.mkFlake { inherit inputs; } {
         "desktop.*" = "mkMerge";
       };
     };
+
+    # Auto-generate nixosConfigurations from __host declarations
+    hosts = {
+      enable = true;
+      sources = [ ../registry/hosts ];
+      defaults = {
+        system = "x86_64-linux";
+        stateVersion = "24.11";
+      };
+    };
   };
 }

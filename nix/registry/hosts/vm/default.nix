@@ -1,47 +1,47 @@
 /**
-  VM host entry point.
+  VM host - QEMU virtual machine for testing.
 
   Run with: nix run .#vm
 */
 {
-  imp,
-  inputs,
-  exports,
-  registry,
-  modulesPath,
-  ...
-}:
-{
-  imports =
-    [
-      (modulesPath + "/virtualisation/qemu-vm.nix")
-      (imp.mergeConfigTrees [
-        registry.hosts.shared.base.__path
-        registry.hosts.shared.desktop-base.__path
-        ./config
-      ])
-      inputs.home-manager.nixosModules.home-manager
-      exports.shared.nixos.__module
-      exports.desktop.nixos.__module
-    ]
-    ++ imp.imports [
-      registry.roles.nixos.home-desktop
+  __host = {
+    system = "x86_64-linux";
+    stateVersion = "24.11";
+    bases = [
+      "hosts.shared.base"
+      "hosts.shared.desktop-base"
     ];
+    sinks = [
+      "shared.nixos"
+      "desktop.nixos"
+    ];
+    hmSinks = [
+      "shared.hm"
+      "desktop.hm"
+    ];
+    user = "albert";
+  };
 
-  environment.etc."motd".text = ''
+  config = ./config;
 
-    ╔═══════════════════════════════════════════════════════════╗
-    ║  impire NixOS Test VM                                     ║
-    ║                                                           ║
-    ║  User: albert (password: changeme)                        ║
-    ║  Root password: changeme                                  ║
-    ║  SSH: ssh -p 2222 albert@localhost                        ║
-    ║  Config mounted at: /mnt/config                           ║
-    ║                                                           ║
-    ║  Rebuild: sudo nixos-rebuild test --flake /mnt/config     ║
-    ╚═══════════════════════════════════════════════════════════╝
+  extraConfig =
+    { modulesPath, ... }:
+    {
+      imports = [ (modulesPath + "/virtualisation/qemu-vm.nix") ];
 
-  '';
+      environment.etc."motd".text = ''
 
-  system.stateVersion = "24.11";
+        ╔═══════════════════════════════════════════════════════════╗
+        ║  impire NixOS Test VM                                     ║
+        ║                                                           ║
+        ║  User: albert (password: changeme)                        ║
+        ║  Root password: changeme                                  ║
+        ║  SSH: ssh -p 2222 albert@localhost                        ║
+        ║  Config mounted at: /mnt/config                           ║
+        ║                                                           ║
+        ║  Rebuild: sudo nixos-rebuild test --flake /mnt/config     ║
+        ╚═══════════════════════════════════════════════════════════╝
+
+      '';
+    };
 }

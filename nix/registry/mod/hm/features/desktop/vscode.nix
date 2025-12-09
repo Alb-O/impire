@@ -2,7 +2,11 @@
   Visual Studio Code editor.
 */
 let
-  mod = { ... }: { programs.vscode.enable = true; };
+  mod =
+    { ... }:
+    {
+      programs.vscode.enable = true;
+    };
 in
 {
   __exports."desktop.hm".value = mod;

@@ -14,7 +14,12 @@ inputs.home-manager.lib.homeManagerConfiguration {
   };
 
   extraSpecialArgs = {
-    inherit inputs imp registry exports;
+    inherit
+      inputs
+      imp
+      registry
+      exports
+      ;
   };
 
   modules = [

@@ -3,11 +3,17 @@
 
   For use with `home-manager switch --flake .#albert@wsl`.
 */
-{ imp, exports, registry, ... }:
+{
+  imp,
+  exports,
+  registry,
+  ...
+}:
 {
   imports = [
     exports.shared.hm.__module
-  ] ++ imp.imports [
+  ]
+  ++ imp.imports [
     registry.users.albert
   ];
 }

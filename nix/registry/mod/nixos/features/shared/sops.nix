@@ -12,7 +12,11 @@
   __functor =
     _: _:
     let
-      mod = { inputs, ... }: { imports = [ inputs.sops-nix.nixosModules.sops ]; };
+      mod =
+        { inputs, ... }:
+        {
+          imports = [ inputs.sops-nix.nixosModules.sops ];
+        };
     in
     {
       __exports."shared.nixos".value = mod;
