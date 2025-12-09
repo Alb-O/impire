@@ -1,7 +1,7 @@
 /**
   NixOS desktop role.
 
-  Bundles desktop host with extra desktop-only features.
+  Desktop host plus hardware-specific extras (netshare, tty).
 */
 { imp, registry, ... }:
 {

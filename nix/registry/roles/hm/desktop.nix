@@ -1,7 +1,7 @@
 /**
-  Home Manager desktop role.
+  Standalone Home Manager desktop role.
 
-  Combines user config with shared + desktop modules.
+  For use with `home-manager switch --flake .#albert@desktop`.
 */
 { imp, exports, registry, ... }:
 {

@@ -1,5 +1,7 @@
 /**
-  NixOS Home Manager setup for WSL host.
+  NixOS-integrated Home Manager for WSL.
+
+  Configures albert's HM within NixOS using shared exports only.
 */
 {
   inputs,

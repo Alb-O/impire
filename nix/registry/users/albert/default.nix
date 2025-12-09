@@ -1,7 +1,7 @@
 /**
-  Albert's Home Manager configuration.
+  Albert's Home Manager user config.
 
-  User identity and secrets - modules imported by roles.
+  Identity, secrets path, and git settings. Imported by roles.
 */
 {
   registry,

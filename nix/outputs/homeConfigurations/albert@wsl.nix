@@ -1,3 +1,4 @@
+# Standalone HM config for WSL - home-manager switch --flake .#albert@wsl
 {
   inputs,
   imp,

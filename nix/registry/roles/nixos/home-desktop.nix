@@ -1,5 +1,7 @@
 /**
-  NixOS Home Manager setup for desktop/VM hosts.
+  NixOS-integrated Home Manager for desktop/VM hosts.
+
+  Configures albert's HM within NixOS using shared + desktop exports.
 */
 {
   inputs,

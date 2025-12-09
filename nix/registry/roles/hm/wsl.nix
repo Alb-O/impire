@@ -1,7 +1,7 @@
 /**
-  Home Manager WSL role.
+  Standalone Home Manager WSL role.
 
-  User config with shared modules only (no graphical features).
+  For use with `home-manager switch --flake .#albert@wsl`.
 */
 { imp, exports, registry, ... }:
 {

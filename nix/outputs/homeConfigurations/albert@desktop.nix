@@ -1,3 +1,4 @@
+# Standalone HM config for desktop - home-manager switch --flake .#albert@desktop
 {
   inputs,
   imp,
