@@ -18,11 +18,11 @@
   };
 
   __functor =
-    _:
-    { inputs, ... }:
-    {
-      __module =
+    _: _:
+    let
+      mod =
         {
+          inputs,
           config,
           lib,
           pkgs,
@@ -32,7 +32,6 @@
           inherit (config.home) username;
           homeDir = config.home.homeDirectory;
 
-          # Apply NUR overlay locally; avoids needing central overlay aggregation
           nurPkgs = pkgs.extend inputs.nur.overlays.default;
           firefoxExtensions = with nurPkgs.nur.repos.rycee.firefox-addons; [
             darkreader
@@ -65,7 +64,7 @@
         {
           programs.firefox = {
             enable = true;
-            package = nurPkgs.firefox; # Must match the pkgs used by NUR extensions
+            package = nurPkgs.firefox;
             inherit (policiesConfig) policies;
 
             profiles.${username} = {
@@ -104,5 +103,9 @@
             DEFAULT_BROWSER = "${config.programs.firefox.package}/bin/firefox";
           };
         };
+    in
+    {
+      __exports."hm.profile.desktop".value = mod;
+      __module = mod;
     };
 }

@@ -1,14 +1,24 @@
-# Fish shell feature - enables fish with direnv integration
-# Absorbs autix aspects: env/default.nix (fish + direnv parts)
-{ lib, ... }:
+/**
+  Fish shell feature.
+
+  Fish with direnv integration.
+*/
+let
+  mod =
+    { lib, ... }:
+    {
+      programs.fish.enable = lib.mkDefault true;
+
+      programs.direnv = {
+        enable = true;
+        nix-direnv.enable = true;
+      };
+
+      programs.bash.enable = lib.mkForce false;
+    };
+in
 {
-  programs.fish.enable = lib.mkDefault true;
-
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-  };
-
-  # Disable bash - fish is the primary shell
-  programs.bash.enable = lib.mkForce false;
+  __exports."hm.profile.shared".value = mod;
+  __module = mod;
+  __functor = _: mod;
 }

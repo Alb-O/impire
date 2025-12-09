@@ -1,8 +1,13 @@
-# nh feature - nohup helper script
-# Utility for running commands under nohup with log management
-{ pkgs, ... }:
+/**
+  nh feature.
+
+  Nohup helper script for running commands with log management.
+*/
 let
-  nh = pkgs.writeShellScriptBin "nh" ''
+  mod =
+    { pkgs, ... }:
+    let
+      nh = pkgs.writeShellScriptBin "nh" ''
         set -euo pipefail
         usage() {
           cat >&2 <<'EOF'
@@ -256,7 +261,11 @@ let
         pid=$(cat "$outdir/pids"/* | ${pkgs.coreutils}/bin/tail -n1)
         echo "nh: started '$cmd' [pid $pid], log: $outfile"
   '';
+    in
+    { home.packages = [ nh ]; };
 in
 {
-  home.packages = [ nh ];
+  __exports."hm.profile.shared".value = mod;
+  __module = mod;
+  __functor = _: mod;
 }

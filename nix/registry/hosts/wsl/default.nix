@@ -7,17 +7,20 @@
   ...
 }:
 {
-  imports = [
-    inputs.nixos-wsl.nixosModules.default
-    registry.mod.nixos.profiles.shared
-    # Merge shared base config with WSL-specific config
-    (imp.mergeConfigTrees [
-      registry.hosts.shared.base.__path
-      ./config
-    ])
-    inputs.home-manager.nixosModules.home-manager
-    registry.roles.nixos.home-wsl
-  ];
+  imports =
+    [
+      inputs.nixos-wsl.nixosModules.default
+      # Merge shared base config with WSL-specific config
+      (imp.mergeConfigTrees [
+        registry.hosts.shared.base.__path
+        ./config
+      ])
+      inputs.home-manager.nixosModules.home-manager
+    ]
+    ++ imp.imports [
+      registry.mod.nixos.profiles.shared
+      registry.roles.nixos.home-wsl
+    ];
 
   system.stateVersion = "24.11";
 }

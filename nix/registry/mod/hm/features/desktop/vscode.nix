@@ -1,6 +1,11 @@
-# vscode feature - Visual Studio Code
-# Code editor (unfree - requires nixpkgs.config.allowUnfree at NixOS level)
-{ ... }:
+/**
+  Visual Studio Code editor.
+*/
+let
+  mod = { ... }: { programs.vscode.enable = true; };
+in
 {
-  programs.vscode.enable = true;
+  __exports."hm.profile.desktop".value = mod;
+  __module = mod;
+  __functor = _: mod;
 }

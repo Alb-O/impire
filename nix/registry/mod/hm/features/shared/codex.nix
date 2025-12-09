@@ -1,13 +1,23 @@
-# codex feature - OpenAI Codex CLI
-# AI-powered coding assistant
-{ pkgs, ... }:
-{
-  programs.codex = {
-    enable = true;
-  };
+/**
+  Codex feature.
 
-  home.packages = with pkgs; [
-    # codex likes to run adhoc python scripts
-    python314
-  ];
+  OpenAI Codex CLI - AI-powered coding assistant.
+*/
+let
+  mod =
+    { pkgs, ... }:
+    {
+      programs.codex = {
+        enable = true;
+      };
+
+      home.packages = with pkgs; [
+        python314
+      ];
+    };
+in
+{
+  __exports."hm.profile.shared".value = mod;
+  __module = mod;
+  __functor = _: mod;
 }

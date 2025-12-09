@@ -1,14 +1,17 @@
-# Desktop NixOS profile
-# Extends shared profile with desktop environment features
-# Consolidates shared + desktop features for graphical workstations
-{ imp, registry, ... }:
+/**
+  Desktop NixOS profile - desktop environment features.
+
+  Imports all modules exporting to `nixos.profile.desktop`.
+  Note: shared profile should be imported separately by consumers.
+*/
+{ exports, ... }:
+let
+  mod = {
+    imports = [
+      exports.nixos.profile.desktop.__module
+    ];
+  };
+in
 {
-  imports =
-    # Base shared profile
-    [ registry.mod.nixos.profiles.shared ]
-    ++ (imp.imports [
-      # Desktop-specific features (common to all desktop hosts)
-      registry.mod.nixos.features.desktop.desktop
-      registry.mod.nixos.features.desktop.wayland
-    ]);
+  __module = mod;
 }

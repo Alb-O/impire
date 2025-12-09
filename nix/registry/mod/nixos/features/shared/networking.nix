@@ -1,8 +1,18 @@
-# Networking feature - NetworkManager and firewall
-{ lib, ... }:
+/**
+  Networking feature.
+*/
+let
+  mod =
+    { lib, ... }:
+    {
+      networking = {
+        networkmanager.enable = lib.mkDefault true;
+        firewall.enable = lib.mkDefault true;
+      };
+    };
+in
 {
-  networking = {
-    networkmanager.enable = lib.mkDefault true;
-    firewall.enable = lib.mkDefault true;
-  };
+  __exports."nixos.profile.shared".value = mod;
+  __module = mod;
+  __functor = _: mod;
 }

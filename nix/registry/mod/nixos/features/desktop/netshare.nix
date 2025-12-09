@@ -1,8 +1,20 @@
-# Netshare feature - NFS/CIFS client tooling
-{ pkgs, ... }:
+/**
+  Netshare feature.
+
+  NFS/CIFS client tooling.
+*/
+let
+  mod =
+    { pkgs, ... }:
+    {
+      environment.systemPackages = with pkgs; [
+        nfs-utils
+        cifs-utils
+      ];
+    };
+in
 {
-  environment.systemPackages = with pkgs; [
-    nfs-utils
-    cifs-utils
-  ];
+  __exports."nixos.profile.desktop".value = mod;
+  __module = mod;
+  __functor = _: mod;
 }

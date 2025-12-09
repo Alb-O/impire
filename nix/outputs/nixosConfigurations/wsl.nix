@@ -13,6 +13,7 @@
       inputs,
       imp,
       registry,
+      exports,
       ...
     }:
     lib.nixosSystem {
@@ -21,11 +22,12 @@
         inherit
           self
           inputs
-      imp
-      registry
-      ;
-  };
-  modules = imp.imports [
+          imp
+          registry
+          exports
+          ;
+      };
+      modules = imp.imports [
         registry.roles.nixos.wsl
       ];
     };

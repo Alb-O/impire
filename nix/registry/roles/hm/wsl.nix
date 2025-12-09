@@ -1,8 +1,9 @@
 # Home Manager role: WSL bundle
-# Minimal HM setup for WSL host
+# User config with shared profile only (no graphical features)
 { imp, registry, ... }:
 {
   imports = imp.imports [
     registry.users.albert
+    registry.mod.hm.profiles.shared
   ];
 }

@@ -1,41 +1,47 @@
-# Desktop feature - basic graphical desktop setup
-# Includes display manager, fonts, and common desktop services
-{ pkgs, lib, ... }:
-{
-  # Display manager
-  services.displayManager = {
-    enable = true;
-    gdm.enable = true;
-  };
+/**
+  Desktop feature.
 
-  # Fonts
-  fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-color-emoji
-    nerd-fonts.zed-mono
-    fira-sans
-    roboto
-  ];
-
-  # Bluetooth
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-    settings = {
-      General = {
-        Enable = "Source,Sink,Media,Socket";
-        Experimental = true;
+  Basic graphical desktop: display manager, fonts, bluetooth.
+*/
+let
+  mod =
+    { pkgs, lib, ... }:
+    {
+      services.displayManager = {
+        enable = true;
+        gdm.enable = true;
       };
+
+      fonts.packages = with pkgs; [
+        noto-fonts
+        noto-fonts-cjk-sans
+        noto-fonts-color-emoji
+        nerd-fonts.zed-mono
+        fira-sans
+        roboto
+      ];
+
+      hardware.bluetooth = {
+        enable = true;
+        powerOnBoot = true;
+        settings = {
+          General = {
+            Enable = "Source,Sink,Media,Socket";
+            Experimental = true;
+          };
+        };
+      };
+      services.blueman.enable = true;
+
+      security.rtkit.enable = true;
+
+      environment.systemPackages = with pkgs; [
+        alacritty
+      ];
     };
-  };
-  services.blueman.enable = true;
-
-  # Security
-  security.rtkit.enable = true;
-
-  # Essential desktop packages
-  environment.systemPackages = with pkgs; [
-    alacritty
-  ];
+in
+{
+  __exports."nixos.profile.desktop".value = mod;
+  __module = mod;
+  __functor = _: mod;
 }

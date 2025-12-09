@@ -1,4 +1,8 @@
-# sops-nix NixOS feature - atomic secret provisioning
+/**
+  sops-nix NixOS feature.
+
+  Atomic secret provisioning.
+*/
 {
   __inputs = {
     sops-nix.url = "github:Mic92/sops-nix";
@@ -6,11 +10,12 @@
   };
 
   __functor =
-    _:
-    { inputs, ... }:
+    _: _:
+    let
+      mod = { inputs, ... }: { imports = [ inputs.sops-nix.nixosModules.sops ]; };
+    in
     {
-      __module = {
-        imports = [ inputs.sops-nix.nixosModules.sops ];
-      };
+      __exports."nixos.profile.shared".value = mod;
+      __module = mod;
     };
 }

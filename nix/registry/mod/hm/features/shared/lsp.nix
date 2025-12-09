@@ -1,25 +1,25 @@
-# LSP feature - Language Server Protocol tooling
-# Provides common language servers for development
-{ pkgs, ... }:
+/**
+  LSP feature.
+
+  Language Server Protocol tooling for development.
+*/
+let
+  mod =
+    { pkgs, ... }:
+    {
+      home.packages = with pkgs; [
+        nodePackages.typescript-language-server
+        vscode-langservers-extracted
+        tailwindcss-language-server
+        marksman
+        rust-analyzer
+        nixd
+        package-version-server
+      ];
+    };
+in
 {
-  home.packages = with pkgs; [
-    # TypeScript/JavaScript
-    nodePackages.typescript-language-server
-    vscode-langservers-extracted # html, css, json, eslint
-
-    # Web
-    tailwindcss-language-server
-
-    # Markdown
-    marksman
-
-    # Rust
-    rust-analyzer
-
-    # Nix
-    nixd
-
-    # Package versions
-    package-version-server
-  ];
+  __exports."hm.profile.shared".value = mod;
+  __module = mod;
+  __functor = _: mod;
 }

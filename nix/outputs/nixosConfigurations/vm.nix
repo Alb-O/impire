@@ -5,6 +5,7 @@
   inputs,
   imp,
   registry,
+  exports,
   ...
 }:
 lib.nixosSystem {
@@ -15,6 +16,7 @@ lib.nixosSystem {
       inputs
       imp
       registry
+      exports
       ;
   };
   modules = imp.imports [

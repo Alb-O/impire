@@ -1,5 +1,8 @@
-# sops-nix home-manager feature - user-level secrets
-# Note: Requires sops-nix NixOS module for system-level sops daemon
+/**
+  sops-nix home-manager feature.
+
+  User-level secrets. Requires sops-nix NixOS module for system-level sops daemon.
+*/
 {
   __inputs = {
     sops-nix.url = "github:Mic92/sops-nix";
@@ -7,11 +10,11 @@
   };
 
   __functor =
-    _:
-    { inputs, ... }:
-    {
-      __module =
+    _: _:
+    let
+      mod =
         {
+          inputs,
           pkgs,
           lib,
           config,
@@ -25,8 +28,11 @@
             inputs.sops-nix.packages.${pkgs.system}.default
           ];
 
-          # Default age key location
           sops.age.keyFile = lib.mkDefault "${config.home.homeDirectory}/.config/sops/age/keys.txt";
         };
+    in
+    {
+      __exports."hm.profile.shared".value = mod;
+      __module = mod;
     };
 }

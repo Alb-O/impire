@@ -1,5 +1,5 @@
 # Albert's Home Manager configuration
-# Base user config - imported by both desktop and wsl hosts
+# User identity and secrets - profiles imported by roles
 {
   registry,
   imp,
@@ -9,8 +9,6 @@
 {
   imports = imp.imports [
     registry.mod.hm.base
-    # Shared profile: CLI tooling that works everywhere (desktop, WSL, VM)
-    registry.mod.hm.profiles.shared
   ];
 
   # User identity

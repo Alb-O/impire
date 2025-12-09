@@ -8,18 +8,22 @@
   ...
 }:
 {
-  imports = [
-    (modulesPath + "/virtualisation/qemu-vm.nix")
-    registry.mod.nixos.profiles.desktop
-    # Merge layered configs: base → desktop-base → host-specific
-    (imp.mergeConfigTrees [
-      registry.hosts.shared.base.__path # All hosts: time, base user
-      registry.hosts.shared.desktop-base.__path # Desktop hosts: audio/video groups
-      ./config # VM-specific: root user, services, etc
-    ])
-    inputs.home-manager.nixosModules.home-manager
-    registry.roles.nixos.home-desktop
-  ];
+  imports =
+    [
+      (modulesPath + "/virtualisation/qemu-vm.nix")
+      # Merge layered configs: base → desktop-base → host-specific
+      (imp.mergeConfigTrees [
+        registry.hosts.shared.base.__path # All hosts: time, base user
+        registry.hosts.shared.desktop-base.__path # Desktop hosts: audio/video groups
+        ./config # VM-specific: root user, services, etc
+      ])
+      inputs.home-manager.nixosModules.home-manager
+    ]
+    ++ imp.imports [
+      registry.mod.nixos.profiles.shared
+      registry.mod.nixos.profiles.desktop
+      registry.roles.nixos.home-desktop
+    ];
 
   environment.etc."motd".text = ''
 

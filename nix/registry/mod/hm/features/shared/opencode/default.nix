@@ -1,5 +1,8 @@
-# OpenCode AI coding agent configuration
-# MCP servers, agents, plugins, and model providers
+/**
+  OpenCode feature.
+
+  AI coding agent with MCP servers, agents, plugins, and model providers.
+*/
 {
   __inputs = {
     opencode-flake.url = "github:sst/opencode/v1.0.137";
@@ -7,11 +10,10 @@
   };
 
   __functor =
-    _:
-    { inputs, ... }:
-    {
-      __module =
-        { pkgs, lib, ... }:
+    _: _:
+    let
+      mod =
+        { inputs, pkgs, lib, ... }:
         let
           schema = "https://opencode.ai/config.json";
           settings = import ./settings.nix { };
@@ -32,5 +34,9 @@
         // lib.optionalAttrs hasSettings {
           xdg.configFile."opencode/config.json".text = renderedConfig;
         };
+    in
+    {
+      __exports."hm.profile.shared".value = mod;
+      __module = mod;
     };
 }

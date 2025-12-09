@@ -30,5 +30,16 @@ flake-parts.lib.mkFlake { inherit inputs; } {
       description = "Albert's NixOS configuration using imp";
       outputsFile = "./nix/flake";
     };
+
+    # Export sinks configuration
+    exports = {
+      # Only scan registry for exports (outputs contain config, not modules)
+      sources = [ ../registry ];
+      # Use mkMerge for profile module collections
+      sinkDefaults = {
+        "nixos.*" = "mkMerge";
+        "hm.*" = "mkMerge";
+      };
+    };
   };
 }

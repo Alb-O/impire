@@ -1,7 +1,19 @@
-# Tmux feature - terminal multiplexer for agents/interactive usage
-{ ... }:
+/**
+  Tmux feature.
+
+  Terminal multiplexer for agents/interactive usage.
+*/
+let
+  mod =
+    { ... }:
+    {
+      programs.tmux = {
+        enable = true;
+      };
+    };
+in
 {
-  programs.tmux = {
-    enable = true;
-  };
+  __exports."hm.profile.shared".value = mod;
+  __module = mod;
+  __functor = _: mod;
 }

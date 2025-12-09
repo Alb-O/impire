@@ -2,6 +2,7 @@
   inputs,
   imp,
   registry,
+  exports,
   nixpkgs,
   ...
 }:
@@ -12,7 +13,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
   };
 
   extraSpecialArgs = {
-    inherit inputs imp registry;
+    inherit inputs imp registry exports;
   };
 
   modules = [

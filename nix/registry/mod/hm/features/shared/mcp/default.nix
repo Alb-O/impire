@@ -1,5 +1,8 @@
-# MCP feature - Model Context Protocol servers
-# Provides mcp-nixos and context7 for AI assistants
+/**
+  MCP feature.
+
+  Model Context Protocol servers for AI assistants.
+*/
 {
   __inputs = {
     mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
@@ -9,15 +12,18 @@
   __overlays = [ "mcp-servers-nix.overlays.default" ];
 
   __functor =
-    _:
-    { inputs, ... }:
-    {
-      __module =
+    _: _:
+    let
+      mod =
         { pkgs, ... }:
         {
           home.packages = with pkgs; [
             mcp-nixos
           ];
         };
+    in
+    {
+      __exports."hm.profile.shared".value = mod;
+      __module = mod;
     };
 }

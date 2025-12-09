@@ -1,4 +1,8 @@
-# Neovim feature - nightly build from neovim-nightly-overlay
+/**
+  Neovim feature.
+
+  Nightly build from neovim-nightly-overlay.
+*/
 {
   __inputs = {
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
@@ -6,16 +10,19 @@
   };
 
   __functor =
-    _:
-    { inputs, ... }:
-    {
-      __module =
-        { pkgs, ... }:
+    _: _:
+    let
+      mod =
+        { inputs, pkgs, ... }:
         {
           programs.neovim = {
             enable = true;
             package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
           };
         };
+    in
+    {
+      __exports."hm.profile.shared".value = mod;
+      __module = mod;
     };
 }

@@ -1,35 +1,44 @@
-# Clipboard feature - Wayland clipboard manager service
-# Uses wl-clipboard + cliphist for clipboard history
-{ pkgs, lib, ... }:
+/**
+  Wayland clipboard manager with wl-clipboard and cliphist history.
+*/
 let
-  clipboardService = {
-    Unit = {
-      Description = "Clipboard manager for Wayland";
-      PartOf = [ "graphical-session.target" ];
-      After = [ "graphical-session.target" ];
-    };
+  mod =
+    { pkgs, lib, ... }:
+    let
+      clipboardService = {
+        Unit = {
+          Description = "Clipboard manager for Wayland";
+          PartOf = [ "graphical-session.target" ];
+          After = [ "graphical-session.target" ];
+        };
 
-    Service = {
-      Type = "simple";
-      ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store";
-      Restart = "on-failure";
-      RestartSec = 5;
-    };
+        Service = {
+          Type = "simple";
+          ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store";
+          Restart = "on-failure";
+          RestartSec = 5;
+        };
 
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
+        Install = {
+          WantedBy = [ "graphical-session.target" ];
+        };
+      };
+    in
+    {
+      home.packages = with pkgs; [
+        wl-clipboard
+        cliphist
+      ];
+
+      systemd.user.services.cliphist = clipboardService;
+
+      home.sessionVariables = {
+        CLIPHIST_DB_PATH = lib.mkDefault "$HOME/.local/share/cliphist/db";
+      };
     };
-  };
 in
 {
-  home.packages = with pkgs; [
-    wl-clipboard
-    cliphist
-  ];
-
-  systemd.user.services.cliphist = clipboardService;
-
-  home.sessionVariables = {
-    CLIPHIST_DB_PATH = lib.mkDefault "$HOME/.local/share/cliphist/db";
-  };
+  __exports."hm.profile.desktop".value = mod;
+  __module = mod;
+  __functor = _: mod;
 }

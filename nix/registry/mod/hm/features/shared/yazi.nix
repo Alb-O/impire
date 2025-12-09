@@ -1,143 +1,150 @@
-# Yazi feature - terminal file manager with plugins
-{ lib, pkgs, ... }:
+/**
+  Yazi feature.
+
+  Terminal file manager with plugins.
+*/
 let
-  # Plugin definitions
-  pluginDefs = {
-    full-border = {
-      package = pkgs.yaziPlugins.full-border;
-    };
-    git = {
-      package = pkgs.yaziPlugins.git;
-      settings = {
-        plugin.prepend_fetchers = [
-          {
-            id = "git";
-            name = "*";
-            run = "git";
-          }
-          {
-            id = "git";
-            name = "*/";
-            run = "git";
-          }
-        ];
+  mod =
+    { lib, pkgs, ... }:
+    let
+      pluginDefs = {
+        full-border = {
+          package = pkgs.yaziPlugins.full-border;
+        };
+        git = {
+          package = pkgs.yaziPlugins.git;
+          settings = {
+            plugin.prepend_fetchers = [
+              {
+                id = "git";
+                name = "*";
+                run = "git";
+              }
+              {
+                id = "git";
+                name = "*/";
+                run = "git";
+              }
+            ];
+          };
+          extraPackages = [ pkgs.git ];
+        };
+        no-status = {
+          package = pkgs.yaziPlugins.no-status;
+        };
+        smart-enter = {
+          package = pkgs.yaziPlugins.smart-enter;
+          setupOptions.open_multi = false;
+          keymap.mgr.prepend_keymap = [
+            {
+              on = "l";
+              run = "plugin smart-enter";
+              desc = "Enter the child directory, or open the file";
+            }
+          ];
+        };
+        smart-filter = {
+          package = pkgs.yaziPlugins.smart-filter;
+          keymap.mgr.prepend_keymap = [
+            {
+              on = "F";
+              run = "plugin smart-filter";
+              desc = "Smart filter";
+            }
+          ];
+        };
+        smart-paste = {
+          package = pkgs.yaziPlugins.smart-paste;
+          keymap.mgr.prepend_keymap = [
+            {
+              on = "p";
+              run = "plugin smart-paste";
+              desc = "Paste into the hovered directory or CWD";
+            }
+          ];
+        };
       };
-      extraPackages = [ pkgs.git ];
-    };
-    no-status = {
-      package = pkgs.yaziPlugins.no-status;
-    };
-    smart-enter = {
-      package = pkgs.yaziPlugins.smart-enter;
-      setupOptions.open_multi = false;
-      keymap.mgr.prepend_keymap = [
-        {
-          on = "l";
-          run = "plugin smart-enter";
-          desc = "Enter the child directory, or open the file";
-        }
-      ];
-    };
-    smart-filter = {
-      package = pkgs.yaziPlugins.smart-filter;
-      keymap.mgr.prepend_keymap = [
-        {
-          on = "F";
-          run = "plugin smart-filter";
-          desc = "Smart filter";
-        }
-      ];
-    };
-    smart-paste = {
-      package = pkgs.yaziPlugins.smart-paste;
-      keymap.mgr.prepend_keymap = [
-        {
-          on = "p";
-          run = "plugin smart-paste";
-          desc = "Paste into the hovered directory or CWD";
-        }
-      ];
-    };
-  };
 
-  # Merge keymap sets helper
-  mergeKeymapSets =
-    lhs: rhs:
-    if lhs == null then
-      rhs
-    else if rhs == null then
-      lhs
-    else if lib.isList lhs && lib.isList rhs then
-      lhs ++ rhs
-    else if lib.isAttrs lhs && lib.isAttrs rhs then
-      let
-        keys = lib.unique ((builtins.attrNames lhs) ++ (builtins.attrNames rhs));
-      in
-      lib.genAttrs keys (
-        key: mergeKeymapSets (lib.attrByPath [ key ] null lhs) (lib.attrByPath [ key ] null rhs)
-      )
-    else
-      rhs;
+      mergeKeymapSets =
+        lhs: rhs:
+        if lhs == null then
+          rhs
+        else if rhs == null then
+          lhs
+        else if lib.isList lhs && lib.isList rhs then
+          lhs ++ rhs
+        else if lib.isAttrs lhs && lib.isAttrs rhs then
+          let
+            keys = lib.unique ((builtins.attrNames lhs) ++ (builtins.attrNames rhs));
+          in
+          lib.genAttrs keys (
+            key: mergeKeymapSets (lib.attrByPath [ key ] null lhs) (lib.attrByPath [ key ] null rhs)
+          )
+        else
+          rhs;
 
-  # Aggregate plugin data
-  plugins = lib.mapAttrs (_: cfg: cfg.package) pluginDefs;
-  pluginSettings = builtins.foldl' lib.recursiveUpdate { } (
-    lib.mapAttrsToList (_: cfg: cfg.settings or { }) pluginDefs
-  );
-  pluginExtraPackages = lib.concatLists (
-    lib.mapAttrsToList (_: cfg: cfg.extraPackages or [ ]) pluginDefs
-  );
-  pluginSetupOptions = lib.filterAttrs (_: opts: opts != null && opts != { }) (
-    lib.mapAttrs (_: cfg: cfg.setupOptions or { }) pluginDefs
-  );
-  pluginKeymap = builtins.foldl' (acc: cfg: mergeKeymapSets acc (cfg.keymap or { })) { } (
-    lib.attrValues pluginDefs
-  );
+      plugins = lib.mapAttrs (_: cfg: cfg.package) pluginDefs;
+      pluginSettings = builtins.foldl' lib.recursiveUpdate { } (
+        lib.mapAttrsToList (_: cfg: cfg.settings or { }) pluginDefs
+      );
+      pluginExtraPackages = lib.concatLists (
+        lib.mapAttrsToList (_: cfg: cfg.extraPackages or [ ]) pluginDefs
+      );
+      pluginSetupOptions = lib.filterAttrs (_: opts: opts != null && opts != { }) (
+        lib.mapAttrs (_: cfg: cfg.setupOptions or { }) pluginDefs
+      );
+      pluginKeymap = builtins.foldl' (acc: cfg: mergeKeymapSets acc (cfg.keymap or { })) { } (
+        lib.attrValues pluginDefs
+      );
 
-  # Generate init.lua
-  pluginNames = builtins.attrNames plugins;
-  pluginsLua = lib.generators.toLua {
-    multiline = true;
-    indent = "  ";
-  } pluginNames;
-  pluginOptsLua =
-    if pluginSetupOptions == { } then
-      "{}"
-    else
-      lib.generators.toLua {
+      pluginNames = builtins.attrNames plugins;
+      pluginsLua = lib.generators.toLua {
         multiline = true;
         indent = "  ";
-      } pluginSetupOptions;
+      } pluginNames;
+      pluginOptsLua =
+        if pluginSetupOptions == { } then
+          "{}"
+        else
+          lib.generators.toLua {
+            multiline = true;
+            indent = "  ";
+          } pluginSetupOptions;
 
-  initLua = lib.concatStringsSep "\n" [
-    "-- Generated by Nix; do not edit manually."
-    "local plugins = ${pluginsLua}"
-    ""
-    "local plugin_opts = ${pluginOptsLua}"
-    ""
-    "for _, plugin_name in ipairs(plugins) do"
-    "  local ok, plugin = pcall(require, plugin_name)"
-    "  if ok and plugin.setup then"
-    "    plugin:setup(plugin_opts[plugin_name] or {})"
-    "  end"
-    "end"
-    ""
-  ];
+      initLua = lib.concatStringsSep "\n" [
+        "-- Generated by Nix; do not edit manually."
+        "local plugins = ${pluginsLua}"
+        ""
+        "local plugin_opts = ${pluginOptsLua}"
+        ""
+        "for _, plugin_name in ipairs(plugins) do"
+        "  local ok, plugin = pcall(require, plugin_name)"
+        "  if ok and plugin.setup then"
+        "    plugin:setup(plugin_opts[plugin_name] or {})"
+        "  end"
+        "end"
+        ""
+      ];
 
-  # Extra packages
-  extraPackages = lib.unique (
-    (with pkgs; [
-      mediainfo
-      ffmpeg
-    ])
-    ++ pluginExtraPackages
-  );
+      extraPackages = lib.unique (
+        (with pkgs; [
+          mediainfo
+          ffmpeg
+        ])
+        ++ pluginExtraPackages
+      );
+    in
+    {
+      programs.yazi = {
+        enable = true;
+        inherit plugins initLua extraPackages;
+        settings = pluginSettings;
+        keymap = pluginKeymap;
+      };
+    };
 in
 {
-  programs.yazi = {
-    enable = true;
-    inherit plugins initLua extraPackages;
-    settings = pluginSettings;
-    keymap = pluginKeymap;
-  };
+  __exports."hm.profile.shared".value = mod;
+  __module = mod;
+  __functor = _: mod;
 }

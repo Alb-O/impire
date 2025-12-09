@@ -1,13 +1,23 @@
-# Fonts feature - shared font configuration
-{ pkgs, ... }:
+/**
+  Fonts feature.
+*/
+let
+  mod =
+    { pkgs, ... }:
+    {
+      fonts.packages = with pkgs; [
+        noto-fonts
+        noto-fonts-cjk-sans
+        noto-fonts-color-emoji
+        nerd-fonts.jetbrains-mono
+        fira-sans
+        roboto
+        jetbrains-mono
+      ];
+    };
+in
 {
-  fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-color-emoji
-    nerd-fonts.jetbrains-mono
-    fira-sans
-    roboto
-    jetbrains-mono
-  ];
+  __exports."nixos.profile.shared".value = mod;
+  __module = mod;
+  __functor = _: mod;
 }
