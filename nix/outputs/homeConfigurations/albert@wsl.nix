@@ -17,6 +17,5 @@ inputs.home-manager.lib.homeManagerConfiguration {
 
   modules = [
     registry.users.albert
-    registry.mod.hm.profiles.desktop
   ];
 }

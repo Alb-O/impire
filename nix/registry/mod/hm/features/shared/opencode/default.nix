@@ -2,7 +2,7 @@
 # MCP servers, agents, plugins, and model providers
 {
   __inputs = {
-    opencode-flake.url = "github:sst/opencode/v1.0.134";
+    opencode-flake.url = "github:sst/opencode/v1.0.137";
     opencode-flake.inputs.nixpkgs.follows = "nixpkgs";
   };
 

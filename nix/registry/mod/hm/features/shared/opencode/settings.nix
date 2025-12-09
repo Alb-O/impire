@@ -17,8 +17,13 @@
     # };
   };
 
-  # Subagent definitions
   agent = {
+    general = {
+      model = "opencode/big-pickle";
+    };
+    explore = {
+      model = "opencode/big-pickle";
+    };
     nixer = {
       model = "opencode/big-pickle";
       description = ''
@@ -69,7 +74,6 @@
     "context7_*" = false;
   };
 
-  # Plugins
   plugin = [
     "opencode-openai-codex-auth@4.0.2"
   ];
