@@ -1,5 +1,8 @@
-# Home Manager role: WSL bundle
-# User config with shared modules only (no graphical features)
+/**
+  Home Manager WSL role.
+
+  User config with shared modules only (no graphical features).
+*/
 { imp, exports, registry, ... }:
 {
   imports = [

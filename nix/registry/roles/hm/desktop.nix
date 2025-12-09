@@ -1,5 +1,8 @@
-# Home Manager role: desktop bundle
-# Combines user config with shared + desktop modules
+/**
+  Home Manager desktop role.
+
+  Combines user config with shared + desktop modules.
+*/
 { imp, exports, registry, ... }:
 {
   imports = [

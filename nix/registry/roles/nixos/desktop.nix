@@ -1,5 +1,8 @@
-# NixOS role: desktop host bundle
-# Collects the desktop host plus extra desktop-only features wired in nixosConfigurations
+/**
+  NixOS desktop role.
+
+  Bundles desktop host with extra desktop-only features.
+*/
 { imp, registry, ... }:
 {
   imports = imp.imports [

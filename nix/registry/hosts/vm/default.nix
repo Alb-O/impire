@@ -1,5 +1,8 @@
-# VM host entry point
-# Run with: nix run .#vm
+/**
+  VM host entry point.
+
+  Run with: nix run .#vm
+*/
 {
   imp,
   inputs,
@@ -12,14 +15,12 @@
   imports =
     [
       (modulesPath + "/virtualisation/qemu-vm.nix")
-      # Merge layered configs: base → desktop-base → host-specific
       (imp.mergeConfigTrees [
-        registry.hosts.shared.base.__path # All hosts: time, base user
-        registry.hosts.shared.desktop-base.__path # Desktop hosts: audio/video groups
-        ./config # VM-specific: root user, services, etc
+        registry.hosts.shared.base.__path
+        registry.hosts.shared.desktop-base.__path
+        ./config
       ])
       inputs.home-manager.nixosModules.home-manager
-      # Role-based exports: shared + desktop NixOS modules
       exports.shared.nixos.__module
       exports.desktop.nixos.__module
     ]

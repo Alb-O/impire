@@ -1,4 +1,6 @@
-# NixOS helper: Home Manager setup for WSL host
+/**
+  NixOS Home Manager setup for WSL host.
+*/
 {
   inputs,
   exports,

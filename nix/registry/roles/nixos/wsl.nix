@@ -1,5 +1,6 @@
-# NixOS role: WSL bundle
-# Uses the WSL host module (already includes shared profile + Home Manager)
+/**
+  NixOS WSL role.
+*/
 { imp, registry, ... }:
 {
   imports = imp.imports [

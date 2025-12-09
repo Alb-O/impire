@@ -1,5 +1,8 @@
-# Systemd services for desktop
-# Fan control config generation and service
+/**
+  Desktop systemd services.
+
+  Fan control config generation and service.
+*/
 { lib, pkgs, ... }:
 {
   services = {

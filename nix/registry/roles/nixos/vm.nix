@@ -1,5 +1,6 @@
-# NixOS role: VM bundle
-# Uses the VM host module (already includes desktop profile + Home Manager)
+/**
+  NixOS VM role.
+*/
 { imp, registry, ... }:
 {
   imports = imp.imports [

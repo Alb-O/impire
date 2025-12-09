@@ -1,5 +1,8 @@
-# NixOS base configuration
-# Shared settings for all hosts - absorbs autix aspects: nix-settings, essential
+/**
+  NixOS base configuration.
+
+  Shared settings for all hosts: nix-settings, essential packages.
+*/
 {
   self,
   lib,

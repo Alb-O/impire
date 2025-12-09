@@ -1,4 +1,6 @@
-# NixOS helper: Home Manager setup for desktop/VM hosts
+/**
+  NixOS Home Manager setup for desktop/VM hosts.
+*/
 {
   inputs,
   exports,
