@@ -20,6 +20,6 @@ lib.nixosSystem {
       ;
   };
   modules = imp.imports [
-    registry.roles.nixos.vm
+    registry.hosts.vm
   ];
 }

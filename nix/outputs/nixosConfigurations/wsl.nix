@@ -28,7 +28,7 @@
           ;
       };
       modules = imp.imports [
-        registry.roles.nixos.wsl
+        registry.hosts.wsl
       ];
     };
 }
