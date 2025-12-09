@@ -2,9 +2,6 @@
 # Limine bootloader, nvidia kernel params, AMD/nvidia modules
 {
   kernelParams = [
-    "usbcore.autosuspend=-1"
-    "usbhid.mousepoll=1"
-    "usbcore.quirks=046d:c548:gki"
     "processor.ignore_ppc=1"
     "initcall_blacklist=amd_pstate_init"
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
@@ -12,8 +9,6 @@
 
   kernelModules = [
     "kvm-amd"
-    "hid-logitech-dj"
-    "hid-logitech-hidpp"
     "k10temp"
     "nct6775"
   ];
