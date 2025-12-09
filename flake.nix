@@ -25,7 +25,7 @@
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
     nur.url = "github:nix-community/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
-    opencode-flake.url = "github:sst/opencode/v1.0.134";
+    opencode-flake.url = "github:sst/opencode/v1.0.137";
     opencode-flake.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";

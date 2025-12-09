@@ -10,6 +10,7 @@
 {
   imports = [
     (modulesPath + "/virtualisation/qemu-vm.nix")
+    registry.mod.nixos.profiles.desktop
     # Merge layered configs: base → desktop-base → host-specific
     (imp.mergeConfigTrees [
       registry.hosts.shared.base.__path # All hosts: time, base user
@@ -17,18 +18,7 @@
       ./config # VM-specific: root user, services, etc
     ])
     inputs.home-manager.nixosModules.home-manager
-  ];
-
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    extraSpecialArgs = { inherit inputs imp registry; };
-    users.albert = import registry.users.albert;
-  };
-
-  # Enable desktop home profile inside the VM
-  home-manager.users.albert.imports = imp.imports [
-    registry.mod.hm.profiles.desktop
+    registry.hosts.vm.home
   ];
 
   environment.etc."motd".text = ''

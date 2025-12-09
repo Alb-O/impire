@@ -9,20 +9,15 @@
 {
   imports = [
     inputs.nixos-wsl.nixosModules.default
+    registry.mod.nixos.profiles.shared
     # Merge shared base config with WSL-specific config
     (imp.mergeConfigTrees [
       registry.hosts.shared.base.__path
       ./config
     ])
     inputs.home-manager.nixosModules.home-manager
+    registry.hosts.wsl.home
   ];
-
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    extraSpecialArgs = { inherit inputs imp registry; };
-    users.albert = import registry.users.albert;
-  };
 
   system.stateVersion = "24.11";
 }
