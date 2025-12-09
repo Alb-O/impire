@@ -41,7 +41,7 @@ let
     };
 in
 {
-  __exports."nixos.profile.desktop".value = mod;
+  __exports."desktop.nixos".value = mod;
   __module = mod;
   __functor = _: mod;
 }

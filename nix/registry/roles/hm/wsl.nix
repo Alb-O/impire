@@ -1,9 +1,10 @@
 # Home Manager role: WSL bundle
-# User config with shared profile only (no graphical features)
-{ imp, registry, ... }:
+# User config with shared modules only (no graphical features)
+{ imp, exports, registry, ... }:
 {
-  imports = imp.imports [
+  imports = [
+    exports.shared.hm.__module
+  ] ++ imp.imports [
     registry.users.albert
-    registry.mod.hm.profiles.shared
   ];
 }

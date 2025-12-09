@@ -15,7 +15,7 @@
       mod = { inputs, ... }: { imports = [ inputs.sops-nix.nixosModules.sops ]; };
     in
     {
-      __exports."nixos.profile.shared".value = mod;
+      __exports."shared.nixos".value = mod;
       __module = mod;
     };
 }

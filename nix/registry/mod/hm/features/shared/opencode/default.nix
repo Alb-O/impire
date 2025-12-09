@@ -36,7 +36,7 @@
         };
     in
     {
-      __exports."hm.profile.shared".value = mod;
+      __exports."shared.hm".value = mod;
       __module = mod;
     };
 }

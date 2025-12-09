@@ -35,10 +35,10 @@ flake-parts.lib.mkFlake { inherit inputs; } {
     exports = {
       # Only scan registry for exports (outputs contain config, not modules)
       sources = [ ../registry ];
-      # Use mkMerge for profile module collections
+      # Use mkMerge for role-based module collections
       sinkDefaults = {
-        "nixos.*" = "mkMerge";
-        "hm.*" = "mkMerge";
+        "shared.*" = "mkMerge";
+        "desktop.*" = "mkMerge";
       };
     };
   };

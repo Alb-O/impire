@@ -3,6 +3,7 @@
 {
   imp,
   inputs,
+  exports,
   registry,
   ...
 }:
@@ -16,9 +17,10 @@
         ./config
       ])
       inputs.home-manager.nixosModules.home-manager
+      # Role-based exports: shared NixOS modules only (no desktop)
+      exports.shared.nixos.__module
     ]
     ++ imp.imports [
-      registry.mod.nixos.profiles.shared
       registry.roles.nixos.home-wsl
     ];
 

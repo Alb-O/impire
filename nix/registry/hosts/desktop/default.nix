@@ -3,6 +3,7 @@
 {
   imp,
   inputs,
+  exports,
   registry,
   modulesPath,
   ...
@@ -18,10 +19,11 @@
         ./config
       ])
       inputs.home-manager.nixosModules.home-manager
+      # Role-based exports: shared + desktop NixOS modules
+      exports.shared.nixos.__module
+      exports.desktop.nixos.__module
     ]
     ++ imp.imports [
-      registry.mod.nixos.profiles.shared
-      registry.mod.nixos.profiles.desktop
       registry.roles.nixos.home-desktop
       # Specific desktop features (keyboard and niri are host-specific)
       registry.mod.nixos.features.desktop.keyboard

@@ -19,7 +19,7 @@
         };
     in
     {
-      __exports."hm.profile.desktop".value = mod;
+      __exports."desktop.hm".value = mod;
       __module = mod;
     };
 }

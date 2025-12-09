@@ -1,10 +1,11 @@
 # Home Manager role: desktop bundle
-# Combines user config with shared + desktop profiles
-{ imp, registry, ... }:
+# Combines user config with shared + desktop modules
+{ imp, exports, registry, ... }:
 {
-  imports = imp.imports [
+  imports = [
+    exports.shared.hm.__module
+    exports.desktop.hm.__module
+  ] ++ imp.imports [
     registry.users.albert
-    registry.mod.hm.profiles.shared
-    registry.mod.hm.profiles.desktop
   ];
 }

@@ -13,9 +13,10 @@
     useUserPackages = true;
 
     users.albert = {
-      imports = imp.imports [
+      imports = [
+        exports.shared.hm.__module
+      ] ++ imp.imports [
         registry.users.albert
-        registry.mod.hm.profiles.shared
       ];
     };
   };

@@ -12,7 +12,7 @@ let
     };
 in
 {
-  __exports."nixos.profile.shared".value = mod;
+  __exports."shared.nixos".value = mod;
   __module = mod;
   __functor = _: mod;
 }
