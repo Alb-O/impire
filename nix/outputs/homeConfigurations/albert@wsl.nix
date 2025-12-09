@@ -16,6 +16,6 @@ inputs.home-manager.lib.homeManagerConfiguration {
   };
 
   modules = [
-    registry.users.albert
+    registry.roles.hm.wsl
   ];
 }

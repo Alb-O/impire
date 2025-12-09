@@ -16,7 +16,7 @@
       ./config
     ])
     inputs.home-manager.nixosModules.home-manager
-    registry.hosts.wsl.home
+    registry.roles.nixos.home-wsl
   ];
 
   system.stateVersion = "24.11";

@@ -21,14 +21,12 @@
         inherit
           self
           inputs
-          imp
-          registry
-          ;
-      };
-      modules = imp.imports [
-        registry.hosts.wsl
-        # Shared profile: base + common shared features
-        registry.mod.nixos.profiles.shared
+      imp
+      registry
+      ;
+  };
+  modules = imp.imports [
+        registry.roles.nixos.wsl
       ];
     };
 }

@@ -18,7 +18,7 @@
       ./config
     ])
     inputs.home-manager.nixosModules.home-manager
-    registry.hosts.desktop.home
+    registry.roles.nixos.home-desktop
   ]
   ++ (imp.imports [
     # Specific desktop features (keyboard and niri are host-specific)

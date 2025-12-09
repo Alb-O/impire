@@ -18,7 +18,7 @@
       ./config # VM-specific: root user, services, etc
     ])
     inputs.home-manager.nixosModules.home-manager
-    registry.hosts.vm.home
+    registry.roles.nixos.home-desktop
   ];
 
   environment.etc."motd".text = ''
