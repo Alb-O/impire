@@ -3,6 +3,8 @@
 {
   kernelParams = [
     "usbcore.autosuspend=-1"
+    "usbhid.mousepoll=1"
+    "usbcore.quirks=046d:c548:gki"
     "processor.ignore_ppc=1"
     "initcall_blacklist=amd_pstate_init"
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
