@@ -12,7 +12,7 @@
       "hosts.shared.desktop-base"
     ];
     sinks = [
-      "shared.nixos"
+      "shared.os"
       "desktop.nixos"
     ];
     hmSinks = [
@@ -20,10 +20,10 @@
       "desktop.hm"
     ];
     modules = [
-      "mod.nixos.features.desktop.keyboard"
-      "mod.nixos.features.desktop.niri"
-      "mod.nixos.features.desktop.netshare"
-      "mod.nixos.features.desktop.tty"
+      "mod.os.features.desktop.keyboard"
+      "mod.os.features.desktop.niri"
+      "mod.os.features.desktop.netshare"
+      "mod.os.features.desktop.tty"
     ];
     user = "albert";
   };

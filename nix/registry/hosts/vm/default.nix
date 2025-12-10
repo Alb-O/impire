@@ -12,7 +12,7 @@
       "hosts.shared.desktop-base"
     ];
     sinks = [
-      "shared.nixos"
+      "shared.os"
       "desktop.nixos"
     ];
     hmSinks = [

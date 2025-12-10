@@ -6,9 +6,7 @@
 */
 let
   flakePath = "/home/albert/imp.devspace/impire";
-
-  # Home Manager configuration
-  hmMod =
+  hm =
     { ... }:
     {
       programs.nh = {
@@ -21,9 +19,7 @@ let
         };
       };
     };
-
-  # NixOS configuration
-  nixosMod =
+  os =
     { ... }:
     {
       programs.nh = {
@@ -38,8 +34,8 @@ let
     };
 in
 {
-  __exports."shared.hm".value = hmMod;
-  __exports."shared.nixos".value = nixosMod;
-  __module = hmMod;
-  __functor = _: hmMod;
+  __exports."shared.hm".value = hm;
+  __exports."shared.os".value = os;
+  __module = hm;
+  __functor = _: hm;
 }

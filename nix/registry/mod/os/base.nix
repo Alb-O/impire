@@ -54,7 +54,7 @@ let
     };
 in
 {
-  __exports."shared.nixos".value = mod;
+  __exports."shared.os".value = mod;
   __module = mod;
   __functor = _: mod;
 }

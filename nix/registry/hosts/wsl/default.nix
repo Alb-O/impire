@@ -11,7 +11,7 @@
     system = "x86_64-linux";
     stateVersion = "24.11";
     bases = [ "hosts.shared.base" ];
-    sinks = [ "shared.nixos" ];
+    sinks = [ "shared.os" ];
     hmSinks = [ "shared.hm" ];
     modules = [ "@nixos-wsl.nixosModules.default" ];
     user = "albert";
