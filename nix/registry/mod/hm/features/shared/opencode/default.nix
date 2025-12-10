@@ -5,7 +5,7 @@
 */
 {
   __inputs = {
-    opencode-flake.url = "github:sst/opencode/v1.0.141";
+    opencode-flake.url = "github:sst/opencode/v1.0.143";
     opencode-flake.inputs.nixpkgs.follows = "nixpkgs";
   };
 
