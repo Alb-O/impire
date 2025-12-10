@@ -8,7 +8,6 @@ let
     { pkgs, ... }:
     {
       home.packages = with pkgs; [
-        atuin
         eza
         fd
         ffmpeg

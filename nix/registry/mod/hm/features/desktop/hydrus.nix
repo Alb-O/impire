@@ -5,6 +5,15 @@ let
   mod =
     { pkgs, ... }:
     let
+      # Apply overlay to bypass hydrus check phase
+      pkgs' = pkgs.extend (
+        final: prev: {
+          hydrus = prev.hydrus.overrideAttrs (oldAttrs: {
+            doCheck = false;
+          });
+        }
+      );
+
       hydrusClient = pkgs.writeShellScriptBin "hydrus-client" ''
         set -euo pipefail
 
@@ -12,7 +21,7 @@ let
         export QT_SCALE_FACTOR="1.5"
 
         XDG_DATA_HOME="''${XDG_DATA_HOME:-$HOME/.local/share}"
-        exec -a "$0" "${pkgs.hydrus}/bin/hydrus-client" --db_dir "$XDG_DATA_HOME/hydrus" "$@"
+        exec -a "$0" "${pkgs'.hydrus}/bin/hydrus-client" --db_dir "$XDG_DATA_HOME/hydrus" "$@"
       '';
     in
     {
@@ -20,7 +29,7 @@ let
     };
 in
 {
-  #__exports."desktop.hm".value = mod;
+  __exports."desktop.hm".value = mod;
   __module = mod;
   __functor = _: mod;
 }
