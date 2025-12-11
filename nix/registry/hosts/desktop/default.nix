@@ -1,7 +1,7 @@
 /**
   Desktop host - Albert's main workstation.
 
-  AMD CPU, Nvidia GPU, Limine boot.
+  AMD CPU, Nvidia GPU 🤢, Limine boot.
 */
 {
   __host = {
@@ -23,7 +23,7 @@
       { registry, ... }:
       [
         registry.mod.os.desktop.keyboard
-        registry.mod.niri
+        registry.mod.dual.niri
         registry.mod.os.desktop.netshare
         registry.mod.os.desktop.tty
       ];
