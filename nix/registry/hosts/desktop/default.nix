@@ -21,7 +21,7 @@
     ];
     modules = [
       "mod.os.features.desktop.keyboard"
-      "mod.os.features.desktop.niri"
+      "mod.niri"
       "mod.os.features.desktop.netshare"
       "mod.os.features.desktop.tty"
     ];

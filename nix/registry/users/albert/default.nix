@@ -4,16 +4,11 @@
   Identity, secrets path, and git settings. Imported by roles.
 */
 {
-  registry,
-  imp,
   lib,
   ...
 }:
 {
-  imports = imp.imports [
-    registry.mod.hm.base
-  ];
-
+  programs.home-manager.enable = true;
   home = {
     username = "albert";
     homeDirectory = "/home/albert";

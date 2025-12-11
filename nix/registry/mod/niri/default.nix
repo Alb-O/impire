@@ -7,14 +7,11 @@
 */
 let
   hm =
-    { pkgs, ... }:
-    let
-      niriConfig = builtins.readFile ./config.kdl;
-    in
+    { ... }:
     {
       xdg.configFile."niri/config.kdl" = {
         enable = true;
-        source = pkgs.writeText "niri-config.kdl" niriConfig;
+        text = builtins.readFile ./config.kdl;
       };
     };
   os =
@@ -30,6 +27,6 @@ in
 {
   __exports."desktop.hm".value = hm;
   __exports."desktop.os".value = os;
-  __module = hm;
-  __functor = _: hm;
+  __module = os;
+  __functor = _: os;
 }
