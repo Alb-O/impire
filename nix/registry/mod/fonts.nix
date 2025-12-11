@@ -31,8 +31,8 @@ let
     };
 in
 {
-  __exports."shared.hm".value = hm;
-  __exports."shared.os".value = os;
+  __exports.shared.hm.value = hm;
+  __exports.shared.os.value = os;
   __module = hm;
   __functor = _: hm;
 }

@@ -19,6 +19,6 @@ let
     };
 in
 {
-  __exports."desktop.nixos".value = mod;
+  __exports.desktop.nixos.value = mod;
   __module = mod;
 }

@@ -19,12 +19,14 @@
       "shared.hm"
       "desktop.hm"
     ];
-    modules = [
-      "mod.os.features.desktop.keyboard"
-      "mod.niri"
-      "mod.os.features.desktop.netshare"
-      "mod.os.features.desktop.tty"
-    ];
+    modules =
+      { registry, ... }:
+      [
+        registry.mod.os.desktop.keyboard
+        registry.mod.niri
+        registry.mod.os.desktop.netshare
+        registry.mod.os.desktop.tty
+      ];
     user = "albert";
   };
 

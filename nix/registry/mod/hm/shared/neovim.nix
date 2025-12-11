@@ -22,7 +22,7 @@
         };
     in
     {
-      __exports."shared.hm".value = mod;
+      __exports.shared.hm.value = mod;
       __module = mod;
     };
 }

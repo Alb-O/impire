@@ -70,6 +70,6 @@ let
     };
 in
 {
-  __exports."desktop.hm".value = mod;
+  __exports.desktop.hm.value = mod;
   __module = mod;
 }

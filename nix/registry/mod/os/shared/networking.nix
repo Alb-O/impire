@@ -12,6 +12,6 @@ let
     };
 in
 {
-  __exports."shared.os".value = mod;
+  __exports.shared.os.value = mod;
   __module = mod;
 }

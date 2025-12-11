@@ -24,7 +24,7 @@ let
     };
 in
 {
-  __exports."desktop.hm".value = hm;
-  __exports."desktop.os".value = os;
+  __exports.desktop.hm.value = hm;
+  __exports.desktop.os.value = os;
   __module = os;
 }
