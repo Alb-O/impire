@@ -5,7 +5,7 @@
 */
 let
   mod =
-    { pkgs, lib, ... }:
+    { pkgs, ... }:
     {
       services.displayManager = {
         enable = true;
@@ -43,5 +43,4 @@ in
 {
   __exports."desktop.nixos".value = mod;
   __module = mod;
-  __functor = _: mod;
 }

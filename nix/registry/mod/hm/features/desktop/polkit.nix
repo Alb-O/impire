@@ -28,5 +28,4 @@ in
 {
   __exports."desktop.hm".value = mod;
   __module = mod;
-  __functor = _: mod;
 }

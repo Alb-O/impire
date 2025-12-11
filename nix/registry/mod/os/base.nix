@@ -56,5 +56,4 @@ in
 {
   __exports."shared.os".value = mod;
   __module = mod;
-  __functor = _: mod;
 }

@@ -16,5 +16,4 @@ in
 {
   __exports."desktop.nixos".value = mod;
   __module = mod;
-  __functor = _: mod;
 }

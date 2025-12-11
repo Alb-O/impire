@@ -18,7 +18,6 @@ let
     { pkgs, ... }:
     {
       programs.niri.enable = true;
-
       environment.systemPackages = with pkgs; [
         alacritty
       ];
@@ -28,5 +27,4 @@ in
   __exports."desktop.hm".value = hm;
   __exports."desktop.os".value = os;
   __module = os;
-  __functor = _: os;
 }

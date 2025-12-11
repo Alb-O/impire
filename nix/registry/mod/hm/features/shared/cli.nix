@@ -23,5 +23,4 @@ in
 {
   __exports."shared.hm".value = mod;
   __module = mod;
-  __functor = _: mod;
 }
