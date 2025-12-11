@@ -31,7 +31,7 @@
   };
 
   plugin = [
-    "opencode-openai-codex-auth@4.0.2"
+    "opencode-openai-codex-auth@latest"
   ];
 
   # OpenAI provider configuration with OAuth models

@@ -1,7 +1,9 @@
 /**
-  sops-nix home-manager feature.
+  sops-nix feature.
 
-  User-level secrets. Requires sops-nix NixOS module for system-level sops daemon.
+  Atomic secret provisioning for both Home Manager and NixOS.
+  HM: User-level secrets management with sops CLI tools
+  OS: System-level sops daemon
 */
 {
   __inputs = {
@@ -12,7 +14,7 @@
   __functor =
     _: _:
     let
-      mod =
+      hm =
         {
           inputs,
           pkgs,
@@ -30,9 +32,15 @@
 
           sops.age.keyFile = lib.mkDefault "${config.home.homeDirectory}/.config/sops/age/keys.txt";
         };
+      os =
+        { inputs, ... }:
+        {
+          imports = [ inputs.sops-nix.nixosModules.sops ];
+        };
     in
     {
-      __exports."shared.hm".value = mod;
-      __module = mod;
+      __exports."shared.hm".value = hm;
+      __exports."shared.os".value = os;
+      __module = hm;
     };
 }
