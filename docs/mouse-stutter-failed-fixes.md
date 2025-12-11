@@ -1,241 +1,84 @@
-# Mouse Pointer Stutter - Failed Fixes Documentation
+# MX Master 4 Mouse Stutter
 
-**Date**: Wed Dec 10 2025\
-**Hardware**: Logitech MX Master 4 (Bolt Receiver) - USB ID `046d:c548`\
-**System**: AMD CPU, Nvidia GPU, NixOS
+Logitech MX Master 4 with Bolt receiver (`046d:c548`) on NixOS with AMD CPU and Nvidia GPU. The mouse exhibits intermittent pointer stuttering that correlates with GPU load rather than USB activity.
 
-## Problem Description
+## USB power management is not the cause
 
-Wireless mouse pointer stuttering/lag issues despite various USB power management and kernel parameter adjustments.
-
-______________________________________________________________________
-
-## Timeline
-
-### Initial Config (4 days ago - commit 57b00cd)
-
-Started with basic USB autosuspend disabled:
-
-**nix/registry/hosts/desktop/config/boot.nix**:
+Extensive testing ruled out USB power management. The following were tried in combination and individually, none resolved the stutter:
 
 ```nix
+# boot.nix - kernel parameters
 kernelParams = [
-  "usbcore.autosuspend=-1"
-  # ... other params
+  "usbcore.autosuspend=-1"       # global USB autosuspend off
+  "usbhid.mousepoll=1"           # force 1ms polling
+  "usbcore.quirks=046d:c548:gki" # g=NO_LPM, k=NO_AUTOSUSPEND, i=RESET_RESUME
 ];
 
 kernelModules = [
-  "hid-logitech-dj"
-  "hid-logitech-hidpp"
-  # ... other modules
-];
-
-initrd.availableKernelModules = [
-  "usbhid"
-  "usb_storage"
-  # ... other modules
+  "hid-logitech-dj"    # DJ receiver protocol
+  "hid-logitech-hidpp" # HID++ protocol for Bolt/Unifying
 ];
 ```
 
-**Status**: ❌ DID NOT WORK
-
-______________________________________________________________________
-
-### Latest Attempt (8 hours ago - commit 77ad401)
-
-"fix allowUnfree, attempt wireless mouse fix, kms"
-
-Added multiple layers of USB fixes:
-
-#### Kernel Parameters Added
-
-**File**: `nix/registry/hosts/desktop/config/boot.nix:5-7`
-
 ```nix
-kernelParams = [
-  "usbcore.autosuspend=-1"      # Already present - disables global USB autosuspend
-  "usbhid.mousepoll=1"           # NEW - sets mouse polling rate to 1ms
-  "usbcore.quirks=046d:c548:gki" # NEW - USB quirks for MX Master 4
-  # ... other params
-];
-```
-
-**Quirk flags**:
-
-- `g` = NO_LPM (disable Link Power Management)
-- `k` = NO_AUTOSUSPEND
-- `i` = RESET_RESUME
-
-#### Udev Rules Added
-
-**File**: `nix/registry/hosts/desktop/config/services.nix:6-14`
-
-```nix
+# services.nix - udev rules
 udev.extraRules = ''
-  # Logitech USB receivers - disable autosuspend (ALL Logitech devices)
   ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{power/control}="on"
-  
-  # Logitech Bolt Receiver (MX Master 4) - specific device targeting
-  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="c548", ATTR{power/control}="on", ATTR{power/autosuspend}="-1"
+  ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="c548", ATTR{power/autosuspend}="-1"
 '';
 ```
 
-**Status**: ❌ DID NOT WORK
+Moving the Bolt receiver to a USB hub closer to the mouse made no difference. The previous mouse, a G502 Lightspeed, did not exhibit this behavior on identical hardware.
 
-______________________________________________________________________
+## Current hypothesis: Nvidia driver frame timing
 
-## Configuration Summary - What Was Tried
+The stutter correlates with GPU-intensive rendering: complex browser animations, video decoding, compositor effects. This points to the Nvidia driver's power state transitions causing frame timing jitter in niri, which then affects input event delivery.
 
-### ✅ Kernel Modules Loaded
+The G502 Lightspeed likely masked this because its receiver firmware optimizes for tighter latency tolerances than Bolt, which prioritizes battery life and multi-device pairing.
 
-**File**: `nix/registry/hosts/desktop/config/boot.nix:13-19`
+## Fixes to test
 
-```nix
-kernelModules = [
-  "hid-logitech-dj"      # Logitech DJ receiver support
-  "hid-logitech-hidpp"   # Logitech HID++ protocol support
-  # ... other modules
-];
-
-initrd.availableKernelModules = [
-  "usbhid"
-  "usb_storage"
-  # ... other modules
-];
-```
-
-### ✅ Kernel Parameters Tried
-
-1. **`usbcore.autosuspend=-1`** - Global USB autosuspend disabled
-1. **`usbhid.mousepoll=1`** - Force 1ms polling interval for USB HID mice
-1. **`usbcore.quirks=046d:c548:gki`** - Device-specific USB quirks (no LPM, no autosuspend, reset resume)
-
-### ✅ Udev Rules Tried
-
-1. **Vendor-wide rule** - All Logitech devices (`046d:*`)
-
-   - Set `power/control=on` (disable autosuspend at device level)
-
-1. **Device-specific rule** - MX Master 4 Bolt Receiver (`046d:c548`)
-
-   - Set `power/control=on`
-   - Set `power/autosuspend=-1` (double-disable autosuspend)
-
-### 🤔 Power Management Settings
-
-**File**: `nix/registry/hosts/desktop/config/hardware.nix:9-10`
+Disable Nvidia power management in `hardware.nix`:
 
 ```nix
 nvidia = {
-  powerManagement.enable = true;        # Nvidia PM enabled
-  powerManagement.finegrained = false;  # Coarse PM (not per-device)
-  # ...
+  powerManagement.enable = false; # was true
+  powerManagement.finegrained = false;
 };
 ```
 
-**Note**: Nvidia power management is ENABLED. Unknown if this interacts with USB power management.
+If stutter persists, force cursor rendering through the main framebuffer instead of DRM cursor planes. In niri config:
 
-______________________________________________________________________
-
-## What Didn't Work
-
-### Layer 1: Global Kernel Parameters ❌
-
-- `usbcore.autosuspend=-1` alone was insufficient
-
-### Layer 2: Device-Specific Kernel Quirks ❌
-
-- `usbcore.quirks=046d:c548:gki` (no LPM, no autosuspend, reset resume) did not resolve stuttering
-
-### Layer 3: Aggressive Polling ❌
-
-- `usbhid.mousepoll=1` (1ms polling) did not improve responsiveness
-
-### Layer 4: Udev Runtime Control ❌
-
-- Setting `power/control=on` via udev rules did not prevent stuttering
-- Redundant `power/autosuspend=-1` setting had no additional effect
-
-### Layer 5: Vendor-Wide Disabling ❌
-
-- Targeting all Logitech devices (`046d:*`) was no more effective than device-specific rules
-
-______________________________________________________________________
-
-## Potential Unexplored Issues
-
-1. **Nvidia Power Management Interaction**
-
-   - `hardware.nvidia.powerManagement.enable = true` might be causing system-wide power state changes affecting USB
-   - Try disabling Nvidia PM?
-
-1. **USB Controller Power State**
-
-   - `xhci_pci` module loaded but no specific power config
-   - May need `xhci_hcd` power management tweaks
-
-1. **CPU Power States**
-
-   - AMD P-state disabled (`initcall_blacklist=amd_pstate_init`)
-   - But CPU C-states not explicitly configured
-
-1. **Compositor/Wayland Issues**
-
-   - Using Niri compositor (Wayland)
-   - Stuttering might be rendering-related, not USB-related
-
-1. **Interrupt Coalescing**
-
-   - No explicit interrupt handling optimization
-   - USB interrupts might be delayed/batched
-
-1. **Bluetooth Interference**
-
-   - Using Bolt receiver (not Bluetooth) but system has Bluetooth enabled
-   - RF interference?
-
-______________________________________________________________________
-
-## Next Steps (Nuclear Option)
-
-Planning to **remove ALL mouse/USB power management config** and test if stuttering:
-
-- Persists → Problem is NOT USB power management
-- Resolves → One of the configs is actually CAUSING the issue
-
-Files to clean up:
-
-- `nix/registry/hosts/desktop/config/boot.nix` - remove `usbhid.mousepoll`, `usbcore.quirks`, possibly `usbcore.autosuspend`
-- `nix/registry/hosts/desktop/config/services.nix` - remove all `udev.extraRules`
-- `nix/registry/hosts/desktop/config/hardware.nix` - consider toggling `nvidia.powerManagement.enable`
-
-______________________________________________________________________
-
-## Device Info
-
-**Mouse**: Logitech MX Master 4\
-**Receiver**: Logitech Bolt Receiver\
-**USB Vendor ID**: `046d` (Logitech)\
-**USB Product ID**: `c548` (Bolt Receiver)
-
-**Verify with**:
-
-```bash
-lsusb | grep -i logitech
-# Should show: Bus XXX Device XXX: ID 046d:c548 Logitech, Inc. Bolt Receiver
+```kdl
+debug {
+    disable-cursor-plane
+}
 ```
 
-______________________________________________________________________
+If still present, disable PowerMizer entirely via kernel parameter:
 
-## References
+```nix
+kernelParams = [
+  "nvidia.NVreg_RegistryDwords=PowerMizerEnable=0x0"
+];
+```
 
-**Git Commits**:
+There's also a known niri/Nvidia VRAM heap issue. Create `/etc/nvidia/nvidia-application-profiles-rc.d/50-niri.json`:
 
-- `57b00cd` (4 days ago) - "init" - Initial config with basic `usbcore.autosuspend=-1`
-- `77ad401` (8 hours ago) - "fix allowUnfree, attempt wireless mouse fix, kms" - Added polling, quirks, and udev rules
+```json
+{
+    "rules": [{
+        "pattern": {"feature": "procname", "matches": "niri"},
+        "profile": "Limit Free Buffer Pool On Wayland Compositors"
+    }],
+    "profiles": [{
+        "name": "Limit Free Buffer Pool On Wayland Compositors",
+        "settings": [{"key": "GLVidHeapReuseRatio", "value": 0}]
+    }]
+}
+```
 
-**Modified Files**:
+## Commits
 
-- `nix/registry/hosts/desktop/config/boot.nix`
-- `nix/registry/hosts/desktop/config/services.nix`
-- `nix/registry/hosts/desktop/config/hardware.nix`
+- `57b00cd` initial config with `usbcore.autosuspend=-1`
+- `77ad401` added polling, quirks, udev rules (all ineffective)
