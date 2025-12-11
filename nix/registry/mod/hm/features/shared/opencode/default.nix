@@ -1,11 +1,10 @@
 /**
   OpenCode feature.
-
   AI coding agent with MCP servers, agents, plugins, and model providers.
 */
 {
   __inputs = {
-    opencode-flake.url = "github:sst/opencode/v1.0.143";
+    opencode-flake.url = "github:sst/opencode/v1.0.146";
     opencode-flake.inputs.nixpkgs.follows = "nixpkgs";
   };
 
@@ -13,31 +12,19 @@
     _: _:
     let
       mod =
-        {
-          inputs,
-          pkgs,
-          lib,
-          ...
-        }:
-        let
-          schema = "https://opencode.ai/config.json";
-          settings = import ./settings.nix { };
-          hasSettings = settings != { };
-          renderedConfig = builtins.toJSON (
-            {
-              "$schema" = schema;
-            }
-            // settings
-          );
-        in
+        { inputs, pkgs, ... }:
         {
           programs.opencode = {
             package = inputs.opencode-flake.packages."${pkgs.system}".default;
             enable = true;
           };
-        }
-        // lib.optionalAttrs hasSettings {
-          xdg.configFile."opencode/config.json".text = renderedConfig;
+
+          xdg.configFile = {
+            "opencode/opencode.json".text = builtins.toJSON (
+              { "$schema" = "https://opencode.ai/config.json"; } // import ./config.nix
+            );
+            "opencode/dcp.json".text = builtins.toJSON (import ./dcp.nix);
+          };
         };
     in
     {

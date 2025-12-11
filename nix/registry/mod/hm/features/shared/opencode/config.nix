@@ -1,6 +1,3 @@
-# OpenCode settings
-# Agent definitions, plugins, and provider configurations
-{ ... }:
 {
   agent = {
     general = {
@@ -32,6 +29,7 @@
 
   plugin = [
     "opencode-openai-codex-auth@latest"
+    "@tarquinen/opencode-dcp@latest"
   ];
 
   # OpenAI provider configuration with OAuth models
