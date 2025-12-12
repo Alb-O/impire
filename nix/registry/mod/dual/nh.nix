@@ -5,7 +5,7 @@
   Provides unified CLI for system management and automatic cleanup services.
 */
 let
-  flakePath = "/home/albert/imp.devspace/impire";
+  flakePath = "/home/albert/workspace/impire";
   hm =
     { ... }:
     {

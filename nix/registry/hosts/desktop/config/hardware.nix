@@ -6,7 +6,7 @@
 
   nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = false;  # Disabled - was causing mouse stutter during GPU load
+    powerManagement.enable = true;
     powerManagement.finegrained = false;
     open = false;
   };
