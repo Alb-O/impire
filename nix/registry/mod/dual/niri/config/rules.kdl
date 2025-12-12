@@ -1,0 +1,22 @@
+window-rule {
+    geometry-corner-radius 0
+    clip-to-geometry true
+    open-maximized-to-edges true
+}
+
+window-rule {
+    match app-id="kitty" title="XDG File Picker"
+    default-column-width { proportion 0.650000; }
+    default-window-height { proportion 0.800000; }
+    open-floating true
+}
+
+window-rule {
+    match app-id="firefox$" title="^Picture-in-Picture$"
+    open-floating true
+}
+
+window-rule {
+    match app-id="helium"
+    scroll-factor 1.25
+}

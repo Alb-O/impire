@@ -1,0 +1,23 @@
+animations {
+    slowdown 0.5
+}
+
+input {
+    keyboard {
+        repeat-delay 200
+        repeat-rate 35
+        track-layout "global"
+        numlock
+    }
+    touchpad {
+        tap
+        natural-scroll
+    }
+    focus-follows-mouse max-scroll-amount="20%"
+    workspace-auto-back-and-forth
+}
+
+cursor {
+    xcursor-theme "default"
+    xcursor-size 24
+}

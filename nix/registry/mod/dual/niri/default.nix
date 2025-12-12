@@ -9,9 +9,10 @@ let
   hm =
     { ... }:
     {
-      xdg.configFile."niri/config.kdl" = {
+      xdg.configFile."niri" = {
         enable = true;
-        text = builtins.readFile ./config.kdl;
+        source = ./config;
+        recursive = true;
       };
     };
   os =

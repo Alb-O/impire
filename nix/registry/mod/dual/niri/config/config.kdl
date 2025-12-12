@@ -1,0 +1,26 @@
+// Niri configuration - modular setup
+
+// Input settings (animations, keyboard, touchpad, cursor)
+include "input.kdl"
+
+// Monitor configurations
+include "monitors.kdl"
+
+// Layout and visual settings
+include "layout.kdl"
+
+// Keybindings
+include "binds.kdl"
+
+// Window rules
+include "rules.kdl"
+
+// Screenshot settings
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+// Disable client-side decorations
+prefer-no-csd
+
+// Startup applications
+spawn-at-startup "waybar"
+spawn-at-startup "setup-background-terminals"
