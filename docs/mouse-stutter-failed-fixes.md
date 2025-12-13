@@ -1,6 +1,6 @@
 # MX Master 4 Mouse Stutter
 
-Logitech MX Master 4 with Bolt receiver (`046d:c548`) on NixOS with AMD CPU and Nvidia GPU. The mouse exhibits intermittent pointer stuttering that **definitively correlates with CPU/GPU compute workload**, especially when browsers (Firefox or Chromium) load heavy tabs and pages. This is not a USB power management issue.
+Logitech MX Master 4 with Bolt receiver (`046d:c548`) on NixOS with AMD CPU and Nvidia GPU. The mouse exhibits intermittent pointer stuttering that occurs **even when the system is idle or under light load**. The stutter can be temporarily resolved by switching the mouse off and on again, but will return after some time. This is not a USB power management issue or a performance load issue.
 
 ## USB power management is not the cause
 
@@ -30,13 +30,11 @@ udev.extraRules = ''
 
 Moving the Bolt receiver to a USB hub closer to the mouse made no difference. The previous mouse, a G502 Lightspeed, did not exhibit this behavior on identical hardware.
 
-## Root cause: Compute workload affecting input event delivery
+## Root cause: Unknown (not performance-related)
 
-The stutter **definitively occurs under CPU/GPU compute load**, particularly when browsers (tested with both Firefox and Chromium) load heavy tabs and pages. This is not GPU-specific—it happens with any significant compute workload that saturates system resources.
+The stutter occurs **even when the system is idle or under light load**, ruling out CPU/GPU compute workload as the cause. The issue appears intermittently and can be temporarily resolved by switching the mouse off and on again, suggesting a firmware or receiver-level issue rather than system resource contention.
 
-The issue appears to be the system's inability to maintain consistent input event delivery timing when under heavy load. The Nvidia driver's frame timing or power state transitions may exacerbate this, but the core problem is compute saturation affecting event processing.
-
-The G502 Lightspeed likely masked this because its receiver firmware optimizes for tighter latency tolerances than Bolt, which prioritizes battery life and multi-device pairing.
+The G502 Lightspeed did not exhibit this behavior on identical hardware, pointing to differences in how the Bolt receiver or MX Master 4 firmware handles connection stability compared to Lightspeed's receiver protocol.
 
 ## Nvidia power management is not the cause
 
@@ -69,9 +67,9 @@ kernelParams = [
 ];
 ```
 
-## Fixes to test
+## VRAM heap configuration is not the cause
 
-There's a known niri/Nvidia VRAM heap issue. Create `/etc/nvidia/nvidia-application-profiles-rc.d/50-niri.json`:
+The niri/Nvidia VRAM heap issue was tested by creating `/etc/nvidia/nvidia-application-profiles-rc.d/50-niri.json`:
 
 ```json
 {
@@ -85,6 +83,12 @@ There's a known niri/Nvidia VRAM heap issue. Create `/etc/nvidia/nvidia-applicat
     }]
 }
 ```
+
+This did not resolve the stutter.
+
+## Solaar configuration is not the cause
+
+Installed latest Solaar and configured the MX Master 4 properly. The device shows up correctly in Solaar and all settings are accessible/configurable. However, adjusting Solaar settings (polling rate, power management, etc.) did not resolve the stutter.
 
 ## Commits
 
