@@ -8,5 +8,6 @@
     "video" # From shared
     "networkmanager" # Desktop-specific: WiFi management
     "libvirtd" # Desktop-specific: VM management
+    "uinput" # Solaar rules (simulate keypresses)
   ];
 }
