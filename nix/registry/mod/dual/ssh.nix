@@ -7,19 +7,27 @@
 */
 let
   hm =
-    { lib, ... }:
+    { lib, pkgs, ... }:
     {
+      home.packages = [ pkgs.cloudflared ];
       programs.ssh = {
         enable = true;
         enableDefaultConfig = false;
-        matchBlocks."*" = {
-          controlMaster = lib.mkDefault "auto";
-          controlPersist = lib.mkDefault "10m";
-          serverAliveInterval = lib.mkDefault 60;
-          forwardAgent = lib.mkDefault true;
-          extraOptions = {
-            AddKeysToAgent = "yes";
-            IdentityFile = "~/.ssh/id_ed25519";
+        matchBlocks = {
+          "meow" = {
+            hostname = "ssh.nyet.su";
+            user = "alb-o";
+            proxyCommand = "cloudflared access ssh --hostname %h";
+          };
+          "*" = {
+            controlMaster = lib.mkDefault "auto";
+            controlPersist = lib.mkDefault "10m";
+            serverAliveInterval = lib.mkDefault 60;
+            forwardAgent = lib.mkDefault true;
+            extraOptions = {
+              AddKeysToAgent = "yes";
+              IdentityFile = "~/.ssh/id_ed25519";
+            };
           };
         };
       };

@@ -5,6 +5,7 @@
     "processor.ignore_ppc=1"
     "initcall_blacklist=amd_pstate_init"
     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+    "resume=UUID=459d3fed-e5a3-4d17-ab68-fb2679849ea9"
   ];
 
   kernelModules = [
