@@ -1,5 +1,5 @@
 /**
-  Kitty GPU-accelerated terminal with gruvdark theme.
+  Kitty GPU-accelerated terminal with solarized dark theme.
 */
 let
   mod =
@@ -11,8 +11,8 @@ let
         enable = true;
 
         font = {
-          name = "ZedMono NFM";
-          size = 17;
+          name = "CozetteVector";
+          size = 18;
         };
 
         settings = {
@@ -28,43 +28,58 @@ let
           cursor_shape = "beam";
           cursor_blink_interval = "0.25";
           hide_window_decorations = "yes";
-          active_border_color = "#80c8ff";
+          active_border_color = "#268bd2";
 
           tab_bar_min_tabs = "1";
           tab_bar_edge = "top";
           tab_bar_margin_height = "5.0 5.0";
           tab_bar_style = "custom";
           tab_powerline_style = "round";
-          active_tab_foreground = "#000000";
-          inactive_tab_foreground = "#1E1E1E";
-          active_tab_background = "#BBDDFF";
-          inactive_tab_background = "#579DD4";
-          tab_bar_margin_color = "#1E1E1E";
+          active_tab_foreground = "#002b36";
+          inactive_tab_foreground = "#073642";
+          active_tab_background = "#2aa198";
+          inactive_tab_background = "#586e75";
+          tab_bar_margin_color = "#002b36";
           tab_title_template = "{index}: {title}";
 
-          foreground = "#E6E3DE";
-          background = "#1E1E1E";
-          selection_background = "#2A404F";
-          cursor = "#E6E3DE";
-          url_color = "#579DD4";
+          foreground = "#839496";
+          background = "#002b36";
+          selection_background = "#073642";
+          selection_foreground = "#93a1a1";
+          cursor = "#839496";
+          url_color = "#268bd2";
 
-          color0 = "#1E1E1E";
-          color1 = "#E16464";
-          color2 = "#72BA62";
-          color3 = "#D19F66";
-          color4 = "#579DD4";
-          color5 = "#9266DA";
-          color6 = "#00A596";
-          color7 = "#D6CFC4";
+          # Black (Base02/Base01)
+          color0 = "#073642";
+          color8 = "#586e75";
 
-          color8 = "#9D9A94";
-          color9 = "#F19A9A";
-          color10 = "#9AD58B";
-          color11 = "#E6BB88";
-          color12 = "#8AC0EA";
-          color13 = "#B794F0";
-          color14 = "#2FCAB9";
-          color15 = "#E6E3DE";
+          # Red
+          color1 = "#dc322f";
+          color9 = "#cb4b16";
+
+          # Green
+          color2 = "#859900";
+          color10 = "#586e75";
+
+          # Yellow
+          color3 = "#b58900";
+          color11 = "#657b83";
+
+          # Blue
+          color4 = "#268bd2";
+          color12 = "#839496";
+
+          # Magenta
+          color5 = "#d33682";
+          color13 = "#6c71c4";
+
+          # Cyan
+          color6 = "#2aa198";
+          color14 = "#93a1a1";
+
+          # White (Base2/Base3)
+          color7 = "#eee8d5";
+          color15 = "#fdf6e3";
         };
       };
     };

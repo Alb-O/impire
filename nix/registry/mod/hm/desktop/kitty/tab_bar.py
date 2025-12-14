@@ -1,21 +1,21 @@
 import datetime
-import json
-import subprocess
-from collections import defaultdict
 
-from kitty.boss import get_boss
-from kitty.fast_data_types import Screen, add_timer
+from kitty.fast_data_types import Screen
 from kitty.tab_bar import (
     DrawData,
     ExtraData,
-    Formatter,
     TabBarData,
     as_rgb,
     draw_attributed_string,
-    draw_tab_with_powerline,
+    Formatter,
 )
 
-timer_id = None
+# Solarized colors
+CYAN = 0x2aa198
+BLUE = 0x268bd2
+ORANGE = 0xcb4b16
+BASE1 = 0x93a1a1
+BASE0 = 0x839496
 
 
 def draw_tab(
@@ -28,59 +28,27 @@ def draw_tab(
     is_last: bool,
     extra_data: ExtraData,
 ) -> int:
-    global timer_id
+    draw_attributed_string(Formatter.reset, screen)
 
-    # if timer_id is None:
-    #     timer_id = add_timer(_redraw_tab_bar, 2.0, True)
-    draw_tab_with_powerline(
-        draw_data, screen, tab, before, max_title_length, index, is_last, extra_data
-    )
+    tab_text = f" {index}: {tab.title} "
+    screen.cursor.fg = as_rgb(CYAN if tab.is_active else BASE0)
+    screen.draw(tab_text)
+
     if is_last:
-        draw_right_status(draw_data, screen)
+        draw_right_status(screen)
+
     return screen.cursor.x
 
 
-def draw_right_status(draw_data: DrawData, screen: Screen) -> None:
-    # The tabs may have left some formats enabled. Disable them now.
+def draw_right_status(screen: Screen) -> None:
     draw_attributed_string(Formatter.reset, screen)
-    cells = create_cells()
-    # Drop cells that wont fit
-    while True:
-        if not cells:
-            return
-        padding = screen.columns - screen.cursor.x - sum(len(c) + 3 for c in cells)
-        if padding >= 0:
-            break
-        cells = cells[1:]
 
-    if padding:
+    now = datetime.datetime.now()
+    status = f"{now.strftime('%a %d %b')}  {now.strftime('%H:%M')}"
+
+    padding = screen.columns - screen.cursor.x - len(status) - 1
+    if padding > 0:
         screen.draw(" " * padding)
 
-    tab_bg = as_rgb(int(draw_data.inactive_bg))
-    tab_fg = as_rgb(int(draw_data.inactive_fg))
-    default_bg = as_rgb(int(draw_data.default_bg))
-    for cell in cells:
-        # Draw the separator
-        if cell == cells[0]:
-            screen.cursor.fg = tab_bg
-            screen.draw("")
-        else:
-            screen.cursor.fg = default_bg
-            screen.cursor.bg = tab_bg
-            screen.draw("")
-        screen.cursor.fg = tab_fg
-        screen.cursor.bg = tab_bg
-        screen.draw(f" {cell} ")
-
-
-def create_cells() -> list[str]:
-    now = datetime.datetime.now()
-    return [
-        now.strftime("%A %d %b"),
-        now.strftime("%I:%M %p"),
-    ]
-
-
-def _redraw_tab_bar(timer_id):
-    for tm in get_boss().all_tab_managers:
-        tm.mark_tab_bar_dirty()
+    screen.cursor.fg = as_rgb(ORANGE)
+    screen.draw(status + " ")

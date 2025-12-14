@@ -1,4 +1,4 @@
-overview { backdrop-color "#000000"; }
+overview { backdrop-color "#002b36"; }
 
 layout {
     gaps 16
@@ -9,10 +9,9 @@ layout {
         bottom 0
     }
     focus-ring {
-        width 2
-        active-gradient from="#00d9ff" to="#7b2ff7" angle=135
-        inactive-gradient from="#1a1a2e" to="#3a3a5a" angle=135 relative-to="workspace-view"
-        urgent-gradient from="#ff006e" to="#fb5607" angle=135
+        width 6
+        active-color "#2AA198"
+        inactive-color "#073642"
     }
     border { off; }
     default-column-width { proportion 0.500000; }
@@ -26,6 +25,8 @@ layout {
       	width 11
       	position "top"
       	corner-radius 11
+        active-color "#2aa198"
+        inactive-color "#586e75"
     }
-    background-color "#000000"
+    background-color "#002b36"
 }

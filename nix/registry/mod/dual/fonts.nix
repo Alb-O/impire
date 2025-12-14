@@ -13,22 +13,33 @@ let
         noto-fonts
         noto-fonts-cjk-sans
         noto-fonts-color-emoji
-        nerd-fonts.zed-mono
+        cozette
       ];
+
+      fonts.fontconfig = {
+        enable = true;
+        defaultFonts.monospace = [ "CozetteVector" "Cozette" ];
+      };
     };
   os =
     { pkgs, ... }:
     {
-      fonts.packages = with pkgs; [
-        noto-fonts
-        noto-fonts-cjk-sans
-        noto-fonts-color-emoji
-        nerd-fonts.jetbrains-mono
-        fira-sans
-        roboto
-        jetbrains-mono
-      ];
+      fonts = {
+        packages = with pkgs; [
+          noto-fonts
+          noto-fonts-cjk-sans
+          noto-fonts-color-emoji
+          cozette
+          fira-sans
+          roboto
+          jetbrains-mono
+        ];
+        fontconfig = {
+          defaultFonts.monospace = [ "CozetteVector" "Cozette" ];
+        };
+      };
     };
+
 in
 {
   __exports.shared.hm.value = hm;

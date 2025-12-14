@@ -16,7 +16,7 @@ let
         noto-fonts
         noto-fonts-cjk-sans
         noto-fonts-color-emoji
-        nerd-fonts.zed-mono
+        cozette
         fira-sans
         roboto
       ];

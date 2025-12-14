@@ -12,17 +12,15 @@ let
         settings = {
           gui = {
             theme = {
-              authorColors."*" = "blue";
-              activeBorderColor = [
-                "default"
-                "bold"
-              ];
-              inactiveBorderColor = [ "#373737" ];
-              selectedLineBgColor = [
-                "#303030"
-                "bold"
-              ];
-              optionsTextColor = [ "default" ];
+              authorColors."*" = "#268bd2"; # blue
+              activeBorderColor = [ "#2aa198" "bold" ]; # cyan, bright
+              inactiveBorderColor = [ "#586e75" ];       # dim base01
+              selectedLineBgColor = [ "#073642" ];       # base02
+              selectedRangeBgColor = [ "#073642" ];
+              optionsTextColor = [ "#93a1a1" ];          # base1
+              cherryPickedCommitBgColor = [ "#b58900" ]; # yellow
+              cherryPickedCommitFgColor = [ "#002b36" ]; # base03
+              unstagedChangesColor = [ "#cb4b16" ];      # orange
             };
             scrollHeight = 2;
             scrollPastBottom = true;
