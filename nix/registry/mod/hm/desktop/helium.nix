@@ -1,5 +1,6 @@
 /**
   Helium Browser (Chromium fork) from github:Alb-O/helium-browser-flake.
+  Configured as the default browser.
 */
 {
   __inputs = {
@@ -11,11 +12,30 @@
     _: _:
     let
       mod =
-        { inputs, pkgs, ... }:
+        { inputs, pkgs, config, ... }:
+        let
+          heliumPkg = inputs.helium-browser.packages."${pkgs.system}".helium-prerelease;
+        in
         {
-          home.packages = [
-            inputs.helium-browser.packages."${pkgs.system}".helium-prerelease
-          ];
+          home.packages = [ heliumPkg ];
+
+          xdg.mimeApps = {
+            enable = true;
+            defaultApplications = {
+              "text/html" = [ "helium.desktop" ];
+              "text/xml" = [ "helium.desktop" ];
+              "application/xhtml+xml" = [ "helium.desktop" ];
+              "x-scheme-handler/http" = [ "helium.desktop" ];
+              "x-scheme-handler/https" = [ "helium.desktop" ];
+              "x-scheme-handler/about" = [ "helium.desktop" ];
+              "x-scheme-handler/unknown" = [ "helium.desktop" ];
+            };
+          };
+
+          home.sessionVariables = {
+            BROWSER = "${heliumPkg}/bin/helium";
+            DEFAULT_BROWSER = "${heliumPkg}/bin/helium";
+          };
         };
     in
     {
