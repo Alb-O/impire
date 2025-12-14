@@ -13,6 +13,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     # Collected from __inputs
+    awww.url = "git+https://codeberg.org/LGFae/awww";
+    awww.inputs.nixpkgs.follows = "nixpkgs";
     helium-browser.url = "github:Alb-O/helium-browser-flake";
     helium-browser.inputs.nixpkgs.follows = "nixpkgs";
     imp-fmt.url = "github:imp-nix/imp.fmt";
