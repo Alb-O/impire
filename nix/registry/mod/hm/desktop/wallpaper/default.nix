@@ -1,10 +1,13 @@
 /**
   awww - Wayland wallpaper daemon with smooth transitions.
+  Uses nix-wallpaper to generate wallpaper from preset.
 */
 {
   __inputs = {
     awww.url = "git+https://codeberg.org/LGFae/awww";
     awww.inputs.nixpkgs.follows = "nixpkgs";
+    nix-wallpaper.url = "github:lunik1/nix-wallpaper";
+    nix-wallpaper.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   __functor =
@@ -14,7 +17,10 @@
         { inputs, pkgs, ... }:
         let
           awwwPkg = inputs.awww.packages."${pkgs.system}".default;
-          wallpaper = ./solarized-light-nixos.png;
+          wallpaperPkg = inputs.nix-wallpaper.packages."${pkgs.system}".default.override {
+            preset = "solarized-light";
+          };
+          wallpaper = "${wallpaperPkg}/share/wallpapers/nixos-wallpaper.png";
         in
         {
           home.packages = [ awwwPkg ];
