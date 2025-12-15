@@ -1,6 +1,6 @@
 /**
   Thumb Gesture Daemon - Maps MX Master 4 thumb wheel to Niri's smooth horizontal panning.
-  
+
   This daemon listens to thumb wheel events from Solaar and simulates the
   Mod+MiddleMouse+Drag gesture using ydotool for smooth column navigation in Niri.
 */
@@ -9,7 +9,7 @@ let
     { pkgs, lib, ... }:
     let
       python-with-evdev = pkgs.python3.withPackages (ps: with ps; [ evdev ]);
-      
+
       thumb-gesture-script = pkgs.writeShellScriptBin "thumb-gesture-daemon" ''
         exec ${python-with-evdev}/bin/python3 ${./thumb-gesture-daemon.py}
       '';
@@ -56,6 +56,6 @@ let
     };
 in
 {
-  __exports.desktop.hm.value = mod;
-  __module = mod;
+  #__exports.desktop.hm.value = mod;
+  #__module = mod;
 }

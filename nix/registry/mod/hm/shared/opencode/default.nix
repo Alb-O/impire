@@ -4,7 +4,7 @@
 */
 {
   __inputs = {
-    opencode-flake.url = "github:sst/opencode/v1.0.153";
+    opencode-flake.url = "github:sst/opencode/v1.0.159";
     opencode-flake.inputs.nixpkgs.follows = "nixpkgs";
   };
 
@@ -23,7 +23,7 @@
             "opencode/opencode.json".text = builtins.toJSON (
               { "$schema" = "https://opencode.ai/config.json"; } // import ./config.nix
             );
-            "opencode/dcp.json".text = builtins.toJSON (import ./dcp.nix);
+            "opencode/dcp.jsonc".source = ./dcp.jsonc;
           };
         };
     in

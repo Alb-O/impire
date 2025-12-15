@@ -1,15 +1,17 @@
 {
   agent = {
     general = {
+      enabled = false;
       model = "opencode/big-pickle";
     };
     explore = {
+      enabled = false;
       model = "opencode/big-pickle";
     };
     docfinder = {
       model = "opencode/big-pickle";
       description = ''
-        Technical documentation researcher agent, give it any techincal research task (e.g. libraries, APIs, languages).
+        Technical documentation researcher agent, give it a techincal research task (e.g. libraries, APIs, languages).
         IMPORTANT: You must ask it to use `codesearch` and `websearch` tools in your description of the task.
         Ask it to be thorough and use the tools many times, it will report back.
       '';
