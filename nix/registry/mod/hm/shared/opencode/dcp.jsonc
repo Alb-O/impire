@@ -1,6 +1,6 @@
 {
     // Enable or disable the plugin
-    "enabled": true,
+    "enabled": false,
     // Enable debug logging to ~/.config/opencode/logs/dcp/
     "debug": false,
     // Show toast notifications when a new version is available
@@ -23,7 +23,7 @@
             // Nudge the LLM to use the prune tool (every <frequency> tool results)
             "nudge": {
                 "enabled": true,
-                "frequency": 15
+                "frequency": 29
             }
         }
     }

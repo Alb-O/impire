@@ -1,5 +1,5 @@
 {
-  agent = {
+ agent = {
     general = {
       enabled = false;
       model = "opencode/big-pickle";
@@ -31,7 +31,8 @@
 
   plugin = [
     "opencode-openai-codex-auth@latest"
+    "opencode-antigravity-auth@latest"
     "@tarquinen/opencode-dcp@latest"
   ];
-  provider = (builtins.fromJSON (builtins.readFile ./provider.json)).provider;
+  provider = (builtins.fromJSON (builtins.readFile ./codex.json)) // (builtins.fromJSON (builtins.readFile ./antigravity.json));
 }
