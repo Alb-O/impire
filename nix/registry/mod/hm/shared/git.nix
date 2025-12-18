@@ -17,7 +17,6 @@ let
     in
     {
       home.packages = with pkgs; [
-        difftastic
         git-toolbelt
       ];
 
@@ -52,7 +51,6 @@ let
             branches = "branch -a";
             remotes = "remote -v";
           };
-          diff.external = "${pkgs.difftastic}/bin/difft";
           init.defaultBranch = "main";
           core = {
             editor = "kak";
