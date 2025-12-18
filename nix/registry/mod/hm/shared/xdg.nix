@@ -86,14 +86,14 @@ let
         userDirs = {
           enable = true;
           createDirectories = true;
-          desktop = "${config.home.homeDirectory}/desktop";
-          documents = "${config.home.homeDirectory}/desktop/docs";
-          download = "${config.home.homeDirectory}/desktop/dl";
-          music = "${config.home.homeDirectory}/desktop/music";
-          pictures = "${config.home.homeDirectory}/desktop/pics";
-          videos = "${config.home.homeDirectory}/desktop/vids";
-          templates = "${config.home.homeDirectory}/desktop/templates";
-          publicShare = "${config.home.homeDirectory}/desktop/public";
+          desktop = "${config.home.homeDirectory}/@/desktop";
+          documents = "${config.home.homeDirectory}/@/desktop/docs";
+          download = "${config.home.homeDirectory}/@/desktop/dl";
+          music = "${config.home.homeDirectory}/@/desktop/music";
+          pictures = "${config.home.homeDirectory}/@/desktop/pics";
+          videos = "${config.home.homeDirectory}/@/desktop/vids";
+          templates = "${config.home.homeDirectory}/@/desktop/templates";
+          publicShare = "${config.home.homeDirectory}/@/desktop/public";
         };
       };
 
