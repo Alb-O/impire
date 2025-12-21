@@ -18,7 +18,14 @@ let
 
       fonts.fontconfig = {
         enable = true;
-        defaultFonts.monospace = [ "CozetteVector" "Cozette" ];
+        defaultFonts = {
+          monospace = [
+            "CozetteVector"
+            "Cozette"
+          ];
+          emoji = [ "Noto Color Emoji" ];
+          sansSerif = [ "Fira Sans" ];
+        };
       };
     };
   os =
@@ -35,11 +42,17 @@ let
           jetbrains-mono
         ];
         fontconfig = {
-          defaultFonts.monospace = [ "CozetteVector" "Cozette" ];
+          defaultFonts = {
+            monospace = [
+              "CozetteVector"
+              "Cozette"
+            ];
+            emoji = [ "Noto Color Emoji" ];
+            sansSerif = [ "Fira Sans" ];
+          };
         };
       };
     };
-
 in
 {
   __exports.shared.hm.value = hm;

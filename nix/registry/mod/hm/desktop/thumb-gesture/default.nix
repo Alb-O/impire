@@ -25,7 +25,10 @@ let
       systemd.user.services.thumb-gesture-daemon = {
         Unit = {
           Description = "Thumb Gesture Daemon for Niri";
-          After = [ "graphical-session.target" "ydotoold.service" ];
+          After = [
+            "graphical-session.target"
+            "ydotoold.service"
+          ];
           Wants = [ "ydotoold.service" ];
         };
         Service = {

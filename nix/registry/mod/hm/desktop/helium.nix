@@ -12,7 +12,12 @@
     _: _:
     let
       mod =
-        { inputs, pkgs, config, ... }:
+        {
+          inputs,
+          pkgs,
+          config,
+          ...
+        }:
         let
           heliumPkg = inputs.helium-browser.packages."${pkgs.system}".helium-prerelease;
         in

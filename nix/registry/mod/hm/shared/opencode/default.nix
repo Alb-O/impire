@@ -4,7 +4,7 @@
 */
 {
   __inputs = {
-    opencode-flake.url = "github:sst/opencode/v1.0.168";
+    opencode-flake.url = "github:sst/opencode/v1.0.184";
     opencode-flake.inputs.nixpkgs.follows = "nixpkgs";
   };
 
@@ -12,7 +12,12 @@
     _: _:
     let
       mod =
-        { inputs, pkgs, lib, ... }:
+        {
+          inputs,
+          pkgs,
+          lib,
+          ...
+        }:
         {
           programs.opencode = {
             package = inputs.opencode-flake.packages."${pkgs.system}".default;

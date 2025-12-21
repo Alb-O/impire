@@ -16,11 +16,9 @@ let
         };
         # 1.1.18 uses PATH-based getfacl lookup instead of hardcoded /usr/bin/getfacl
         preConfigure = "";
-        preFixup =
-          (oldAttrs.preFixup or "")
-          + ''
-            makeWrapperArgs+=(--prefix PATH : "${pkgs.acl}/bin")
-          '';
+        preFixup = (oldAttrs.preFixup or "") + ''
+          makeWrapperArgs+=(--prefix PATH : "${pkgs.acl}/bin")
+        '';
       });
     in
     {

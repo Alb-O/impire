@@ -1,5 +1,5 @@
 {
- agent = {
+  agent = {
     general = {
       enabled = false;
       model = "opencode/big-pickle";
@@ -34,5 +34,7 @@
     "opencode-antigravity-auth@latest"
     "@tarquinen/opencode-dcp@latest"
   ];
-  provider = (builtins.fromJSON (builtins.readFile ./codex.json)) // (builtins.fromJSON (builtins.readFile ./antigravity.json));
+  provider =
+    (builtins.fromJSON (builtins.readFile ./codex.json))
+    // (builtins.fromJSON (builtins.readFile ./antigravity.json));
 }
