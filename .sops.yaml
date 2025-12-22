@@ -2,8 +2,13 @@ keys:
   - &albert age1rf75et6fud5duxrczv45vh05a6q0pvfep70h7cf33fdczku7jd2stem7rk
 
 creation_rules:
-  # Default rule for all secrets
+  # User secrets
   - path_regex: ^nix/registry/users/[^/]+/(?:secrets/.*\.yaml|secrets\.yaml)$
+    key_groups:
+      - age:
+          - *albert
+  # Host secrets
+  - path_regex: ^nix/registry/hosts/[^/]+/secrets\.yaml$
     key_groups:
       - age:
           - *albert
