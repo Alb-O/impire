@@ -1,0 +1,189 @@
+{
+  "llm-proxy": {
+    "npm": "@ai-sdk/openai-compatible",
+    "name": "Proxy",
+    "options": {
+      "baseURL": "http://127.0.0.1:8000/v1",
+      "apiKey": "VerysecretKey",
+      "timeout": 300000
+    },
+    "models": {
+      "claude-opus-4-5-thinking": {
+        "id": "antigravity/claude-opus-4-5",
+        "name": "Claude Opus 4.5 Thinking",
+        "limit": {
+          "context": 200000,
+          "output": 32000
+        },
+        "reasoning": true,
+        "options": {
+          "reasoningEffort": "high"
+        },
+        "modalities": {
+          "input": [
+            "image",
+            "text"
+          ],
+          "output": [
+            "text"
+          ]
+        }
+      },
+      "claude-sonnet-4-5-thinking": {
+        "id": "antigravity/claude-sonnet-4-5",
+        "name": "Claude Sonnet 4.5 Thinking",
+        "limit": {
+          "context": 200000,
+          "output": 32000
+        },
+        "reasoning": true,
+        "options": {
+          "reasoningEffort": "high"
+        },
+        "modalities": {
+          "input": [
+            "image",
+            "text"
+          ],
+          "output": [
+            "text"
+          ]
+        }
+      },
+      "claude-sonnet-4-5": {
+        "id": "antigravity/claude-sonnet-4-5",
+        "name": "Claude Sonnet 4.5",
+        "limit": {
+          "context": 200000,
+          "output": 8000
+        },
+        "reasoning": false,
+        "modalities": {
+          "input": [
+            "image",
+            "text"
+          ],
+          "output": [
+            "text"
+          ]
+        }
+      },
+      "ant_gemini-3-pro-high": {
+        "id": "antigravity/gemini-3-pro-preview",
+        "name": "ANT Gemini 3 Pro High",
+        "limit": {
+          "context": 1048576,
+          "output": 64000
+        },
+        "reasoning": true,
+        "options": {
+          "reasoningEffort": "high"
+        },
+        "modalities": {
+          "input": [
+            "image",
+            "text"
+          ],
+          "output": [
+            "text"
+          ]
+        }
+      },
+      "cli_gemini-3-pro-high": {
+        "id": "gemini_cli/gemini-3-pro-preview",
+        "name": "CLI Gemini 3 Pro High",
+        "limit": {
+          "context": 1048576,
+          "output": 64000
+        },
+        "reasoning": true,
+        "options": {
+          "reasoningEffort": "high"
+        },
+        "modalities": {
+          "input": [
+            "image",
+            "text"
+          ],
+          "output": [
+            "text"
+          ]
+        }
+      },
+      "ant_gemini-3-pro-low": {
+        "id": "antigravity/gemini-3-pro-preview",
+        "name": "ANT Gemini 3 Pro Low",
+        "limit": {
+          "context": 1048576,
+          "output": 64000
+        },
+        "reasoning": true,
+        "options": {
+          "reasoningEffort": "low"
+        },
+        "modalities": {
+          "input": [
+            "image",
+            "text"
+          ],
+          "output": [
+            "text"
+          ]
+        }
+      },
+      "cli_gemini-3-pro-low": {
+        "id": "gemini_cli/gemini-3-pro-preview",
+        "name": "CLI Gemini 3 Pro Low",
+        "limit": {
+          "context": 1048576,
+          "output": 64000
+        },
+        "reasoning": true,
+        "options": {
+          "reasoningEffort": "low"
+        },
+        "modalities": {
+          "input": [
+            "image",
+            "text"
+          ],
+          "output": [
+            "text"
+          ]
+        }
+      },
+      "Qwen3-Coder-Plus": {
+        "id": "qwen_code/qwen3-coder-plus",
+        "name": "Qwen 3 Coder Plus",
+        "limit": {
+          "context": 1048576,
+          "output": 32000
+        }
+      },
+      "Qwen3-Coder-Flash": {
+        "id": "qwen_code/qwen3-coder-flash",
+        "name": "Qwen 3 Coder Flash",
+        "limit": {
+          "context": 1048576,
+          "output": 32000
+        }
+      },
+      "K2-0905": {
+        "id": "nvidia_nim/moonshotai/kimi-k2-instruct-0905",
+        "name": "K2-0905 NV",
+        "limit": {
+          "context": 256000,
+          "output": 32000
+        }
+      },
+      "I_K2-0905": {
+        "id": "iflow/kimi-k2-0905",
+        "name": "Kimi K2 (0905)",
+        "limit": {
+          "context": 256000,
+          "output": 32000
+        }
+      }
+    }
+  }
+}
