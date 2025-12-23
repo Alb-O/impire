@@ -7,24 +7,22 @@ let
   mod =
     { ... }:
     {
+      programs.delta = {
+        enable = true;
+        options = {
+          syntax-theme = "gruvbox-dark";
+          decorations = {
+            file-decoration-style = "none";
+          };
+          map-styles = "bold purple => syntax magenta, bold cyan => syntax blue";
+          whitespace-error-style = "22 reverse";
+          features = "gruvbox-dark zebra dark";
+        };
+      };
       programs.lazygit = {
         enable = true;
         settings = {
           gui = {
-            theme = {
-              authorColors."*" = "#268bd2"; # blue
-              activeBorderColor = [
-                "#2aa198"
-                "bold"
-              ]; # cyan, bright
-              inactiveBorderColor = [ "#586e75" ]; # dim base01
-              selectedLineBgColor = [ "#073642" ]; # base02
-              selectedRangeBgColor = [ "#073642" ];
-              optionsTextColor = [ "#93a1a1" ]; # base1
-              cherryPickedCommitBgColor = [ "#b58900" ]; # yellow
-              cherryPickedCommitFgColor = [ "#002b36" ]; # base03
-              unstagedChangesColor = [ "#cb4b16" ]; # orange
-            };
             scrollHeight = 2;
             scrollPastBottom = true;
             tabWidth = 2;
@@ -43,7 +41,11 @@ let
             showFileIcons = true;
           };
           git = {
-            useExternalDiffGitConfig = true;
+            pagers = [
+              {
+                pager = "delta --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format=\"lazygit-edit://{path}:{line}\"";
+              }
+            ];
             commit = {
               signOff = false;
               autoWrapCommitMessage = true;
@@ -71,7 +73,7 @@ let
             };
           };
           os = {
-            editPreset = "kak";
+            editPreset = "kakoune";
             open = "xdg-open {{filename}} >/dev/null";
           };
           keybinding = {

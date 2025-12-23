@@ -51,6 +51,9 @@ let
             branches = "branch -a";
             remotes = "remote -v";
           };
+          diff = {
+            colorMoved = "default";
+          };
           init.defaultBranch = "main";
           core = {
             editor = "kak";

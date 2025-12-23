@@ -15,6 +15,7 @@
     hmSinks = [ "shared.hm" ];
     modules = [
       "@nixos-wsl.nixosModules.default"
+      "@stylix.nixosModules.default"
     ];
     user = "albert";
   };

@@ -33,10 +33,11 @@
   config = ./config;
 
   extraConfig =
-    { modulesPath, ... }:
+    { modulesPath, inputs, ... }:
     {
       imports = [
         (modulesPath + "/installer/scan/not-detected.nix")
+        inputs.stylix.nixosModules.default
       ];
     };
 }

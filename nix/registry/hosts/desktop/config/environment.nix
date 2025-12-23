@@ -1,5 +1,8 @@
 # Environment configuration for desktop
 { pkgs, ... }:
 {
-  systemPackages = [ pkgs.lm_sensors ];
+  systemPackages = [
+    pkgs.lm_sensors
+    pkgs.usbutils
+  ];
 }

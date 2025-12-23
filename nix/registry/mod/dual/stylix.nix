@@ -35,9 +35,8 @@ let
       home.sessionVariables.GTK2_RC_FILES = lib.mkForce "${config.xdg.configHome}/gtk-2.0/gtkrc";
     };
   os =
-    { pkgs, inputs, ... }:
+    { pkgs, ... }:
     {
-      imports = [ inputs.stylix.nixosModules.default ];
       stylix = {
         enable = true;
         base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";

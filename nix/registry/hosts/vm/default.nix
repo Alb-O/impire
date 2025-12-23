@@ -25,10 +25,11 @@
   config = ./config;
 
   extraConfig =
-    { modulesPath, ... }:
+    { modulesPath, inputs, ... }:
     {
       imports = [
         (modulesPath + "/virtualisation/qemu-vm.nix")
+        inputs.stylix.nixosModules.default
       ];
 
       environment.etc."motd".text = ''

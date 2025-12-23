@@ -14,7 +14,12 @@
     _: _:
     let
       mod =
-        { config, inputs, pkgs, ... }:
+        {
+          config,
+          inputs,
+          pkgs,
+          ...
+        }:
         let
           awwwPkg = inputs.awww.packages."${pkgs.system}".default;
           wallpaperPkg = inputs.nix-wallpaper.packages."${pkgs.system}".default.override {
