@@ -23,6 +23,7 @@
     mcp-servers-nix.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     neovim-nightly-overlay.inputs.nixpkgs.follows = "nixpkgs";
+    nix-colorizer.url = "github:nutsalhan87/nix-colorizer";
     nix-wallpaper.url = "github:lunik1/nix-wallpaper";
     nix-wallpaper.inputs.nixpkgs.follows = "nixpkgs";
     nixos-wsl.url = "github:nix-community/NixOS-WSL";

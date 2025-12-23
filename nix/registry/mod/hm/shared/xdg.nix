@@ -95,8 +95,8 @@ let
           music = "${config.home.homeDirectory}/@/desktop/music";
           pictures = "${config.home.homeDirectory}/@/desktop/pics";
           videos = "${config.home.homeDirectory}/@/desktop/vids";
-          templates = "${config.home.homeDirectory}/@/desktop/templates";
           publicShare = "${config.home.homeDirectory}/@/desktop/public";
+          templates = "${config.home.homeDirectory}/@/desktop/templates";
         };
       };
 
