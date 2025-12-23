@@ -10,12 +10,11 @@ from kitty.tab_bar import (
     Formatter,
 )
 
-# Solarized colors
-CYAN = 0x2aa198
-BLUE = 0x268bd2
-ORANGE = 0xcb4b16
-BASE1 = 0x93a1a1
-BASE0 = 0x839496
+CYAN = 0x@cyan@
+BLUE = 0x@blue@
+ORANGE = 0x@orange@
+BASE1 = 0x@base1@
+BASE0 = 0x@base0@
 
 
 def draw_tab(
@@ -31,7 +30,7 @@ def draw_tab(
     draw_attributed_string(Formatter.reset, screen)
 
     tab_text = f" {index}: {tab.title} "
-    screen.cursor.fg = as_rgb(CYAN if tab.is_active else BASE0)
+    screen.cursor.fg = as_rgb(CYAN if tab.is_active else BASE1)
     screen.draw(tab_text)
 
     if is_last:

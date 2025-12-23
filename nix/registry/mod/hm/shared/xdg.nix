@@ -17,32 +17,35 @@ let
 
       mkVars = prefix: mapping: lib.mapAttrs (_: value: "${prefix}/${value}") mapping;
 
-      sessionVars =
-        mkVars stateHome {
+      sessionVars = lib.mkMerge [
+        (mkVars stateHome {
           HISTFILE = "bash/history";
           PYTHON_HISTORY = "python/python_history";
-        }
-        // mkVars dataHome {
+        })
+        (mkVars dataHome {
           CARGO_HOME = "cargo";
           DOTNET_CLI_HOME = "dotnet";
           NB_DIR = "nb";
           GOPATH = "go";
           UNISON = "unison";
           PYTHONUSERBASE = "python";
-        }
-        // mkVars cacheHome {
+        })
+        (mkVars cacheHome {
           CUDA_CACHE_PATH = "nv";
           XCOMPOSECACHE = "X11/xcompose";
           NPM_CONFIG_CACHE = "npm";
           PYTHONPYCACHEPREFIX = "python";
-        }
-        // mkVars cfgHome {
-          GTK2_RC_FILES = "gtk-2.0/gtkrc";
+        })
+        (mkVars cfgHome {
           NPM_CONFIG_INIT_MODULE = "npm/config/npm-init.js";
           NBRC_PATH = "nbrc";
           PYTHONSTARTUP = "python/pythonrc.py";
           XCOMPOSEFILE = "X11/xcompose";
-        };
+        })
+        {
+          GTK2_RC_FILES = "${cfgHome}/gtk-2.0/gtkrc";
+        }
+      ];
     in
     {
       nix = {
@@ -67,7 +70,7 @@ let
 
         preferXdgDirectories = true;
 
-        sessionVariables = lib.mkMerge [ sessionVars ];
+        sessionVariables = sessionVars;
 
         file = {
           "${cfgHome}/npm/config/.keep".text = "";
@@ -79,7 +82,7 @@ let
         };
       };
 
-      systemd.user.sessionVariables = lib.mkMerge [ sessionVars ];
+      systemd.user.sessionVariables = sessionVars;
 
       xdg = {
         enable = true;

@@ -2,7 +2,7 @@
   Desktop host - Albert's main workstation.
 
   AMD CPU, Nvidia GPU 🤢, Limine boot.
-*/
+ */
 {
   __host = {
     system = "x86_64-linux";
@@ -35,6 +35,8 @@
   extraConfig =
     { modulesPath, ... }:
     {
-      imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+      imports = [
+        (modulesPath + "/installer/scan/not-detected.nix")
+      ];
     };
 }

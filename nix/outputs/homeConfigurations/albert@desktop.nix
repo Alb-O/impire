@@ -23,6 +23,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
   };
 
   modules = [
+    inputs.stylix.homeManagerModules.stylix
     registry.roles.hm.desktop
   ];
 }

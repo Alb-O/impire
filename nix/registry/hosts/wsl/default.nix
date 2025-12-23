@@ -1,6 +1,6 @@
 /**
   WSL host - Windows Subsystem for Linux.
-*/
+ */
 {
   __inputs.nixos-wsl = {
     url = "github:nix-community/NixOS-WSL";
@@ -13,7 +13,9 @@
     bases = [ "hosts.shared.base" ];
     sinks = [ "shared.os" ];
     hmSinks = [ "shared.hm" ];
-    modules = [ "@nixos-wsl.nixosModules.default" ];
+    modules = [
+      "@nixos-wsl.nixosModules.default"
+    ];
     user = "albert";
   };
 

@@ -27,7 +27,9 @@
   extraConfig =
     { modulesPath, ... }:
     {
-      imports = [ (modulesPath + "/virtualisation/qemu-vm.nix") ];
+      imports = [
+        (modulesPath + "/virtualisation/qemu-vm.nix")
+      ];
 
       environment.etc."motd".text = ''
 

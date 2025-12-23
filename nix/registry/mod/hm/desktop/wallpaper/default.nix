@@ -14,11 +14,12 @@
     _: _:
     let
       mod =
-        { inputs, pkgs, ... }:
+        { config, inputs, pkgs, ... }:
         let
           awwwPkg = inputs.awww.packages."${pkgs.system}".default;
           wallpaperPkg = inputs.nix-wallpaper.packages."${pkgs.system}".default.override {
-            preset = "solarized-light";
+            preset = "gruvbox-dark";
+            backgroundColor = "#${config.lib.stylix.colors.base00}";
           };
           wallpaper = "${wallpaperPkg}/share/wallpapers/nixos-wallpaper.png";
         in

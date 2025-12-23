@@ -1,4 +1,4 @@
-overview { backdrop-color "#002b36"; }
+overview { backdrop-color "#@base03@"; }
 
 layout {
     gaps 16
@@ -10,8 +10,8 @@ layout {
     }
     focus-ring {
         width 6
-        active-color "#2AA198"
-        inactive-color "#073642"
+        active-color "#@cyan@"
+        inactive-color "#@base02@"
     }
     border { off; }
     default-column-width { proportion 0.500000; }
@@ -25,8 +25,8 @@ layout {
       	width 11
       	position "top"
       	corner-radius 11
-        active-color "#2aa198"
-        inactive-color "#586e75"
+        active-color "#@cyan@"
+        inactive-color "#@base01@"
     }
-    background-color "#002b36"
+    background-color "#@base03@"
 }

@@ -1,18 +1,15 @@
 /**
   GTK2/GTK3 theme and font settings.
-*/
+
+  Overrides Stylix defaults for gtk2 config location.
+ */
 let
   mod =
-    { pkgs, config, ... }:
+    { config, lib, ... }:
     {
       gtk = {
         enable = true;
-        gtk2.configLocation = config.xdg.configHome + "/gtk-2.0/gtkrc";
-        font = {
-          name = "Fira Sans";
-          package = pkgs.fira-sans;
-          size = 13;
-        };
+        gtk2.configLocation = lib.mkForce (config.xdg.configHome + "/gtk-2.0/gtkrc");
       };
     };
 in
