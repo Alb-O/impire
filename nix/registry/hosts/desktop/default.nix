@@ -2,7 +2,7 @@
   Desktop host - Albert's main workstation.
 
   AMD CPU, Nvidia GPU 🤢, Limine boot.
- */
+*/
 {
   __host = {
     system = "x86_64-linux";

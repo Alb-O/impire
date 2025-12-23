@@ -2,7 +2,7 @@
   GTK2/GTK3 theme and font settings.
 
   Overrides Stylix defaults for gtk2 config location.
- */
+*/
 let
   mod =
     { config, lib, ... }:

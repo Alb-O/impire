@@ -1,6 +1,6 @@
 /**
   WSL host - Windows Subsystem for Linux.
- */
+*/
 {
   __inputs.nixos-wsl = {
     url = "github:nix-community/NixOS-WSL";
