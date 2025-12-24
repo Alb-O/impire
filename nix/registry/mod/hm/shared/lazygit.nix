@@ -8,8 +8,7 @@
     url = "github:nutsalhan87/nix-colorizer";
   };
 }
-//
-(
+// (
   let
     mod =
       { config, inputs, ... }:

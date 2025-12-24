@@ -1,0 +1,40 @@
+/**
+  HP Laptop host - Albert's HP laptop.
+
+  AMD CPU, laptop configuration.
+*/
+{
+  __host = {
+    system = "x86_64-linux";
+    stateVersion = "24.11";
+    bases = [
+      "hosts.shared.base"
+      "hosts.shared.desktop-base"
+    ];
+    sinks = [
+      "shared.os"
+      "desktop.nixos"
+    ];
+    hmSinks = [
+      "shared.hm"
+      "desktop.hm"
+    ];
+    modules =
+      { registry, ... }:
+      [
+        registry.mod.dual.niri
+      ];
+    user = "albert";
+  };
+
+  config = ./config;
+
+  extraConfig =
+    { modulesPath, inputs, ... }:
+    {
+      imports = [
+        (modulesPath + "/installer/scan/not-detected.nix")
+        inputs.stylix.nixosModules.default
+      ];
+    };
+}
