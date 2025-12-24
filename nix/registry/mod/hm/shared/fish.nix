@@ -7,7 +7,13 @@ let
   mod =
     { lib, ... }:
     {
-      programs.fish.enable = lib.mkDefault true;
+      programs.fish = {
+        enable = lib.mkDefault true;
+        shellAbbrs = {
+          l = "lazygit";
+          o = "opencode";
+        };
+      };
 
       programs.direnv = {
         enable = true;
