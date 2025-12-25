@@ -31,6 +31,10 @@
               { "$schema" = "https://opencode.ai/config.json"; } // import ./config.nix
             );
             "opencode/dcp.jsonc".source = ./dcp.jsonc;
+            "opencode/skill" = {
+              source = ./skill;
+              recursive = true;
+            };
           };
         };
     in
