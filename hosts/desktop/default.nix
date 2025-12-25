@@ -8,8 +8,8 @@
     system = "x86_64-linux";
     stateVersion = "24.11";
     bases = [
-      "hosts.shared.base"
-      "hosts.shared.desktop-base"
+      "mod.base.base"
+      "mod.base.desktop-base"
     ];
     sinks = [
       "shared.os"
@@ -22,15 +22,15 @@
     modules =
       { registry, ... }:
       [
-        registry.mod.os.desktop.keyboard
+        registry.mod.os.keyboard
         registry.mod.dual.niri
-        registry.mod.os.desktop.netshare
-        registry.mod.os.desktop.tty
+        registry.mod.os.netshare
+        registry.mod.os.tty
       ];
     user = "albert";
   };
 
-  config = ./config;
+  config = ./.;
 
   extraConfig =
     { modulesPath, inputs, ... }:

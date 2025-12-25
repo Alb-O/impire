@@ -1,4 +1,4 @@
-# Standalone HM config for WSL - home-manager switch --flake .#albert@wsl
+# Standalone HM config for desktop - home-manager switch --flake .#albert@desktop
 {
   inputs,
   imp,
@@ -24,6 +24,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
 
   modules = [
     inputs.stylix.homeManagerModules.stylix
-    registry.roles.hm.wsl
-  ];
+    exports.shared.hm.__module
+    exports.desktop.hm.__module
+  ] ++ imp.imports [ registry.users.albert ];
 }

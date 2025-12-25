@@ -39,5 +39,5 @@
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = inputs: import ./nix/flake inputs;
+  outputs = inputs: import ./flake inputs;
 }

@@ -21,20 +21,21 @@ flake-parts.lib.mkFlake { inherit inputs; } {
     args.nixpkgs = nixpkgs;
 
     # Registry: reference modules by name instead of path
-    registry.src = ../registry;
+    # Now scans: mod/, hosts/, roles/, users/
+    registry.src = ./..;
 
     # Auto-generate flake.nix from __inputs declarations
     flakeFile = {
       enable = true;
       coreInputs = import ./inputs.nix;
       description = "Albert's NixOS configuration using imp";
-      outputsFile = "./nix/flake";
+      outputsFile = "./flake";
     };
 
     # Export sinks configuration
     exports = {
-      # Only scan registry for exports (outputs contain config, not modules)
-      sources = [ ../registry ];
+      # Scan mod/ for exports
+      sources = [ ../mod ];
       # Use mkMerge for role-based module collections
       sinkDefaults = {
         "shared.*" = "mkMerge";
@@ -45,7 +46,7 @@ flake-parts.lib.mkFlake { inherit inputs; } {
     # Auto-generate nixosConfigurations from __host declarations
     hosts = {
       enable = true;
-      sources = [ ../registry/hosts ];
+      sources = [ ../hosts ];
       defaults = {
         system = "x86_64-linux";
         stateVersion = "24.11";

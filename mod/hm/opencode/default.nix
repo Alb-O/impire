@@ -4,7 +4,7 @@
 */
 {
   __inputs = {
-    opencode-flake.url = "github:sst/opencode/v1.0.191";
+    opencode-flake.url = "github:sst/opencode/v1.0.201";
     opencode-flake.inputs.nixpkgs.follows = "nixpkgs";
     oc-bin-flake.url = "github:bogorad/oc-bin-flake";
     oc-bin-flake.inputs.nixpkgs.follows = "nixpkgs";
@@ -22,7 +22,7 @@
         }:
         {
           programs.opencode = {
-            package = inputs.oc-bin-flake.packages."${pkgs.system}".default;
+            package = inputs.opencode-flake.packages."${pkgs.system}".default;
             enable = true;
           };
 

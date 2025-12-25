@@ -8,8 +8,8 @@
     system = "x86_64-linux";
     stateVersion = "24.11";
     bases = [
-      "hosts.shared.base"
-      "hosts.shared.desktop-base"
+      "mod.base.base"
+      "mod.base.desktop-base"
     ];
     sinks = [
       "shared.os"
@@ -27,7 +27,7 @@
     user = "albert";
   };
 
-  config = ./config;
+  config = ./.;
 
   extraConfig =
     { modulesPath, inputs, ... }:

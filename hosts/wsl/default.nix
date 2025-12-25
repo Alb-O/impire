@@ -10,7 +10,7 @@
   __host = {
     system = "x86_64-linux";
     stateVersion = "24.11";
-    bases = [ "hosts.shared.base" ];
+    bases = [ "mod.base.base" ];
     sinks = [ "shared.os" ];
     hmSinks = [ "shared.hm" ];
     modules = [
@@ -20,5 +20,5 @@
     user = "albert";
   };
 
-  config = ./config;
+  config = ./.;
 }

@@ -1,4 +1,4 @@
-# Standalone HM config for desktop - home-manager switch --flake .#albert@desktop
+# Standalone HM config for hp-laptop - home-manager switch --flake .#albert@hp-laptop
 {
   inputs,
   imp,
@@ -24,6 +24,7 @@ inputs.home-manager.lib.homeManagerConfiguration {
 
   modules = [
     inputs.stylix.homeManagerModules.stylix
-    registry.roles.hm.desktop
-  ];
+    exports.shared.hm.__module
+    exports.desktop.hm.__module
+  ] ++ imp.imports [ registry.users.albert ];
 }
