@@ -12,15 +12,6 @@ let
         gdm.enable = true;
       };
 
-      fonts.packages = with pkgs; [
-        noto-fonts
-        noto-fonts-cjk-sans
-        noto-fonts-color-emoji
-        cozette
-        fira-sans
-        roboto
-      ];
-
       hardware.bluetooth = {
         enable = true;
         powerOnBoot = true;
