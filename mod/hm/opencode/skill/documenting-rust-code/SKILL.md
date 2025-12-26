@@ -20,29 +20,26 @@ metadata:
 
 # Rust Documentation Practices
 
-Comprehensive guidance on documenting Rust code in the HASH repository following rustdoc conventions.
-
-## Core Principles
-
-**Follow high-quality standards like `time`, `jiff`, and `serde`:**
+Comprehensive guidance on documenting Rust code following rustdoc conventions.
 
 DO:
 
-- Begin every doc comment with single-line summary
-- Use intra-doc links for all type references
-- Document all error conditions with `# Errors`
-- Include practical examples for public APIs
-- Link standard library types: [`Vec`], [`HashMap`], etc.
-- Use inline parameter descriptions for simple functions (0-2 params)
-- Describe return values in main text, not separate sections
+✓  Begin every doc comment with single-line summary
+✓  Use intra-doc links for all type references
+✓  Document all error conditions with `# Errors`
+✓  Include practical examples for public APIs
+✓  Link standard library types: [`Vec`], [`HashMap`], etc.
+✓  Use inline parameter descriptions for simple functions (0-2 params)
+✓  Describe return values in main text, not separate sections
 
 DON'T:
 
-- Document standard trait implementations (`Debug`, `Display`, `From`)
-- Add separate `# Returns` sections (inline instead)
-- Mention variable types already in signatures
-- Use comments on same line as code
-- Skip error documentation for fallible functions
+✗  Document standard trait implementations (`Debug`, `Display`, `From`)
+✗  Add separate `# Returns` sections (inline instead)
+✗  Mention variable types already in signatures
+✗  Use comments on same line as code
+✗  Skip error documentation for fallible functions
+✗  Sprinkle small inline `//` comments; Merge these into a comprehensive doscstring if useful, otherwise remove them completely.
 
 ## Quick Reference
 
@@ -102,7 +99,7 @@ Use explicit `# Arguments` section:
 /// * `callback` - Optional function for each merged item
 ```
 
-### Error Documentation
+### Error Docs
 
 ```rust
 /// # Errors
@@ -114,7 +111,7 @@ Use explicit `# Arguments` section:
 /// [`AuthorizationError`]: WebError::Authorization
 ```
 
-### Module Documentation
+### Module Docs
 
 ```rust
 //! Entity management functionality.
@@ -150,7 +147,9 @@ cargo doc --no-deps --all-features
 
 ## References
 
-- **[references/function-documentation.md](references/function-documentation.md)**: Functions and methods documentation patterns
-- **[references/type-documentation.md](references/type-documentation.md)**: Types, structs, enums, and traits documentation
-- **[references/error-documentation.md](references/error-documentation.md)**: Error conditions and panics documentation
-- **[references/examples-and-links.md](references/examples-and-links.md)**: Examples and intra-doc links usage
+Please read these if explicitly given a doc writing task:
+
+- [references/function-documentation.md](references/function-documentation.md): Functions and methods documentation patterns
+- [references/type-documentation.md](references/type-documentation.md): Types, structs, enums, and traits documentation
+- [references/error-documentation.md](references/error-documentation.md): Error conditions and panics documentation
+- [references/examples-and-links.md](references/examples-and-links.md): Examples and intra-doc links usage
