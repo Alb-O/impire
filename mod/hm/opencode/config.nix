@@ -1,11 +1,11 @@
 {
   agent = {
     general = {
-      enabled = false;
+      disable = true;
       model = "opencode/big-pickle";
     };
     explore = {
-      enabled = false;
+      disable = true;
       model = "opencode/big-pickle";
     };
     docfinder = {
