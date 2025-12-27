@@ -22,7 +22,7 @@
         }:
         {
           programs.opencode = {
-            package = inputs.opencode-flake.packages."${pkgs.system}".default;
+            package = inputs.oc-bin-flake.packages."${pkgs.system}".default;
             enable = true;
           };
 
@@ -33,6 +33,10 @@
             "opencode/dcp.jsonc".source = ./dcp.jsonc;
             "opencode/skill" = {
               source = ./skill;
+              recursive = true;
+            };
+            "opencode/command" = {
+              source = ./command;
               recursive = true;
             };
           };
