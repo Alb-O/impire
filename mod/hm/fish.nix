@@ -12,6 +12,7 @@ let
         shellAbbrs = {
           l = "lazygit";
           o = "opencode";
+          y = "yazi";
         };
       };
 
