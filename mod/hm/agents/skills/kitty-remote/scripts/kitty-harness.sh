@@ -12,6 +12,8 @@
 set -euo pipefail
 
 # Configuration
+KITTY_BIN="${KITTY_BIN:-kitty}"
+KITTY_REMOTE_BIN="${KITTY_REMOTE_BIN:-kitty}"
 KITTY_SOCKET="${KITTY_SOCKET:-}"
 KITTY_LAUNCH_TIMEOUT="${KITTY_LAUNCH_TIMEOUT:-40}"  # iterations of 100ms
 KITTY_USE_PANEL="${KITTY_USE_PANEL:-auto}"
@@ -52,6 +54,15 @@ _kitty_session_name() {
 }
 
 #######################################
+# Run kitty remote control command
+# Arguments:
+#   ... - Remote control subcommand and args
+#######################################
+_kitty_remote() {
+  "$KITTY_REMOTE_BIN" @ --to "unix:$KITTY_SOCKET" "$@"
+}
+
+#######################################
 # Launch a kitty instance
 # Arguments:
 #   $1 - Command to run (default: bash)
@@ -69,7 +80,7 @@ kitty_launch() {
   rm -f "$KITTY_SOCKET"
   
   if _kitty_should_use_panel; then
-    kitty +kitten panel \
+    "$KITTY_BIN" +kitten panel \
       --focus-policy=not-allowed \
       --edge=background \
       --listen-on "unix:$KITTY_SOCKET" \
@@ -81,7 +92,7 @@ kitty_launch() {
     # Set environment for X11/software rendering fallback
     KITTY_ENABLE_WAYLAND="${KITTY_ENABLE_WAYLAND:-0}" \
     LIBGL_ALWAYS_SOFTWARE="${LIBGL_ALWAYS_SOFTWARE:-1}" \
-    kitty \
+    "$KITTY_BIN" \
       --listen-on "unix:$KITTY_SOCKET" \
       --class "$_KITTY_SESSION_NAME" \
       -o allow_remote_control=yes \
@@ -100,7 +111,7 @@ kitty_launch() {
 kitty_wait_ready() {
   local i
   for ((i=0; i<KITTY_LAUNCH_TIMEOUT; i++)); do
-    if kitty @ --to "unix:$KITTY_SOCKET" ls &>/dev/null; then
+    if _kitty_remote ls &>/dev/null; then
       return 0
     fi
     sleep 0.1
@@ -114,7 +125,7 @@ kitty_wait_ready() {
 # Returns: 0 if alive, 1 if not
 #######################################
 kitty_is_alive() {
-  [[ -n "$KITTY_SOCKET" ]] && kitty @ --to "unix:$KITTY_SOCKET" ls &>/dev/null
+  [[ -n "$KITTY_SOCKET" ]] && _kitty_remote ls &>/dev/null
 }
 
 #######################################
@@ -124,7 +135,7 @@ kitty_is_alive() {
 #######################################
 kitty_send_text() {
   local text="$1"
-  kitty @ --to "unix:$KITTY_SOCKET" send-text "$text"
+  _kitty_remote send-text "$text"
   sleep 0.02  # Small delay for processing
 }
 
@@ -219,7 +230,7 @@ kitty_capture() {
   if [[ "${1:-}" == "--ansi" ]]; then
     ansi_flag="--ansi"
   fi
-  kitty @ --to "unix:$KITTY_SOCKET" get-text --extent screen $ansi_flag
+  _kitty_remote get-text --extent screen $ansi_flag
 }
 
 #######################################
@@ -248,7 +259,7 @@ kitty_wait_for() {
 #######################################
 kitty_close() {
   if [[ -n "$KITTY_SOCKET" ]]; then
-    kitty @ --to "unix:$KITTY_SOCKET" close-window 2>/dev/null || true
+    _kitty_remote close-window 2>/dev/null || true
     rm -f "$KITTY_SOCKET"
     KITTY_SOCKET=""
     _KITTY_SESSION_NAME=""
@@ -259,7 +270,24 @@ kitty_close() {
 # Get window information as JSON
 #######################################
 kitty_info() {
-  kitty @ --to "unix:$KITTY_SOCKET" ls
+  _kitty_remote ls
+}
+
+#######################################
+# Dump remote state for debugging
+# Arguments:
+#   $1 - Optional output directory
+#######################################
+kitty_dump_state() {
+  local out_dir="${1:-}"
+  if [[ -n "$out_dir" ]]; then
+    mkdir -p "$out_dir"
+    _kitty_remote ls > "$out_dir/kitty-ls.json" 2>&1 || true
+    _kitty_remote get-text --extent screen --ansi > "$out_dir/kitty-screen.ansi" 2>&1 || true
+  else
+    _kitty_remote ls || true
+    _kitty_remote get-text --extent screen --ansi || true
+  fi
 }
 
 #######################################

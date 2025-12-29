@@ -14,6 +14,13 @@ let
       home.packages = with pkgs; [
         python314
       ];
+
+      home.file = {
+        ".codex/skills" = {
+          source = ./agents/skills;
+          recursive = true;
+        };
+      };
     };
 in
 {

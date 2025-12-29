@@ -2,7 +2,7 @@
 
 Complete guide for documenting error conditions in Rust functions.
 
----
+______________________________________________________________________
 
 ## The `# Errors` Section
 
@@ -25,7 +25,7 @@ Complete guide for documenting error conditions in Rust functions.
 pub fn create_web(&mut self) -> Result<WebId, Report<WebError>> {
 ```
 
----
+______________________________________________________________________
 
 ## Linking Error Variants
 
@@ -59,7 +59,7 @@ pub enum EntityError {
 /// [`Validation`]: EntityError::Validation
 ```
 
----
+______________________________________________________________________
 
 ## Runtime Errors
 
@@ -74,7 +74,7 @@ For errors created at runtime (not enum variants), use plain text:
 pub fn validate_unique(values: &[String]) -> Result<(), Report<ValidationError>> {
 ```
 
----
+______________________________________________________________________
 
 ## External Crate Errors
 
@@ -90,7 +90,7 @@ For errors from external crates, describe without links:
 pub fn load_config(path: &Path) -> Result<Config, Box<dyn Error>> {
 ```
 
----
+______________________________________________________________________
 
 ## Panic Documentation
 
@@ -109,7 +109,7 @@ pub fn to_uuid(&self) -> Uuid {
 
 **Note:** Prefer returning `Result` over panicking in library code.
 
----
+______________________________________________________________________
 
 ## Complete Example
 
@@ -146,7 +146,7 @@ pub fn update_entity(
 }
 ```
 
----
+______________________________________________________________________
 
 ## Error Documentation Checklist
 
@@ -157,7 +157,7 @@ pub fn update_entity(
 - [ ] Link definitions at end of doc comment
 - [ ] `# Panics` section if function can panic
 
----
+______________________________________________________________________
 
 ## Common Patterns
 
@@ -209,7 +209,7 @@ pub fn try_load_cached(&self) -> Result<Option<Data>, Report<Error>> {
 pub async fn fetch_remote(&self, id: EntityId) -> Result<Entity, Report<RemoteError>> {
 ```
 
----
+______________________________________________________________________
 
 ## Related
 

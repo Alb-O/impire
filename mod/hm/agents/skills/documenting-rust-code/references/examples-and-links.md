@@ -2,7 +2,7 @@
 
 Complete guide for writing examples and using intra-doc links in Rust documentation.
 
----
+______________________________________________________________________
 
 ## Intra-Doc Links
 
@@ -73,13 +73,13 @@ With link definition:
 /// [`NotFound`]: EntityError::NotFound
 ```
 
----
+______________________________________________________________________
 
 ## Writing Examples
 
 ### Basic Example Structure
 
-```rust
+````rust
 /// # Examples
 ///
 /// ```rust
@@ -89,7 +89,7 @@ With link definition:
 /// assert_eq!(entity.id(), id);
 /// # Ok::<(), Box<dyn core::error::Error>>(())
 /// ```
-```
+````
 
 ### Example Checklist
 
@@ -99,13 +99,13 @@ With link definition:
 - [ ] Example compiles
 - [ ] Example is minimal but complete
 
----
+______________________________________________________________________
 
 ## Hiding Setup Code
 
 Use `#` to hide necessary setup from docs display:
 
-```rust
+````rust
 /// # Examples
 ///
 /// ```rust
@@ -118,7 +118,7 @@ Use `#` to hide necessary setup from docs display:
 /// # Ok(())
 /// # }
 /// ```
-```
+````
 
 **What renders:**
 
@@ -127,13 +127,13 @@ let entity = store.get_entity(type_id)?;
 println!("Found: {}", entity.name);
 ```
 
----
+______________________________________________________________________
 
 ## Error Handling in Examples
 
 ### Using `?` Operator
 
-```rust
+````rust
 /// # Examples
 ///
 /// ```rust
@@ -141,26 +141,26 @@ println!("Found: {}", entity.name);
 /// assert!(result.is_valid());
 /// # Ok::<(), Box<dyn core::error::Error>>(())
 /// ```
-```
+````
 
 ### Using `expect` for Infallible Cases
 
-```rust
+````rust
 /// # Examples
 ///
 /// ```rust
 /// let config = Config::default();
 /// let value = config.get("key").expect("should have default key");
 /// ```
-```
+````
 
----
+______________________________________________________________________
 
 ## Multi-Step Examples
 
 Show realistic usage patterns:
 
-```rust
+````rust
 /// # Examples
 ///
 /// ```rust
@@ -179,15 +179,15 @@ Show realistic usage patterns:
 /// # Ok(())
 /// # }
 /// ```
-```
+````
 
----
+______________________________________________________________________
 
 ## Module Documentation
 
 Use `//!` for module-level docs:
 
-```rust
+````rust
 //! Entity management functionality.
 //!
 //! This module provides types and functions for creating, updating,
@@ -208,9 +208,9 @@ Use `//!` for module-level docs:
 //! store.save(&entity)?;
 //! # Ok::<(), Box<dyn std::error::Error>>(())
 //! ```
-```
+````
 
----
+______________________________________________________________________
 
 ## Performance Notes
 
@@ -230,11 +230,11 @@ Document performance characteristics when relevant:
 /// [`get_entities_stream`]: Self::get_entities_stream
 ```
 
----
+______________________________________________________________________
 
 ## Async Documentation
 
-```rust
+````rust
 /// Processes entity asynchronously.
 ///
 /// # Concurrency
@@ -253,13 +253,13 @@ Document performance characteristics when relevant:
 /// # }
 /// ```
 pub async fn process_async(&self, entity: Entity) -> Result<ProcessResult, Error> {
-```
+````
 
----
+______________________________________________________________________
 
 ## Complete Example
 
-```rust
+````rust
 /// Validates and creates entity with type checking.
 ///
 /// Takes `properties` and validates them against the entity's type schema.
@@ -311,9 +311,9 @@ pub fn create_entity(
     properties: Vec<(String, Value)>,
     web_id: WebId,
 ) -> Result<EntityId, Report<EntityError>> {
-```
+````
 
----
+______________________________________________________________________
 
 ## Related
 

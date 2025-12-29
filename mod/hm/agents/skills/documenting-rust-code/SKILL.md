@@ -13,9 +13,9 @@ metadata:
       - documentation
       - intra-doc link
     intent-patterns:
-      - "\\bdocument(ing|ation)?\\b.*?\\b(rust|function|type|struct|enum|trait|module)\\b"
-      - "\\b(write|add|create)\\b.*?\\bdoc\\s*comment\\b"
-      - "\\b#\\s*(Errors|Panics|Examples|Arguments)\\b"
+      - \bdocument(ing|ation)?\b.*?\b(rust|function|type|struct|enum|trait|module)\b
+      - \b(write|add|create)\b.*?\bdoc\s*comment\b
+      - \b#\s*(Errors|Panics|Examples|Arguments)\b
 ---
 
 # Rust Documentation Practices
@@ -24,22 +24,22 @@ Comprehensive guidance on documenting Rust code following rustdoc conventions.
 
 DO:
 
-✓  Begin every doc comment with single-line summary
-✓  Use intra-doc links for all type references
-✓  Document all error conditions with `# Errors`
-✓  Include practical examples for public APIs
-✓  Link standard library types: [`Vec`], [`HashMap`], etc.
-✓  Use inline parameter descriptions for simple functions (0-2 params)
-✓  Describe return values in main text, not separate sections
+✓ Begin every doc comment with single-line summary
+✓ Use intra-doc links for all type references
+✓ Document all error conditions with `# Errors`
+✓ Include practical examples for public APIs
+✓ Link standard library types: \[`Vec`\], \[`HashMap`\], etc.
+✓ Use inline parameter descriptions for simple functions (0-2 params)
+✓ Describe return values in main text, not separate sections
 
 DON'T:
 
-✗  Document standard trait implementations (`Debug`, `Display`, `From`)
-✗  Add separate `# Returns` sections (inline instead)
-✗  Mention variable types already in signatures
-✗  Use comments on same line as code
-✗  Skip error documentation for fallible functions
-✗  Sprinkle small inline `//` comments; Merge these into a comprehensive doscstring if useful, otherwise remove them completely.
+✗ Document standard trait implementations (`Debug`, `Display`, `From`)
+✗ Add separate `# Returns` sections (inline instead)
+✗ Mention variable types already in signatures
+✗ Use comments on same line as code
+✗ Skip error documentation for fallible functions
+✗ Sprinkle small inline `//` comments; Merge these into a comprehensive doscstring if useful, otherwise remove them completely.
 
 ## Quick Reference
 
@@ -113,7 +113,7 @@ Use explicit `# Arguments` section:
 
 ### Module Docs
 
-```rust
+````rust
 //! Entity management functionality.
 //!
 //! Main types:
@@ -125,11 +125,11 @@ Use explicit `# Arguments` section:
 //! ```
 //! use hash_graph::entity::Entity;
 //! ```
-```
+````
 
 ### Examples with Error Handling
 
-```rust
+````rust
 /// # Examples
 ///
 /// ```rust
@@ -137,7 +137,7 @@ Use explicit `# Arguments` section:
 /// assert_eq!(entities.len(), 2);
 /// # Ok::<(), Box<dyn core::error::Error>>(())
 /// ```
-```
+````
 
 ## Verification
 

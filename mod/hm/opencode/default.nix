@@ -32,7 +32,7 @@
             );
             "opencode/dcp.jsonc".source = ./dcp.jsonc;
             "opencode/skill" = {
-              source = ./skill;
+              source = ../agents/skills;
               recursive = true;
             };
             "opencode/command" = {

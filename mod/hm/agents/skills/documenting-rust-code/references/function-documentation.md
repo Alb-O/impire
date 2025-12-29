@@ -2,20 +2,20 @@
 
 Complete guide for documenting functions and methods in Rust.
 
----
+______________________________________________________________________
 
 ## Documentation Structure
 
 Every public function must have a doc comment with:
 
 1. **Single-line summary** - What the function does
-2. **Detailed description** - How it behaves
-3. **Parameter descriptions** - Inline (simple) or explicit (complex)
-4. **Return value** - Described in main text
-5. **Error conditions** - `# Errors` section if fallible
-6. **Examples** - `# Examples` section for public APIs
+1. **Detailed description** - How it behaves
+1. **Parameter descriptions** - Inline (simple) or explicit (complex)
+1. **Return value** - Described in main text
+1. **Error conditions** - `# Errors` section if fallible
+1. **Examples** - `# Examples` section for public APIs
 
----
+______________________________________________________________________
 
 ## Single-Line Summary
 
@@ -37,7 +37,7 @@ Begin every doc comment with a clear, action-oriented summary:
 /// Gets entity                    // Missing "the" or article
 ```
 
----
+______________________________________________________________________
 
 ## Parameter Documentation
 
@@ -76,7 +76,7 @@ Use explicit `# Arguments` section with bullet points:
 /// * `context` - Additional context passed to transformation rules
 ```
 
----
+______________________________________________________________________
 
 ## Return Value Documentation
 
@@ -102,7 +102,7 @@ pub fn get_entity(&self, id: EntityId) -> Result<Entity, Report<EntityError>> {
 /// The entity if found  // Don't use separate Returns section
 ```
 
----
+______________________________________________________________________
 
 ## Async Function Documentation
 
@@ -127,7 +127,7 @@ Document concurrency considerations when relevant:
 pub async fn process_entity(&self, id: EntityId) -> Result<(), Report<ProcessError>> {
 ```
 
----
+______________________________________________________________________
 
 ## When to Skip Documentation
 
@@ -174,7 +174,7 @@ impl Serialize for ComplexType {
 }
 ```
 
----
+______________________________________________________________________
 
 ## Performance Documentation
 
@@ -208,11 +208,11 @@ Add `# Performance` sections for performance-critical functions:
 - Standard library usage with no special patterns
 - Non-performance-sensitive code
 
----
+______________________________________________________________________
 
 ## Complete Example
 
-```rust
+````rust
 /// Validates and creates a new entity in the system.
 ///
 /// Takes the provided `properties` and validates them against the entity's
@@ -265,9 +265,9 @@ pub fn create_entity(
     web_id: WebId,
     account: &Account,
 ) -> Result<EntityId, Report<EntityError>> {
-```
+````
 
----
+______________________________________________________________________
 
 ## Related
 

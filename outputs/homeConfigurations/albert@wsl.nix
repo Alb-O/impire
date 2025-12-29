@@ -25,5 +25,6 @@ inputs.home-manager.lib.homeManagerConfiguration {
   modules = [
     inputs.stylix.homeManagerModules.stylix
     exports.shared.hm.__module
-  ] ++ imp.imports [ registry.users.albert ];
+  ]
+  ++ imp.imports [ registry.users.albert ];
 }

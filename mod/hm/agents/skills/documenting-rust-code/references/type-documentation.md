@@ -2,7 +2,7 @@
 
 Complete guide for documenting types, structs, enums, and traits in Rust.
 
----
+______________________________________________________________________
 
 ## Struct Documentation
 
@@ -43,7 +43,7 @@ pub struct User {
 }
 ```
 
----
+______________________________________________________________________
 
 ## Enum Documentation
 
@@ -98,7 +98,7 @@ pub enum CacheStrategy {
 }
 ```
 
----
+______________________________________________________________________
 
 ## Trait Documentation
 
@@ -123,7 +123,7 @@ pub trait EntityStore: Send + Sync {
 }
 ```
 
----
+______________________________________________________________________
 
 ## Newtype Pattern
 
@@ -146,7 +146,7 @@ pub struct NonEmptyString(String);
 pub struct NonEmptyString(String);
 ```
 
----
+______________________________________________________________________
 
 ## Generic Types
 
@@ -165,7 +165,7 @@ where
 }
 ```
 
----
+______________________________________________________________________
 
 ## Complex Types
 
@@ -190,7 +190,7 @@ pub struct TemporalEntity {
 }
 ```
 
----
+______________________________________________________________________
 
 ## What NOT to Document
 
@@ -202,20 +202,20 @@ pub struct TemporalEntity {
    struct Point { x: f64, y: f64 }  // No docs needed
    ```
 
-2. **Standard trait implementations:**
+1. **Standard trait implementations:**
 
    ```rust
    impl Debug for MyType { ... }    // No docs needed
    impl From<A> for B { ... }       // No docs needed
    ```
 
-3. **Self-explanatory type aliases:**
+1. **Self-explanatory type aliases:**
 
    ```rust
    type Result<T> = std::result::Result<T, Error>;  // No docs needed
    ```
 
-4. **Obvious field names:**
+1. **Obvious field names:**
 
    ```rust
    struct User {
@@ -224,7 +224,7 @@ pub struct TemporalEntity {
    }
    ```
 
----
+______________________________________________________________________
 
 ## When TO Document
 
@@ -237,28 +237,28 @@ Document when:
    pub struct Email(String);
    ```
 
-2. **Performance characteristics:**
+1. **Performance characteristics:**
 
    ```rust
    /// Sorted vector with O(log n) lookup
    pub struct SortedVec<T>(Vec<T>);
    ```
 
-3. **Special behavior:**
+1. **Special behavior:**
 
    ```rust
    /// Cache that prefetches adjacent keys on miss
    pub struct PredictiveCache<K, V> { ... }
    ```
 
-4. **Complex state machines:**
+1. **Complex state machines:**
 
    ```rust
    /// Connection state. Transitions: Idle -> Active -> Closing -> Closed
    pub enum ConnectionState { ... }
    ```
 
----
+______________________________________________________________________
 
 ## Related
 

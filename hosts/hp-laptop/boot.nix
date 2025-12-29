@@ -10,7 +10,11 @@
   ];
 
   kernelModules = [ "kvm-amd" ];
-  blacklistedKernelModules = [ "tpm" "tpm_tis" "tpm_crb" ];
+  blacklistedKernelModules = [
+    "tpm"
+    "tpm_tis"
+    "tpm_crb"
+  ];
 
   loader = {
     efi.canTouchEfiVariables = true;
