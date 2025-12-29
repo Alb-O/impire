@@ -64,6 +64,7 @@ let
           help.autocorrect = 1;
           rerere.enabled = true;
           log.date = "relative";
+          worktree.guessRemote = true;
           credential.helper = lib.mkIf hasSops "store --file ${
             config.sops.secrets."${giteaCredentials}".path
           }";
