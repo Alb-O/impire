@@ -31,14 +31,13 @@ Drive kitty instances via the remote control protocol and kitty-test-harness.
 
 ## Harness usage
 
-- Prefer `kitty +kitten panel` on Wayland for background panels; fall back to windows on X11/WSL.
-- Use absolute socket paths and delete stale sockets before launch.
-- Normalize modal state (send `ESC`) before `:` commands.
-- Treat socket disappearance as evidence of app exit/crash; capture proof with `@ ls`, `get-text --ansi`, and app logs.
-- Use `kitty-remote/scripts/kitty-harness.sh` for a ready-to-source harness.
+- Prefer `kitty +kitten panel` on Wayland; fall back to windows on X11/WSL
+- Use absolute socket paths; delete stale sockets before launch
+- Send `ESC` to normalize modal state before `:` commands
+- Socket disappearance = app exit/crash; capture with `@ ls`, `get-text --ansi`, logs
+- Source [scripts/kitty-harness.sh](scripts/kitty-harness.sh) for ready-to-use harness
 
 ## References
 
-- Read `kitty-remote/references/harness-notes.md` for harness internals, failure signatures, and debug flow.
-- Read `kitty-remote/references/escape-codes.md` for byte-level key sequences and modifiers.
-- Use `kitty-remote/scripts/kitty-harness.sh` as the reusable harness implementation.
+- [harness-notes.md](references/harness-notes.md) - internals, failure signatures, debug flow
+- [escape-codes.md](references/escape-codes.md) - byte-level key sequences and modifiers

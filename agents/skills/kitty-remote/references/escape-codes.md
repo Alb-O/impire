@@ -1,7 +1,5 @@
 # Terminal Escape Codes Reference
 
-Dense reference for escape sequences used with kitty remote control.
-
 ## Table of Contents
 
 - Control Characters

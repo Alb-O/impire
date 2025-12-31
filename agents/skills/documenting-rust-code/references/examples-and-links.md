@@ -1,21 +1,10 @@
 # Examples and Intra-Doc Links Guide
 
-Complete guide for writing examples and using intra-doc links in Rust documentation.
-
-______________________________________________________________________
-
 ## Intra-Doc Links
 
-### Why Use Them
+Intra-doc links make docs navigable and catch broken references at compile time.
 
-Intra-doc links make documentation navigable and catch broken references at compile time.
-
-**Link everything:**
-
-- Types you mention
-- Related functions
-- Standard library types
-- Error variants
+Link everything: types, related functions, stdlib types, error variants.
 
 ### Basic Syntax
 

@@ -31,9 +31,9 @@ Avoid vague instructions like "improve the code". Be specific: "Fix the null che
 ### XML Constraint Blocks
 
 Use XML tags to define distinct rule sets:
-- `<mandatory_execution_requirements>`: execution loop (Read -> Edit -> Verify)
-- `<verbosity_and_scope_constraints>`: output size and scope control
-- `<design_system_enforcement>`: adhering to existing patterns
+- `<mandatory_execution_requirements>` - execution loop (Read -> Edit -> Verify)
+- `<verbosity_and_scope_constraints>` - output size and scope control
+- `<design_system_enforcement>` - adhering to existing patterns
 
 ### Chain of Verification
 

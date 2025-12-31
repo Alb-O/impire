@@ -1,12 +1,8 @@
 # Error Documentation Guide
 
-Complete guide for documenting error conditions in Rust functions.
-
-______________________________________________________________________
-
 ## The `# Errors` Section
 
-**Every fallible function** (returning `Result`) must document error conditions:
+Every fallible function (returning `Result`) must document error conditions:
 
 ```rust
 /// Creates a new web in the system.
@@ -107,7 +103,7 @@ pub fn to_uuid(&self) -> Uuid {
 }
 ```
 
-**Note:** Prefer returning `Result` over panicking in library code.
+Note: Prefer returning `Result` over panicking in library code.
 
 ______________________________________________________________________
 

@@ -1,9 +1,5 @@
 # Type Documentation Guide
 
-Complete guide for documenting types, structs, enums, and traits in Rust.
-
-______________________________________________________________________
-
 ## Struct Documentation
 
 ### Basic Structure
@@ -21,7 +17,7 @@ pub struct EntityId {
 
 ### When to Document Fields
 
-✅ **Document when field purpose is NOT obvious:**
+Document when field purpose is NOT obvious:
 
 ```rust
 pub struct EntityQuery {
@@ -33,7 +29,7 @@ pub struct EntityQuery {
 }
 ```
 
-❌ **Don't document obvious fields:**
+Don't document obvious fields:
 
 ```rust
 pub struct User {
@@ -49,7 +45,7 @@ ______________________________________________________________________
 
 ### Document WHY, not WHAT
 
-✅ **Good - explains purpose:**
+Good - explains purpose:
 
 ```rust
 /// Entity lifecycle state.
@@ -63,7 +59,7 @@ pub enum EntityState {
 }
 ```
 
-❌ **Bad - restates the obvious:**
+Bad - restates the obvious:
 
 ```rust
 pub enum EntityState {
@@ -129,7 +125,7 @@ ______________________________________________________________________
 
 Document invariants and guarantees, not the wrapping itself:
 
-✅ **Good - explains guarantees:**
+Good:
 
 ```rust
 /// Non-empty string validated at construction.
@@ -139,7 +135,7 @@ Document invariants and guarantees, not the wrapping itself:
 pub struct NonEmptyString(String);
 ```
 
-❌ **Bad - states the obvious:**
+Bad:
 
 ```rust
 /// A string wrapper
@@ -194,69 +190,21 @@ ______________________________________________________________________
 
 ## What NOT to Document
 
-**Skip documentation for:**
-
-1. **Obvious structs:**
-
-   ```rust
-   struct Point { x: f64, y: f64 }  // No docs needed
-   ```
-
-1. **Standard trait implementations:**
-
-   ```rust
-   impl Debug for MyType { ... }    // No docs needed
-   impl From<A> for B { ... }       // No docs needed
-   ```
-
-1. **Self-explanatory type aliases:**
-
-   ```rust
-   type Result<T> = std::result::Result<T, Error>;  // No docs needed
-   ```
-
-1. **Obvious field names:**
-
-   ```rust
-   struct User {
-       pub id: UserId,     // Don't document
-       pub name: String,   // Don't document
-   }
-   ```
+Skip docs for:
+- Obvious structs: `struct Point { x: f64, y: f64 }`
+- Standard trait impls: `Debug`, `From`, etc.
+- Self-explanatory type aliases
+- Obvious field names (`id`, `name`, etc.)
 
 ______________________________________________________________________
 
 ## When TO Document
 
 Document when:
-
-1. **Non-obvious invariants:**
-
-   ```rust
-   /// Validated email address (RFC 5322 compliant)
-   pub struct Email(String);
-   ```
-
-1. **Performance characteristics:**
-
-   ```rust
-   /// Sorted vector with O(log n) lookup
-   pub struct SortedVec<T>(Vec<T>);
-   ```
-
-1. **Special behavior:**
-
-   ```rust
-   /// Cache that prefetches adjacent keys on miss
-   pub struct PredictiveCache<K, V> { ... }
-   ```
-
-1. **Complex state machines:**
-
-   ```rust
-   /// Connection state. Transitions: Idle -> Active -> Closing -> Closed
-   pub enum ConnectionState { ... }
-   ```
+- Non-obvious invariants: `/// Validated email (RFC 5322 compliant)`
+- Performance characteristics: `/// Sorted vector with O(log n) lookup`
+- Special behavior: `/// Cache that prefetches adjacent keys on miss`
+- Complex state machines: `/// Transitions: Idle -> Active -> Closing -> Closed`
 
 ______________________________________________________________________
 

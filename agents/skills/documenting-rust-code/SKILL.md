@@ -20,8 +20,6 @@ metadata:
 
 # Rust Documentation Practices
 
-Comprehensive guidance on documenting Rust code following rustdoc conventions.
-
 DO:
 
 ✓ Begin every doc comment with single-line summary
@@ -147,9 +145,8 @@ cargo doc --no-deps --all-features
 
 ## References
 
-Please read these if explicitly given a doc writing task:
-
-- [references/function-documentation.md](references/function-documentation.md): Functions and methods documentation patterns
-- [references/type-documentation.md](references/type-documentation.md): Types, structs, enums, and traits documentation
-- [references/error-documentation.md](references/error-documentation.md): Error conditions and panics documentation
-- [references/examples-and-links.md](references/examples-and-links.md): Examples and intra-doc links usage
+For doc-heavy tasks, read as needed:
+- [function-documentation.md](references/function-documentation.md) - functions/methods
+- [type-documentation.md](references/type-documentation.md) - structs/enums/traits
+- [error-documentation.md](references/error-documentation.md) - errors/panics
+- [examples-and-links.md](references/examples-and-links.md) - examples/intra-doc links

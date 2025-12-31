@@ -1,27 +1,22 @@
 # Function Documentation Guide
 
-Complete guide for documenting functions and methods in Rust.
-
-______________________________________________________________________
-
 ## Documentation Structure
 
-Every public function must have a doc comment with:
-
-1. **Single-line summary** - What the function does
-1. **Detailed description** - How it behaves
-1. **Parameter descriptions** - Inline (simple) or explicit (complex)
-1. **Return value** - Described in main text
-1. **Error conditions** - `# Errors` section if fallible
-1. **Examples** - `# Examples` section for public APIs
+Every public function needs:
+1. Single-line summary - what it does
+2. Detailed description - how it behaves
+3. Parameter descriptions - inline (simple) or explicit (complex)
+4. Return value - in main text
+5. Error conditions - `# Errors` section if fallible
+6. Examples - `# Examples` section for public APIs
 
 ______________________________________________________________________
 
 ## Single-Line Summary
 
-Begin every doc comment with a clear, action-oriented summary:
+Begin with a clear, action-oriented summary:
 
-✅ **Good summaries:**
+Good:
 
 ```rust
 /// Retrieves an entity by its UUID.
@@ -29,7 +24,7 @@ Begin every doc comment with a clear, action-oriented summary:
 /// Processes the input elements and returns filtered results.
 ```
 
-❌ **Bad summaries:**
+Bad:
 
 ```rust
 /// This function gets an entity  // "This function" is redundant
@@ -43,7 +38,7 @@ ______________________________________________________________________
 
 ### Simple Functions (0-2 parameters)
 
-Describe parameters **inline** in the main description:
+Describe parameters inline:
 
 ```rust
 /// Processes the `input` elements and returns a filtered collection.
@@ -80,9 +75,9 @@ ______________________________________________________________________
 
 ## Return Value Documentation
 
-**Always** describe return values in the main description, **not** in a separate section:
+Describe return values in the main description, not in a separate section:
 
-✅ **Good:**
+Good:
 
 ```rust
 /// Retrieves an entity by its UUID.
@@ -92,7 +87,7 @@ ______________________________________________________________________
 pub fn get_entity(&self, id: EntityId) -> Result<Entity, Report<EntityError>> {
 ```
 
-❌ **Bad:**
+Bad:
 
 ```rust
 /// Retrieves an entity by its UUID.
@@ -131,11 +126,10 @@ ______________________________________________________________________
 
 ## When to Skip Documentation
 
-**Skip documentation for:**
-
+Skip docs for:
 - Standard trait implementations (`Debug`, `Display`, `From`, `Into`)
 - Trait-derived methods (unless special behavior)
-- Private helper functions (optional)
+- Private helper functions
 - Obvious getters/setters
 
 ```rust
@@ -154,8 +148,7 @@ impl From<MyType> for String {
 }
 ```
 
-**Document trait implementations only when:**
-
+Document trait implementations only when:
 - Special behavior beyond trait definition
 - Performance considerations
 - Different failure modes
@@ -192,21 +185,13 @@ Add `# Performance` sections for performance-critical functions:
 /// [`get_entities_stream`]: Self::get_entities_stream
 ```
 
-**When to document performance:**
-
-- Processing variable-sized inputs
-- Hot path functions
-- Complex algorithms (non-obvious complexity)
+When to document performance:
+- Variable-sized inputs, hot paths, complex algorithms
 - Public APIs with performance guarantees
-- Resource-intensive operations
-- Operations with tradeoffs
+- Resource-intensive operations, operations with tradeoffs
 
-**When to skip:**
-
-- Obvious characteristics (simple getters/setters)
-- Internal implementation details
-- Standard library usage with no special patterns
-- Non-performance-sensitive code
+When to skip:
+- Obvious characteristics, internal details, non-performance-sensitive code
 
 ______________________________________________________________________
 
