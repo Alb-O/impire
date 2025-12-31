@@ -2,14 +2,20 @@
   agent = {
     general = {
       disable = true;
-      model = "opencode/big-pickle";
+      model = "anthropic/claude-haiku-4-5";
     };
     explore = {
-      disable = true;
-      model = "opencode/big-pickle";
+      disable = false;
+      model = "anthropic/claude-haiku-4-5";
+      tools = {
+        write = false;
+        edit = false;
+        patch = false;
+        bash = false;
+      };
     };
     docfinder = {
-      model = "opencode/big-pickle";
+      model = "anthropic/claude-haiku-4-5";
       description = ''
         Technical documentation researcher agent, give it a techincal research task (e.g. libraries, APIs, languages).
         IMPORTANT: You must ask it to use `codesearch` and `websearch` tools in your description of the task.

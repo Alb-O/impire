@@ -17,7 +17,7 @@ let
 
       home.file = {
         ".codex/skills" = {
-          source = ./agents/skills;
+          source = ../../agents/skills;
           recursive = true;
         };
       };
