@@ -34,16 +34,15 @@ GPT-5.2 is stronger at structured code but may produce more code than minimal UX
 
 ```
 <design_and_scope_constraints>
-- Explore any existing design systems and understand it deeply.
-- Implement EXACTLY and ONLY what the user requests.
-- No extra features, no added components, no UX embellishments.
+- Explore any existing design systems and understand them first.
+- Stay focused on what the user requests; avoid unrelated tangents.
+- New patterns, abstractions, or refactors are fine when they improve code health.
 - Style aligned to the design system at hand.
-- Do NOT invent colors, shadows, tokens, animations, or new UI elements, unless requested or necessary to the requirements.
 - If any instruction is ambiguous, choose the simplest valid interpretation.
 </design_and_scope_constraints>
 ```
 
-For design system enforcement, reuse your 5.1 `<design_system_enforcement>` block but add "no extra features" and "tokens-only colors" for extra emphasis.
+For design system enforcement, balance consistency with improvement—new patterns are acceptable when they benefit the codebase.
 
 ### 3.3 Long-Context and Recall
 
