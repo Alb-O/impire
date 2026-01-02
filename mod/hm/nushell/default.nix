@@ -87,12 +87,11 @@ let
           # Custom scripts
           use ${scripts}/nerd-grep.nu
 
-          # Prompt configuration
           def create_left_prompt [] {
             let last_exit = $env.LAST_EXIT_CODE
 
-            # user@host in green
-            let user_host = $"(ansi green_bold)($env.USER)@(hostname)(ansi reset)"
+            let path = $env.PWD | str replace $env.HOME "~"
+            let top_line = $"(ansi dark_gray)╭─(ansi reset) (ansi cyan)($path)(ansi reset)"
 
             # git branch with icon in magenta
             let git_branch = do {
@@ -104,14 +103,12 @@ let
               }
             }
 
-            # nix shell indicator in blue
             let nix_shell = if ($env.IN_NIX_SHELL? | default "" | is-not-empty) {
               $" (ansi blue_bold) (ansi reset)"
             } else {
               ""
             }
 
-            # prompt suffix: red on error, blue on success
             let suffix = if $last_exit != 0 {
               $"(ansi red_bold)   (ansi reset)"
             } else {
@@ -121,9 +118,10 @@ let
             $"($user_host)($git_branch)($nix_shell)($suffix)"
           }
 
-          def create_right_prompt [] {
-            # full path in dim gray
-            $"(ansi dark_gray) ($env.PWD)(ansi reset)"
+            let corner_color = if $last_exit != 0 { ansi red } else { ansi dark_gray }
+            let bottom_line = $"($corner_color)╰─(ansi reset)($git_branch)($nix_shell) "
+
+            $"($top_line)\n($bottom_line)"
           }
 
           $env.PROMPT_COMMAND = {|| create_left_prompt }

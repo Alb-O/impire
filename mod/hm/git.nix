@@ -50,6 +50,8 @@ let
             cleanup = "!git branch --merged | grep -v '\\*\\|main\\|master\\|develop' | xargs -n 1 git branch -d";
             branches = "branch -a";
             remotes = "remote -v";
+            # Clone bare with fetch refspec configured and main worktree added
+            clone-bare = "!f() { git clone --bare \"$1\" \"$2\" && git -C \"$2\" config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' && git -C \"$2\" fetch origin && git -C \"$2\" worktree add @/main main; }; f";
           };
           diff = {
             colorMoved = "default";
