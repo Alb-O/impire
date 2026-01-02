@@ -3,12 +3,13 @@
 ## Documentation Structure
 
 Every public function needs:
+
 1. Single-line summary - what it does
-2. Detailed description - how it behaves
-3. Parameter descriptions - inline (simple) or explicit (complex)
-4. Return value - in main text
-5. Error conditions - `# Errors` section if fallible
-6. Examples - `# Examples` section for public APIs
+1. Detailed description - how it behaves
+1. Parameter descriptions - inline (simple) or explicit (complex)
+1. Return value - in main text
+1. Error conditions - `# Errors` section if fallible
+1. Examples - `# Examples` section for public APIs
 
 ______________________________________________________________________
 
@@ -127,6 +128,7 @@ ______________________________________________________________________
 ## When to Skip Documentation
 
 Skip docs for:
+
 - Standard trait implementations (`Debug`, `Display`, `From`, `Into`)
 - Trait-derived methods (unless special behavior)
 - Private helper functions
@@ -149,6 +151,7 @@ impl From<MyType> for String {
 ```
 
 Document trait implementations only when:
+
 - Special behavior beyond trait definition
 - Performance considerations
 - Different failure modes
@@ -186,11 +189,13 @@ Add `# Performance` sections for performance-critical functions:
 ```
 
 When to document performance:
+
 - Variable-sized inputs, hot paths, complex algorithms
 - Public APIs with performance guarantees
 - Resource-intensive operations, operations with tradeoffs
 
 When to skip:
+
 - Obvious characteristics, internal details, non-performance-sensitive code
 
 ______________________________________________________________________

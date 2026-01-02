@@ -414,17 +414,18 @@ def get_secret [key: string]: nothing -> string {
 
 ## Anti-Patterns to Avoid
 
-| Anti-Pattern | Problem | Better Approach |
-|--------------|---------|-----------------|
-| `mut total = 0; for x in $list { $total += $x }` | Mutation, imperative | `$list \| math sum` |
-| `ps \| to text \| lines \| split column " "` | Parsing structured as text | `ps \| select pid name cpu` |
-| `let all = (open huge \| collect); $all \| first 10` | Premature collection | `open huge \| first 10` |
-| `def process [x] { ... }` | Missing types | `def process [x: int]: int -> int { ... }` |
-| `try { risky } catch { null }` | Silent failure | `try { risky } catch { \|e\| log "error" $e.msg; default }` |
+| Anti-Pattern                                         | Problem                    | Better Approach                                             |
+| ---------------------------------------------------- | -------------------------- | ----------------------------------------------------------- |
+| `mut total = 0; for x in $list { $total += $x }`     | Mutation, imperative       | `$list \| math sum`                                         |
+| `ps \| to text \| lines \| split column " "`         | Parsing structured as text | `ps \| select pid name cpu`                                 |
+| `let all = (open huge \| collect); $all \| first 10` | Premature collection       | `open huge \| first 10`                                     |
+| `def process [x] { ... }`                            | Missing types              | `def process [x: int]: int -> int { ... }`                  |
+| `try { risky } catch { null }`                       | Silent failure             | `try { risky } catch { \|e\| log "error" $e.msg; default }` |
 
 ## Production Checklist
 
 ### Code Quality
+
 - [ ] All functions have type signatures
 - [ ] Error handling is explicit
 - [ ] Input validation performed
@@ -432,16 +433,19 @@ def get_secret [key: string]: nothing -> string {
 - [ ] Code is documented
 
 ### Testing
+
 - [ ] Unit tests cover happy path and errors
 - [ ] Integration tests verify E2E
 - [ ] Tests run in CI/CD
 
 ### Observability
+
 - [ ] Structured logging
 - [ ] Health checks
 - [ ] Error tracking
 
 ### Security
+
 - [ ] Input sanitization
 - [ ] Secure secret management
 - [ ] Audit logging for sensitive ops

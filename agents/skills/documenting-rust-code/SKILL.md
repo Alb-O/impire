@@ -146,6 +146,7 @@ cargo doc --no-deps --all-features
 ## References
 
 For doc-heavy tasks, read as needed:
+
 - [function-documentation.md](references/function-documentation.md) - functions/methods
 - [type-documentation.md](references/type-documentation.md) - structs/enums/traits
 - [error-documentation.md](references/error-documentation.md) - errors/panics

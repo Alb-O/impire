@@ -191,6 +191,7 @@ ______________________________________________________________________
 ## What NOT to Document
 
 Skip docs for:
+
 - Obvious structs: `struct Point { x: f64, y: f64 }`
 - Standard trait impls: `Debug`, `From`, etc.
 - Self-explanatory type aliases
@@ -201,6 +202,7 @@ ______________________________________________________________________
 ## When TO Document
 
 Document when:
+
 - Non-obvious invariants: `/// Validated email (RFC 5322 compliant)`
 - Performance characteristics: `/// Sorted vector with O(log n) lookup`
 - Special behavior: `/// Cache that prefetches adjacent keys on miss`

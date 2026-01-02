@@ -4,21 +4,21 @@
 
 Only these `.d` directories are auto-merged by `imp.tree`:
 
-| Directory | Flake Output |
-|-----------|--------------|
-| `packages.d/` | `self'.packages` |
-| `devShells.d/` | `self'.devShells` |
-| `checks.d/` | `self'.checks` |
-| `apps.d/` | `self'.apps` |
-| `overlays.d/` | `self.overlays` |
-| `nixosModules.d/` | `self.nixosModules` |
-| `homeModules.d/` | `self.homeModules` |
-| `darwinModules.d/` | `self.darwinModules` |
-| `flakeModules.d/` | `self.flakeModules` |
-| `nixosConfigurations.d/` | `self.nixosConfigurations` |
+| Directory                 | Flake Output                |
+| ------------------------- | --------------------------- |
+| `packages.d/`             | `self'.packages`            |
+| `devShells.d/`            | `self'.devShells`           |
+| `checks.d/`               | `self'.checks`              |
+| `apps.d/`                 | `self'.apps`                |
+| `overlays.d/`             | `self.overlays`             |
+| `nixosModules.d/`         | `self.nixosModules`         |
+| `homeModules.d/`          | `self.homeModules`          |
+| `darwinModules.d/`        | `self.darwinModules`        |
+| `flakeModules.d/`         | `self.flakeModules`         |
+| `nixosConfigurations.d/`  | `self.nixosConfigurations`  |
 | `darwinConfigurations.d/` | `self.darwinConfigurations` |
-| `homeConfigurations.d/` | `self.homeConfigurations` |
-| `legacyPackages.d/` | `self.legacyPackages` |
+| `homeConfigurations.d/`   | `self.homeConfigurations`   |
+| `legacyPackages.d/`       | `self.legacyPackages`       |
 
 ## Merge behavior
 
@@ -31,6 +31,7 @@ packages.d/
 ```
 
 Result:
+
 ```nix
 {
   default = basePkg;
@@ -54,17 +55,20 @@ Result: `{ default = myShell; lintfra = lintShell; }`
 ## Fragment file patterns
 
 ### Simple attrset
+
 ```nix
 { myPkg = derivation; }
 ```
 
 ### Function (receives flake-parts args)
+
 ```nix
 { pkgs, self', inputs', ... }:
 { myPkg = pkgs.hello; }
 ```
 
 ### With file-level inputs
+
 ```nix
 {
   __inputs = {
@@ -96,9 +100,9 @@ in
 
 ### Fragment collection methods
 
-| Method | Use case | Example |
-|--------|----------|---------|
-| `.list` | Raw list of fragments | Iteration |
-| `.asString` | Concatenate with newlines | Shell scripts |
-| `.asList` | Flatten nested lists | Package lists |
-| `.asAttrs` | Merge attrsets | Environment variables |
+| Method      | Use case                  | Example               |
+| ----------- | ------------------------- | --------------------- |
+| `.list`     | Raw list of fragments     | Iteration             |
+| `.asString` | Concatenate with newlines | Shell scripts         |
+| `.asList`   | Flatten nested lists      | Package lists         |
+| `.asAttrs`  | Merge attrsets            | Environment variables |

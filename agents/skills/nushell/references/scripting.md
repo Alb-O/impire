@@ -16,7 +16,7 @@ $nu.default-config-dir        # Shows config path
 ### Startup Sequence
 
 1. **env.nu** - Loaded first, sets environment variables
-2. **config.nu** - Main configuration (aliases, commands, settings)
+1. **config.nu** - Main configuration (aliases, commands, settings)
 
 ```nu
 # env.nu - Environment setup
@@ -157,6 +157,7 @@ def "main init" [
 ```
 
 Available attributes:
+
 - `@category <name>` - Command category
 - `@example "desc" { code }` - Example (with optional `--result`)
 - `@search-terms <terms>` - Additional search terms
@@ -332,14 +333,14 @@ use ~/.config/nushell/modules/utils.nu
 
 ## Aliases vs def
 
-| Feature | alias | def |
-|---------|-------|-----|
-| Simple substitution | ✓ | ✓ |
-| Parameters | ✗ | ✓ |
-| Logic/conditionals | ✗ | ✓ |
-| Type checking | ✗ | ✓ |
-| Documentation | ✗ | ✓ |
-| Pipes in definition | ✗ | ✓ |
+| Feature             | alias | def |
+| ------------------- | ----- | --- |
+| Simple substitution | ✓     | ✓   |
+| Parameters          | ✗     | ✓   |
+| Logic/conditionals  | ✗     | ✓   |
+| Type checking       | ✗     | ✓   |
+| Documentation       | ✗     | ✓   |
+| Pipes in definition | ✗     | ✓   |
 
 ```nu
 # alias: Simple shortcuts

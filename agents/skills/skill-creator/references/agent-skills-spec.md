@@ -48,15 +48,15 @@ metadata:
 
 #### `name` field
 
-* 1-64 characters, lowercase alphanumeric and hyphens only
-* No leading/trailing/consecutive hyphens
-* Must match parent directory name
+- 1-64 characters, lowercase alphanumeric and hyphens only
+- No leading/trailing/consecutive hyphens
+- Must match parent directory name
 
 #### `description` field
 
-* 1-1024 characters
-* Describe what the skill does AND when to use it
-* Include keywords that help agents identify relevant tasks
+- 1-1024 characters
+- Describe what the skill does AND when to use it
+- Include keywords that help agents identify relevant tasks
 
 #### `license` field (optional)
 
@@ -64,8 +64,8 @@ License name or reference to bundled license file.
 
 #### `compatibility` field (optional)
 
-* 1-500 characters
-* Environment requirements (product, system packages, network access)
+- 1-500 characters
+- Environment requirements (product, system packages, network access)
 
 #### `metadata` field (optional)
 
@@ -96,8 +96,8 @@ Static resources: templates, images, data files, schemas.
 ## Progressive disclosure
 
 1. Metadata (~100 tokens) - loaded at startup for all skills
-2. Instructions (<5000 tokens) - loaded when skill activates
-3. Resources (as needed) - loaded only when required
+1. Instructions (\<5000 tokens) - loaded when skill activates
+1. Resources (as needed) - loaded only when required
 
 Keep SKILL.md under 500 lines. Move detailed content to separate files.
 

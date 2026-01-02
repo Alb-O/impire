@@ -115,8 +115,7 @@ let
               $"(ansi blue_bold)   (ansi reset)"
             }
 
-            $"($user_host)($git_branch)($nix_shell)($suffix)"
-          }
+            $"($git_branch)($nix_shell)($suffix)"
 
             let corner_color = if $last_exit != 0 { ansi red } else { ansi dark_gray }
             let bottom_line = $"($corner_color)╰─(ansi reset)($git_branch)($nix_shell) "
@@ -125,7 +124,7 @@ let
           }
 
           $env.PROMPT_COMMAND = {|| create_left_prompt }
-          $env.PROMPT_COMMAND_RIGHT = {|| create_right_prompt }
+          $env.PROMPT_COMMAND_RIGHT = {|| "" }
           $env.PROMPT_INDICATOR = ""
           $env.PROMPT_INDICATOR_VI_INSERT = ""
           $env.PROMPT_INDICATOR_VI_NORMAL = ""

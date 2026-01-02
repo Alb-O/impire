@@ -45,13 +45,14 @@ imp.lib converts directory structures into nested attrsets:
 ```
 
 Naming rules:
-| Path | Attribute |
-|------|-----------|
-| `foo.nix` | `foo` |
-| `foo/default.nix` | `foo` |
-| `foo_.nix` | `foo` (escapes reserved names) |
-| `_foo.nix` | ignored |
-| `foo.d/` | merged fragments |
+
+| Path              | Attribute                      |
+| ----------------- | ------------------------------ |
+| `foo.nix`         | `foo`                          |
+| `foo/default.nix` | `foo`                          |
+| `foo_.nix`        | `foo` (escapes reserved names) |
+| `_foo.nix`        | ignored                        |
+| `foo.d/`          | merged fragments               |
 
 ### imp.gits: Multi-Repo Injection
 
@@ -75,6 +76,7 @@ Inject files from other repos into your workspace:
 ```
 
 Commands:
+
 ```bash
 imp-gits init              # Clone and setup injections
 imp-gits pull              # Update injections
@@ -123,6 +125,7 @@ in
 ### Composable devShells (injection pattern)
 
 **Injected library provides** (`devShells.d/10-lintfra.nix`):
+
 ```nix
 { pkgs, self', ... }:
 {
@@ -134,6 +137,7 @@ in
 ```
 
 **Consumer uses** (`devShells.nix`):
+
 ```nix
 { pkgs, self', ... }:
 {
@@ -147,6 +151,7 @@ in
 ### Injected packages
 
 **Injected** (`packages.d/10-lint.nix`):
+
 ```nix
 { pkgs, ... }:
 { lint = pkgs.writeShellScriptBin "lint" "..."; }
@@ -171,15 +176,18 @@ Declare flake inputs at file level with `__inputs`:
 ## Troubleshooting
 
 ### "attribute X missing"
+
 - Check if `.d/` file returns correct attrset shape
 - Verify `imp-gits pull` synced the file
 - Run `nix flake check` for detailed errors
 
 ### imp-gits pull deletes local files
+
 - Only happens with `--force` on files not in injection's `use` list
 - Fixed in imp.gits 0.2.1+ - update your flake
 
 ### Conflict: foo.nix and foo.d/ both exist
+
 - This is allowed for mergeable outputs (packages.d, devShells.d, etc.)
 - Base file imports first, then fragments merge on top
 

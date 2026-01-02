@@ -80,17 +80,20 @@ Before finalizing an answer in legal, financial, compliance, or safety-sensitive
 For long-running, tool-heavy workflows that exceed the standard context window, GPT-5.2 with Reasoning supports response compaction via the `/responses/compact` endpoint. Compaction performs a loss-aware compression pass over prior conversation state, returning encrypted, opaque items that preserve task-relevant information while dramatically reducing token footprint. This allows the model to continue reasoning across extended workflows without hitting context limits.
 
 When to use compaction:
+
 - Multi-step agent flows with many tool calls
 - Long conversations where earlier turns must be retained
 - Iterative reasoning beyond the maximum context window
 
 Key properties:
+
 - Produces opaque, encrypted items (internal logic may evolve)
 - Designed for continuation, not inspection
 - Compatible with GPT-5.2 and Responses API
 - Safe to run repeatedly in long sessions
 
 Endpoint:
+
 ```
 POST https://api.openai.com/v1/responses/compact
 ```
@@ -98,6 +101,7 @@ POST https://api.openai.com/v1/responses/compact
 Runs a compaction pass over a conversation and returns a compacted response object. Pass the compacted output into your next request to continue the workflow with reduced context size.
 
 Best practices:
+
 - Monitor context usage and plan ahead to avoid hitting context window limits
 - Compact after major milestones (e.g., tool-heavy phases), not every turn
 - Keep prompts functionally identical when resuming to avoid behavior drift
@@ -108,6 +112,7 @@ Best practices:
 GPT-5.2 is strong on agentic scaffolding and multi-step execution when prompted well. You can reuse your GPT-5.1 `<user_updates_spec>` and `<solution_persistence>` blocks.
 
 Two key tweaks to further push the performance of GPT-5.2:
+
 - Clamp verbosity of updates (shorter, more focused)
 - Make scope discipline explicit (don't expand problem surface area)
 
@@ -174,6 +179,7 @@ You will extract structured data from tables/PDFs/emails into JSON.
 ```
 
 For multi-table/multi-file extraction, add guidance to:
+
 - Serialize per-document results separately
 - Include a stable ID (filename, contract title, page range)
 
@@ -183,25 +189,27 @@ This section helps you migrate prompts and model configs to GPT-5.2 while keepin
 
 Migration mapping (use these default mappings when updating to GPT-5.2):
 
-| Current model | Target model | Target reasoning_effort | Notes |
-|---------------|--------------|------------------------|-------|
-| GPT-4o | GPT-5.2 | none | Treat 4o/4.1 migrations as "fast/low-deliberation" by default; only increase effort if evals regress |
-| GPT-4.1 | GPT-5.2 | none | Same mapping as GPT-4o to preserve snappy behavior |
-| GPT-5 | GPT-5.2 | same value except minimal -> none | Preserve none/low/medium/high to keep latency/quality profile consistent |
-| GPT-5.1 | GPT-5.2 | same value | Preserve existing effort selection; adjust only after running evals |
+| Current model | Target model | Target reasoning_effort           | Notes                                                                                                |
+| ------------- | ------------ | --------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| GPT-4o        | GPT-5.2      | none                              | Treat 4o/4.1 migrations as "fast/low-deliberation" by default; only increase effort if evals regress |
+| GPT-4.1       | GPT-5.2      | none                              | Same mapping as GPT-4o to preserve snappy behavior                                                   |
+| GPT-5         | GPT-5.2      | same value except minimal -> none | Preserve none/low/medium/high to keep latency/quality profile consistent                             |
+| GPT-5.1       | GPT-5.2      | same value                        | Preserve existing effort selection; adjust only after running evals                                  |
 
 Note: default reasoning level for GPT-5 is medium, and for GPT-5.1 and GPT-5.2 is none.
 
 General steps to migrate to a new model:
+
 1. Switch models, don't change prompts yet. Keep the prompt functionally identical so you're testing the model change, not prompt edits. Make one change at a time.
-2. Pin reasoning_effort. Explicitly set GPT-5.2 reasoning_effort to match the prior model's latency/depth profile.
-3. Run evals for a baseline. After model + effort are aligned, run your eval suite. If results look good, you're ready to ship.
-4. If regressions, tune the prompt. Use targeted constraints (verbosity/format/schema, scope discipline) to restore parity or improve.
-5. Re-run evals after each small change. Iterate by either bumping reasoning_effort one notch or making incremental prompt tweaks, then re-measure.
+1. Pin reasoning_effort. Explicitly set GPT-5.2 reasoning_effort to match the prior model's latency/depth profile.
+1. Run evals for a baseline. After model + effort are aligned, run your eval suite. If results look good, you're ready to ship.
+1. If regressions, tune the prompt. Use targeted constraints (verbosity/format/schema, scope discipline) to restore parity or improve.
+1. Re-run evals after each small change. Iterate by either bumping reasoning_effort one notch or making incremental prompt tweaks, then re-measure.
 
 GPT-5.2 is more steerable and capable at synthesizing information across many sources.
 
 Best practices:
+
 - Specify the research bar up front: tell the model how you want to perform search, whether to follow second-order leads, resolve contradictions, and include citations. Explicitly state how far to go.
 - Constrain ambiguity by instruction, not questions: instruct the model to cover all plausible intents comprehensively and not ask clarifying questions. Require breadth and depth when uncertainty exists.
 - Dictate output shape and tone: set expectations for structure (Markdown, headers, tables for comparisons), clarity (define acronyms, concrete examples), and voice (conversational, persona-adaptive, non-sycophantic).

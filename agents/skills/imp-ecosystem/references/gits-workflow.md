@@ -28,14 +28,17 @@ Location: `.imp/gits/config.nix`
 ## Commands
 
 ### Initialize
+
 ```bash
 imp-gits init
 ```
+
 - Clones injection repos to `.imp/gits/<name>.git/`
 - Sets up sparse checkout for injected paths
 - Checks out files into workspace
 
 ### Update
+
 ```bash
 imp-gits pull          # Fetch and merge
 imp-gits pull --force  # Fetch and force checkout (overwrites local changes)
@@ -44,18 +47,23 @@ imp-gits pull --force  # Fetch and force checkout (overwrites local changes)
 `--force` only affects files in the injection's `use` list, not other local files.
 
 ### Status
+
 ```bash
 imp-gits status
 ```
+
 Shows status of main repo and all injections.
 
 ### Push changes
+
 ```bash
 imp-gits push
 ```
+
 Push changes back to injection remotes. Prompts for confirmation.
 
 ### Switch context
+
 ```bash
 # bash/zsh
 eval "$(imp-gits use lintfra)"   # Switch to injection
@@ -99,6 +107,7 @@ my-project/
 ## Workflow: Adding an injection
 
 1. Add to config:
+
 ```nix
 {
   injections = [
@@ -115,11 +124,13 @@ my-project/
 ```
 
 2. Initialize:
+
 ```bash
 imp-gits init
 ```
 
 3. Verify files appeared and flake works:
+
 ```bash
 ls lint/ast-rules/
 nix flake check
@@ -136,17 +147,20 @@ imp-gits pull --force # Overwrite local changes to injected files
 ## Workflow: Contributing back
 
 1. Switch context:
+
 ```bash
 eval "$(imp-gits use lintfra)"
 ```
 
 2. Make changes, commit:
+
 ```bash
 git add -A
 git commit -m "Fix lint rule"
 ```
 
 3. Push:
+
 ```bash
 git push
 # or

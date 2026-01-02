@@ -79,27 +79,32 @@ plugin use <name>
 "hello" | my-command
 ```
 
----
+______________________________________________________________________
 
 ## Command Types
 
 ### SimplePluginCommand
+
 For commands that operate on single values:
+
 - Input: `&Value`
 - Output: `Result<Value, LabeledError>`
 - Use for: transformations, simple filters, single value operations
 
 ### PluginCommand
+
 For commands that handle streams:
+
 - Input: `PipelineData`
 - Output: `Result<PipelineData, LabeledError>`
 - Use for: streaming transformations, lazy processing, large datasets
 
----
+______________________________________________________________________
 
 ## Defining Command Signatures
 
 ### Input-Output Types
+
 ```rust
 use nu_protocol::{Signature, Type};
 
@@ -110,6 +115,7 @@ Signature::build("my-command")
 Common types: `String`, `Int`, `Float`, `Bool`, `List(Box<Type>)`, `Record(...)`, `Any`
 
 ### Parameters
+
 ```rust
 Signature::build("my-command")
     .named("output", SyntaxShape::Filepath, "output file", Some('o'))
@@ -120,6 +126,7 @@ Signature::build("my-command")
 ```
 
 ### Accessing Arguments
+
 ```rust
 fn run(&self, call: &EvaluatedCall, ...) -> Result<Value, LabeledError> {
     let output: Option<String> = call.get_flag("output")?;
@@ -130,17 +137,18 @@ fn run(&self, call: &EvaluatedCall, ...) -> Result<Value, LabeledError> {
 }
 ```
 
----
+______________________________________________________________________
 
 ## Error Handling
 
 Always return `LabeledError` with span information:
+
 ```rust
 Err(LabeledError::new("Error message")
     .with_label("specific issue", call.head))
 ```
 
----
+______________________________________________________________________
 
 ## Serialization
 
@@ -153,11 +161,12 @@ serve_plugin(&MyPlugin, MsgPackSerializer)  // Production
 // serve_plugin(&MyPlugin, JsonSerializer)  // Debug
 ```
 
----
+______________________________________________________________________
 
 ## Common Patterns
 
 ### String Transformation
+
 ```rust
 Value::String { val, .. } => {
     Ok(Value::string(val.to_uppercase(), call.head))
@@ -165,6 +174,7 @@ Value::String { val, .. } => {
 ```
 
 ### List Generation
+
 ```rust
 let items = vec![
     Value::string("a", call.head),
@@ -174,6 +184,7 @@ Ok(Value::list(items, call.head))
 ```
 
 ### Record (Table Row)
+
 ```rust
 use nu_protocol::record;
 
@@ -187,6 +198,7 @@ Ok(Value::record(
 ```
 
 ### Table (List of Records)
+
 ```rust
 let records = vec![
     Value::record(record! { "name" => Value::string("a", span) }, span),
@@ -195,7 +207,7 @@ let records = vec![
 Ok(Value::list(records, call.head))
 ```
 
----
+______________________________________________________________________
 
 ## Streaming with PipelineData
 
@@ -232,7 +244,7 @@ impl PluginCommand for MyStreamingCommand {
 - `PipelineData::ListStream(stream, None)` - Stream of values (lazy)
 - `PipelineData::ByteStream(stream, None)` - Raw byte stream
 
----
+______________________________________________________________________
 
 ## Engine Interface
 
@@ -252,7 +264,7 @@ let current_dir = engine.get_current_dir()?;
 let result = engine.eval("ls | length")?;
 ```
 
----
+______________________________________________________________________
 
 ## Custom Values
 
@@ -281,11 +293,12 @@ impl CustomValue for MyCustomValue {
 
 Add `typetag = "0.2"` to Cargo.toml.
 
----
+______________________________________________________________________
 
 ## Development Workflow
 
 ### Iterative Development
+
 ```bash
 cargo build
 plugin add target/debug/nu_plugin_<name>
@@ -299,6 +312,7 @@ plugin use <name>
 ```
 
 ### Automated Testing
+
 ```toml
 [dev-dependencies]
 nu-plugin-test-support = "0.109.1"
@@ -317,12 +331,12 @@ mod tests {
 }
 ```
 
----
+______________________________________________________________________
 
 ## Debugging
 
 1. **Use JsonSerializer** temporarily to inspect protocol messages
-2. **Log to file** (plugins can't use stdout/stderr):
+1. **Log to file** (plugins can't use stdout/stderr):
    ```rust
    fn debug_log(msg: &str) {
        std::fs::OpenOptions::new()
@@ -331,21 +345,21 @@ mod tests {
            .write_all(format!("{}\n", msg).as_bytes()).ok();
    }
    ```
-3. **Run with backtrace**: `RUST_BACKTRACE=1 nu`
-4. **Check registration**: `plugin list | where name == myplugin`
+1. **Run with backtrace**: `RUST_BACKTRACE=1 nu`
+1. **Check registration**: `plugin list | where name == myplugin`
 
----
+______________________________________________________________________
 
 ## Common Issues
 
-| Problem | Solution |
-|---------|----------|
-| Plugin not found | Use absolute path, check binary name is `nu_plugin_*` |
-| Changes not reflected | `plugin rm` then `plugin add` again, or restart nu |
-| "Plugin panicked" | Add file logging, check for unwrap() calls |
-| Path not found | Use `engine.get_current_dir()?.join(path)` |
+| Problem               | Solution                                              |
+| --------------------- | ----------------------------------------------------- |
+| Plugin not found      | Use absolute path, check binary name is `nu_plugin_*` |
+| Changes not reflected | `plugin rm` then `plugin add` again, or restart nu    |
+| "Plugin panicked"     | Add file logging, check for unwrap() calls            |
+| Path not found        | Use `engine.get_current_dir()?.join(path)`            |
 
----
+______________________________________________________________________
 
 ## Important Constraints
 
@@ -353,7 +367,7 @@ mod tests {
 - **Path handling**: Always resolve relative to `engine.get_current_dir()`
 - **Version match**: `nu-plugin` and `nu-protocol` versions must match target Nushell
 
----
+______________________________________________________________________
 
 ## Multi-Command Plugin
 
@@ -375,7 +389,7 @@ impl SimplePluginCommand for Add {
 }
 ```
 
----
+______________________________________________________________________
 
 ## External Resources
 

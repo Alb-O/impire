@@ -84,26 +84,27 @@ ls                              # Produces table of files
 
 ## Data Types
 
-| Type | Example | Notes |
-|------|---------|-------|
-| string | `"hello"` | Interpolation: `$"value: ($var)"` |
-| int | `42`, `0xff` | Hex, octal (`0o755`), binary (`0b101`) |
-| float | `3.14` | |
-| bool | `true` / `false` | |
-| list | `[1, 2, 3]` | Access: `$list.0` or `$list | get 0` |
-| record | `{name: "x", value: 1}` | Access: `$rec.name` |
-| table | `[[col1, col2]; [a, 1], [b, 2]]` | List of records |
-| duration | `1hr + 30min` | Semantic units |
-| filesize | `10mb` | Semantic units |
-| datetime | `2024-01-15` | Native date operations |
-| range | `1..10` or `1..<10` | Inclusive / exclusive |
-| closure | `{|x| $x + 1}` | Captures environment |
-| cell-path | `$table.0.name` | Path into data structures |
-| nothing | `null` | |
+| Type      | Example                          | Notes                                  |
+| --------- | -------------------------------- | -------------------------------------- |
+| string    | `"hello"`                        | Interpolation: `$"value: ($var)"`      |
+| int       | `42`, `0xff`                     | Hex, octal (`0o755`), binary (`0b101`) |
+| float     | `3.14`                           |                                        |
+| bool      | `true` / `false`                 |                                        |
+| list      | `[1, 2, 3]`                      | Access: `$list.0` or \`$list           |
+| record    | `{name: "x", value: 1}`          | Access: `$rec.name`                    |
+| table     | `[[col1, col2]; [a, 1], [b, 2]]` | List of records                        |
+| duration  | `1hr + 30min`                    | Semantic units                         |
+| filesize  | `10mb`                           | Semantic units                         |
+| datetime  | `2024-01-15`                     | Native date operations                 |
+| range     | `1..10` or `1..<10`              | Inclusive / exclusive                  |
+| closure   | \`{                              | x                                      |
+| cell-path | `$table.0.name`                  | Path into data structures              |
+| nothing   | `null`                           |                                        |
 
 ## Common Commands Quick Reference
 
 **Files & Navigation**
+
 ```nu
 ls **/*.rs                    # Recursive glob (no find needed!)
 cd ~/projects
@@ -112,6 +113,7 @@ save output.json              # Saves structured data
 ```
 
 **Data Manipulation**
+
 ```nu
 where condition               # Filter rows
 select col1 col2              # Choose columns
@@ -123,6 +125,7 @@ update col { new_value }      # Modify column
 ```
 
 **Text Processing**
+
 ```nu
 lines                         # Split text into lines
 split row ","                 # Split string
@@ -151,19 +154,19 @@ docker ps --format json | from json
 
 ## Bash to Nushell Translation
 
-| Bash | Nushell |
-|------|---------|
-| `$VAR` | `$env.VAR` (env) or `$var` (local) |
-| `export VAR=x` | `$env.VAR = "x"` |
-| `$(cmd)` | `(cmd)` |
-| `cmd \| grep pattern` | `cmd \| where col =~ pattern` |
+| Bash                      | Nushell                                    |
+| ------------------------- | ------------------------------------------ |
+| `$VAR`                    | `$env.VAR` (env) or `$var` (local)         |
+| `export VAR=x`            | `$env.VAR = "x"`                           |
+| `$(cmd)`                  | `(cmd)`                                    |
+| `cmd \| grep pattern`     | `cmd \| where col =~ pattern`              |
 | `cmd \| awk '{print $1}'` | `cmd \| get column` or `cmd \| select col` |
-| `cmd \| wc -l` | `cmd \| length` |
-| `[ -f file ]` | `("file" \| path exists)` |
-| `for i in ...; do` | `for i in ... { }` |
-| `VAR=x cmd` | `with-env {VAR: x} { cmd }` |
-| `cmd > file` | `cmd \| save file` |
-| `cmd 2>&1` | `cmd \| complete` |
+| `cmd \| wc -l`            | `cmd \| length`                            |
+| `[ -f file ]`             | `("file" \| path exists)`                  |
+| `for i in ...; do`        | `for i in ... { }`                         |
+| `VAR=x cmd`               | `with-env {VAR: x} { cmd }`                |
+| `cmd > file`              | `cmd \| save file`                         |
+| `cmd 2>&1`                | `cmd \| complete`                          |
 
 ## Error Handling
 
@@ -200,6 +203,7 @@ def my-func [value: any]: list -> list {
 ```
 
 **Why this matters**:
+
 - Pipeline input can be **lazily evaluated** (streaming)
 - Parameters are **eagerly evaluated** (loaded into memory)
 - Different calling conventions entirely
@@ -233,13 +237,13 @@ ls | where $big_files
 ## Common Gotchas
 
 1. **Parentheses for subexpressions**: `(ls | length)` not `ls | length` in expressions
-2. **Closures need parameter**: `each {|it| $it.name }` not `each { $it.name }`
-3. **`$in` for pipeline input**: `"text" | { $in | str upcase }`
-4. **External output is text**: Pipe through `lines` or `from json` to structure
-5. **Semicolons separate statements** on same line, not for line endings
-6. **`^` prefix**: Force system command over Nushell builtin
-7. **`each` on records**: Only runs once! Use `items` or `transpose` instead
-8. **Optional fields**: Use `$record.field?` to avoid errors on missing fields
+1. **Closures need parameter**: `each {|it| $it.name }` not `each { $it.name }`
+1. **`$in` for pipeline input**: `"text" | { $in | str upcase }`
+1. **External output is text**: Pipe through `lines` or `from json` to structure
+1. **Semicolons separate statements** on same line, not for line endings
+1. **`^` prefix**: Force system command over Nushell builtin
+1. **`each` on records**: Only runs once! Use `items` or `transpose` instead
+1. **Optional fields**: Use `$record.field?` to avoid errors on missing fields
 
 ## References
 
@@ -253,6 +257,7 @@ Read the relevant reference files based on the task at hand:
 - [production.md](references/production.md) - Testing, validation, logging, error handling patterns
 
 **Plugin Development** (for building Nushell plugins in Rust):
+
 - [plugins.md](references/plugins.md) - Complete guide to building Nushell plugins
 - Template: `scripts/init_plugin.py` and `assets/plugin-template/`
 

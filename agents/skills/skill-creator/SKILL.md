@@ -30,9 +30,9 @@ In opencode, skills are stored in `~/.config/opencode/skill/` (note the singular
 ### What Skills Provide
 
 1. Specialized workflows for specific domains
-2. Tool integrations for file formats or APIs
-3. Domain expertise (company knowledge, schemas, business logic)
-4. Bundled resources (scripts, references, assets)
+1. Tool integrations for file formats or APIs
+1. Domain expertise (company knowledge, schemas, business logic)
+1. Bundled resources (scripts, references, assets)
 
 ## Core Principles
 
@@ -112,8 +112,8 @@ Do NOT create extraneous files: README.md, INSTALLATION_GUIDE.md, CHANGELOG.md, 
 Skills use a three-level loading system to manage context efficiently:
 
 1. **Metadata (name + description)** - Always in context (~100 words)
-2. **SKILL.md body** - When skill triggers (<5k words)
-3. **Bundled resources** - As needed by the agent (Unlimited because scripts can be executed without reading into context window)
+1. **SKILL.md body** - When skill triggers (\<5k words)
+1. **Bundled resources** - As needed by the agent (Unlimited because scripts can be executed without reading into context window)
 
 #### Progressive Disclosure Patterns
 
@@ -176,21 +176,23 @@ For simple edits, modify the XML directly.
 The agent reads REDLINING.md or OOXML.md only when needed.
 
 Guidelines:
+
 - Keep references one level deep from SKILL.md
 - For files >100 lines, include a table of contents
 
 ## Skill Creation Process
 
 1. Understand with concrete examples
-2. Plan reusable contents (scripts, references, assets)
-3. Initialize (run init_skill.py)
-4. Edit (implement resources and write SKILL.md)
-5. Validate (run quick_validate.py)
-6. Iterate based on real usage
+1. Plan reusable contents (scripts, references, assets)
+1. Initialize (run init_skill.py)
+1. Edit (implement resources and write SKILL.md)
+1. Validate (run quick_validate.py)
+1. Iterate based on real usage
 
 ### Step 1: Understand with Concrete Examples
 
 Skip if usage patterns are already clear. Ask clarifying questions:
+
 - What functionality should the skill support?
 - Examples of how it would be used?
 - What phrases should trigger this skill?
@@ -226,6 +228,7 @@ Start with `scripts/`, `references/`, `assets/` from Step 2. Test scripts by run
 #### Update SKILL.md
 
 Frontmatter:
+
 - `name`: skill name
 - `description`: what it does AND when to trigger. Include all trigger info here (body loads after triggering). Example: "Document creation/editing with tracked changes. Use for .docx files: creating, modifying, tracked changes, comments."
 

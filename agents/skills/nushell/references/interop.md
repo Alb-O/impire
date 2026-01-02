@@ -26,6 +26,7 @@ ls                            # Nushell's ls (structured table)
 ```
 
 Use `^` when:
+
 - You need system-specific flags not supported by Nushell
 - A script requires exact POSIX behavior
 - You're piping to another external command expecting text
@@ -106,6 +107,7 @@ curl -s https://api.example.com/data.yaml | from yaml
 ## Defining Typed Signatures with extern
 
 For frequently used external commands, define a full typed signature to get:
+
 - Parse-time type checking
 - Context-aware completions
 - Proper syntax highlighting
@@ -190,16 +192,16 @@ overlay hide custom-env
 
 ## Interop Patterns Summary
 
-| Scenario | Approach |
-|----------|----------|
-| Run external command | Just type it: `git status` |
-| Force system version | Use `^`: `^ls -la` |
-| Capture errors | `cmd \| complete` |
-| Parse delimited text | `lines \| split column` |
+| Scenario                | Approach                       |
+| ----------------------- | ------------------------------ |
+| Run external command    | Just type it: `git status`     |
+| Force system version    | Use `^`: `^ls -la`             |
+| Capture errors          | `cmd \| complete`              |
+| Parse delimited text    | `lines \| split column`        |
 | Parse structured format | `from json`, `from yaml`, etc. |
-| Extract with pattern | `parse "{field}: {value}"` |
-| Add types to external | `extern "cmd" [args...]` |
-| Source bash script | Capture env diff pattern |
+| Extract with pattern    | `parse "{field}: {value}"`     |
+| Add types to external   | `extern "cmd" [args...]`       |
+| Source bash script      | Capture env diff pattern       |
 
 ## Common External Command Recipes
 
