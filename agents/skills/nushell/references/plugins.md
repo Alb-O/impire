@@ -1,19 +1,16 @@
----
-name: nushell-plugin-builder
-description: Guide for creating Nushell plugins in Rust using nu_plugin and nu_protocol crates. Use when users want to build custom Nushell commands, extend Nushell with new functionality, create data transformations, or integrate external tools/APIs into Nushell. Covers project setup, command implementation, streaming data, custom values, and testing.
----
+# Nushell Plugin Development
 
-# Nushell Plugin Builder
-
-## Overview
-
-This skill helps create Nushell plugins in Rust. Plugins are standalone executables that extend Nushell with custom commands, data transformations, and integrations.
+Nushell plugins are standalone Rust executables that extend Nushell with custom commands.
 
 ## Quick Start
 
 ### 1. Create Plugin Project
 
 ```bash
+# Use template script
+python3 scripts/init_plugin.py <plugin-name>
+
+# OR manually
 cargo new nu_plugin_<name>
 cd nu_plugin_<name>
 cargo add nu-plugin nu-protocol
@@ -43,9 +40,7 @@ struct MyCommand;
 impl SimplePluginCommand for MyCommand {
     type Plugin = MyPlugin;
 
-    fn name(&self) -> &str {
-        "my-command"
-    }
+    fn name(&self) -> &str { "my-command" }
 
     fn signature(&self) -> Signature {
         Signature::build("my-command")
@@ -84,6 +79,8 @@ plugin use <name>
 "hello" | my-command
 ```
 
+---
+
 ## Command Types
 
 ### SimplePluginCommand
@@ -98,7 +95,7 @@ For commands that handle streams:
 - Output: `Result<PipelineData, LabeledError>`
 - Use for: streaming transformations, lazy processing, large datasets
 
-See `references/advanced-features.md` for streaming examples.
+---
 
 ## Defining Command Signatures
 
@@ -133,6 +130,8 @@ fn run(&self, call: &EvaluatedCall, ...) -> Result<Value, LabeledError> {
 }
 ```
 
+---
+
 ## Error Handling
 
 Always return `LabeledError` with span information:
@@ -141,23 +140,20 @@ Err(LabeledError::new("Error message")
     .with_label("specific issue", call.head))
 ```
 
-This shows users exactly where the error occurred in their command.
+---
 
 ## Serialization
 
-**MsgPackSerializer** (Recommended)
-- Binary format, much faster
-- Use for production plugins
+**MsgPackSerializer** (Recommended) - Binary format, faster, use for production.
 
-**JsonSerializer**
-- Text-based, human-readable
-- Useful for debugging
+**JsonSerializer** - Text-based, useful for debugging.
 
-Choose in `main()`:
 ```rust
 serve_plugin(&MyPlugin, MsgPackSerializer)  // Production
 // serve_plugin(&MyPlugin, JsonSerializer)  // Debug
 ```
+
+---
 
 ## Common Patterns
 
@@ -199,11 +195,93 @@ let records = vec![
 Ok(Value::list(records, call.head))
 ```
 
-See `references/examples.md` for complete working examples including:
-- Filtering streams
-- HTTP API calls
-- File system operations
-- Multi-command plugins
+---
+
+## Streaming with PipelineData
+
+```rust
+use nu_plugin::PluginCommand;
+use nu_protocol::{PipelineData, ListStream};
+
+impl PluginCommand for MyStreamingCommand {
+    type Plugin = MyPlugin;
+
+    fn run(
+        &self,
+        plugin: &MyPlugin,
+        engine: &EngineInterface,
+        call: &EvaluatedCall,
+        input: PipelineData,
+    ) -> Result<PipelineData, LabeledError> {
+        let result = input.into_iter().map(|value| {
+            process_value(value, call.head)
+        });
+
+        Ok(PipelineData::ListStream(
+            ListStream::new(result, call.head, None),
+            None
+        ))
+    }
+}
+```
+
+### PipelineData Variants
+
+- `PipelineData::Empty` - No data
+- `PipelineData::Value(value, None)` - Single value
+- `PipelineData::ListStream(stream, None)` - Stream of values (lazy)
+- `PipelineData::ByteStream(stream, None)` - Raw byte stream
+
+---
+
+## Engine Interface
+
+```rust
+// Environment variables
+engine.add_env_var("MY_VAR", Value::string("value", span))?;
+let home = engine.get_env_var("HOME")?;
+
+// Configuration
+let config = engine.get_config()?;
+let plugin_config = engine.get_plugin_config()?;  // $env.config.plugins.PLUGIN_NAME
+
+// Current directory
+let current_dir = engine.get_current_dir()?;
+
+// Evaluation
+let result = engine.eval("ls | length")?;
+```
+
+---
+
+## Custom Values
+
+Define custom data types with `#[typetag::serde]`:
+
+```rust
+use nu_protocol::{CustomValue, ShellError, Span, Value};
+use serde::{Deserialize, Serialize};
+
+#[derive(Clone, Debug, Serialize, Deserialize)]
+struct MyCustomValue { data: String }
+
+#[typetag::serde]  // Required for plugin serialization
+impl CustomValue for MyCustomValue {
+    fn clone_value(&self, span: Span) -> Value {
+        Value::custom(Box::new(self.clone()), span)
+    }
+    fn type_name(&self) -> String { "MyCustomType".to_string() }
+    fn to_base_value(&self, span: Span) -> Result<Value, ShellError> {
+        Ok(Value::string(&self.data, span))
+    }
+    fn as_any(&self) -> &dyn std::any::Any { self }
+    fn as_mut_any(&mut self) -> &mut dyn std::any::Any { self }
+}
+```
+
+Add `typetag = "0.2"` to Cargo.toml.
+
+---
 
 ## Development Workflow
 
@@ -239,52 +317,65 @@ mod tests {
 }
 ```
 
-See `references/testing-debugging.md` for debugging techniques and troubleshooting.
+---
 
-## Advanced Features
+## Debugging
 
-### Streaming Data
-For lazy processing of large datasets, use `PipelineData`:
-```rust
-impl PluginCommand for MyCommand {
-    fn run(&self, input: PipelineData, ...) -> Result<PipelineData, LabeledError> {
-        let filtered = input.into_iter().filter(|v| /* condition */);
-        Ok(PipelineData::ListStream(ListStream::new(filtered, span, None), None))
-    }
-}
-```
+1. **Use JsonSerializer** temporarily to inspect protocol messages
+2. **Log to file** (plugins can't use stdout/stderr):
+   ```rust
+   fn debug_log(msg: &str) {
+       std::fs::OpenOptions::new()
+           .create(true).append(true)
+           .open("/tmp/myplugin.log").unwrap()
+           .write_all(format!("{}\n", msg).as_bytes()).ok();
+   }
+   ```
+3. **Run with backtrace**: `RUST_BACKTRACE=1 nu`
+4. **Check registration**: `plugin list | where name == myplugin`
 
-### Engine Interaction
-```rust
-let home = engine.get_env_var("HOME")?;
-engine.add_env_var("MY_VAR", Value::string("value", span))?;  // before response
-let config = engine.get_plugin_config()?;  // $env.config.plugins.<name>
-let cwd = engine.get_current_dir()?;
-```
+---
 
-### Custom Values
-Define custom data types that extend beyond Nushell's built-in types. See `references/advanced-features.md` for complete guide.
+## Common Issues
+
+| Problem | Solution |
+|---------|----------|
+| Plugin not found | Use absolute path, check binary name is `nu_plugin_*` |
+| Changes not reflected | `plugin rm` then `plugin add` again, or restart nu |
+| "Plugin panicked" | Add file logging, check for unwrap() calls |
+| Path not found | Use `engine.get_current_dir()?.join(path)` |
+
+---
 
 ## Important Constraints
 
-**Stdio Restrictions**
-- Plugins cannot use stdin/stdout (reserved for protocol)
-- Check `engine.is_using_stdio()` before attempting stdio access
+- **Stdio reserved**: Plugins can't use stdin/stdout (protocol uses them)
+- **Path handling**: Always resolve relative to `engine.get_current_dir()`
+- **Version match**: `nu-plugin` and `nu-protocol` versions must match target Nushell
 
-**Path Handling**
-- Always use paths relative to `engine.get_current_dir()`
-- Never assume current working directory
+---
 
-**Version Compatibility**
-- Match `nu-plugin` and `nu-protocol` versions
-- Both should match target Nushell version
+## Multi-Command Plugin
 
-## Reference Documentation
+```rust
+impl Plugin for MathPlugin {
+    fn commands(&self) -> Vec<Box<dyn PluginCommand<Plugin = Self>>> {
+        vec![
+            Box::new(Add),
+            Box::new(Multiply),
+            Box::new(Power),
+        ]
+    }
+}
 
-- **`references/plugin-protocol.md`** - Protocol details, serialization, lifecycle
-- **`references/advanced-features.md`** - Streaming, EngineInterface, custom values
-- **`references/examples.md`** - Complete working examples and patterns
-- **`references/testing-debugging.md`** - Development workflow, debugging, troubleshooting
+struct Add;
+impl SimplePluginCommand for Add {
+    fn name(&self) -> &str { "math add" }
+    // ...
+}
+```
+
+---
 
 ## External Resources
 
@@ -292,13 +383,4 @@ Define custom data types that extend beyond Nushell's built-in types. See `refer
 - [nu-plugin API Docs](https://docs.rs/nu-plugin/latest/nu_plugin/)
 - [Plugin Examples Repository](https://github.com/nushell/plugin-examples)
 - [Awesome Nu](https://github.com/nushell/awesome-nu) - Community plugins
-- [nushellWith](https://github.com/YPares/nushellWith) - Nix flake for building reproducible Nushell environments with plugins. Includes 100+ pre-packaged plugins from crates.io with binary caching via Garnix. Useful for testing plugins in isolated environments or building standalone Nu scripts.
-
-## Template Script
-
-Use `scripts/init_plugin.py` to scaffold a new plugin with proper structure:
-```bash
-python3 scripts/init_plugin.py <plugin-name> [--output-dir <path>]
-```
-
-This creates a complete working plugin template ready to customize.
+- [nushellWith](https://github.com/YPares/nushellWith) - Nix flake for reproducible plugin environments

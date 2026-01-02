@@ -1,6 +1,6 @@
 ---
 name: nushell
-description: Write and debug Nushell scripts, pipelines, and commands. Use when working with .nu files, writing Nushell code, converting bash to Nushell, or when the user mentions nushell.
+description: Write and debug Nushell scripts, pipelines, and commands. Also build Nushell plugins in Rust. Use when working with .nu files, writing Nushell code, converting bash to Nushell, creating custom Nushell commands/plugins, or when the user mentions nushell.
 ---
 
 # Nushell
@@ -251,6 +251,10 @@ Read the relevant reference files based on the task at hand:
 - [interop.md](references/interop.md) - External command integration, `complete`, `extern`
 - [scripting.md](references/scripting.md) - Custom commands, modules, `main`, control flow
 - [production.md](references/production.md) - Testing, validation, logging, error handling patterns
+
+**Plugin Development** (for building Nushell plugins in Rust):
+- [plugins.md](references/plugins.md) - Complete guide to building Nushell plugins
+- Template: `scripts/init_plugin.py` and `assets/plugin-template/`
 
 ## Running Nushell
 
