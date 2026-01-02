@@ -140,6 +140,35 @@ def "main deploy" [env: string] {
 }
 ```
 
+### Enriching Help with Attributes
+
+Use attributes to add examples and metadata to commands:
+
+```nu
+# Initialize the project
+@category project
+@example "Basic init" { my-tool init }
+@example "With path" { my-tool init --path ./custom }
+def "main init" [
+    --path (-p): string  # Custom project path
+]: nothing -> nothing {
+    # ...
+}
+```
+
+Available attributes:
+- `@category <name>` - Command category
+- `@example "desc" { code }` - Example (with optional `--result`)
+- `@search-terms <terms>` - Additional search terms
+- `@deprecated "msg"` - Mark as deprecated
+
+Type signatures improve help output:
+
+```nu
+def "main status" []: nothing -> record { ... }  # Shows: nothing -> record
+def "main list" []: nothing -> table { ... }     # Shows: nothing -> table
+```
+
 ## Control Flow
 
 ### Conditionals

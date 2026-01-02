@@ -1,7 +1,7 @@
 /**
   Shell init feature.
 
-  Switches login shells to fish with XDG-aware history.
+  Switches login shells to nushell with XDG-aware history.
 */
 let
   mod =
@@ -13,10 +13,10 @@ let
         fi
         export HISTFILE="$XDG_STATE_HOME/bash/history"
         mkdir -p "$(dirname "$HISTFILE")"
-        if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+        if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "nu" && -z ''${BASH_EXECUTION_STRING} ]]
         then
           shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-          exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
+          exec ${pkgs.nushell}/bin/nu $LOGIN_OPTION
         fi
       '';
     };

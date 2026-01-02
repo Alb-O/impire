@@ -8,7 +8,7 @@ let
     { lib, ... }:
     {
       programs.fish = {
-        enable = lib.mkDefault true;
+        enable = lib.mkDefault false;
         shellAbbrs = {
           l = "lazygit";
           o = "opencode";

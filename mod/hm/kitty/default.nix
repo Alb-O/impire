@@ -28,7 +28,7 @@ let
         settings = lib.mkForce {
           shell_integration = "enabled";
           term = "xterm-256color";
-          shell = "fish";
+          shell = "nu";
           strip_trailing_spaces = "smart";
           focus_follows_mouse = "yes";
           enable_audio_bell = "no";
