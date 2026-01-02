@@ -51,7 +51,7 @@ let
             branches = "branch -a";
             remotes = "remote -v";
             # Clone bare with fetch refspec configured and main worktree added
-            clone-bare = "!f() { git clone --bare \"$1\" \"$2\" && git -C \"$2\" config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' && git -C \"$2\" fetch origin && git -C \"$2\" worktree add @/main main; }; f";
+            clone-bare = ''!f() { url="$1"; dir="''${2:-$(basename "$url" .git).git}"; git clone --bare "$url" "$dir" && git -C "$dir" config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' && git -C "$dir" fetch origin && git -C "$dir" worktree add @/main main; }; f'';
           };
           diff = {
             colorMoved = "default";

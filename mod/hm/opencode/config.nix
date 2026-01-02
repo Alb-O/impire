@@ -35,6 +35,16 @@
     };
   };
 
+  formatter = {
+    rustfmt = {
+      disabled = true;
+    };
+  };
+  lsp = {
+    rust = {
+      disabled = true;
+    };
+  };
   plugin = [
     "opencode-openai-codex-auth@latest"
     "opencode-antigravity-auth@latest"
