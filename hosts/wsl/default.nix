@@ -10,7 +10,7 @@
   __host = {
     system = "x86_64-linux";
     stateVersion = "24.11";
-    bases = [ "mod.base.base" ];
+
     sinks = [ "shared.os" ];
     hmSinks = [ "shared.hm" ];
     modules = [

@@ -2,7 +2,7 @@
 { config, ... }:
 {
 
-  defaultSopsFile = ../secrets.yaml;
+  defaultSopsFile = ./secrets.yaml;
   age.keyFile = "/home/albert/.config/sops/age/keys.txt";
 
   secrets."nas/smb-credentials" = {

@@ -7,10 +7,7 @@
   __host = {
     system = "x86_64-linux";
     stateVersion = "24.11";
-    bases = [
-      "mod.base.base"
-      "mod.base.desktop-base"
-    ];
+
     sinks = [
       "shared.os"
       "desktop.nixos"

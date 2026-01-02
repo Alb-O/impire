@@ -7,9 +7,6 @@
       "wheel"
       "audio"
       "video"
-      "networkmanager"
-      "libvirtd"
-      "uinput"
     ];
   };
 }

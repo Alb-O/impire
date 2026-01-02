@@ -1,6 +1,14 @@
-# VM-specific user config - extends shared base user
-# Base config provides albert user setup
-# This adds root user for VM testing
 {
+  users.albert = {
+    isNormalUser = true;
+    description = "Albert O'Shea";
+    initialPassword = "changeme";
+    extraGroups = [
+      "wheel"
+      "audio"
+      "video"
+    ];
+  };
+
   users.root.initialPassword = "changeme";
 }
