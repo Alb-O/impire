@@ -32,16 +32,55 @@ let
 
         settings = {
           show_banner = false;
+          use_kitty_protocol = true;
+
+          shell_integration = {
+            osc2 = true; # window title
+            osc7 = true; # current directory (enables click-to-cd in kitty)
+            osc133 = true; # prompt markers (semantic shell integration)
+          };
+
           completions = {
             case_sensitive = false;
             quick = true;
             partial = true;
             algorithm = "fuzzy";
           };
+
           history = {
             file_format = "sqlite";
             max_size = 100000;
           };
+
+          menus = [
+            {
+              name = "completion_menu";
+              only_buffer_difference = false;
+              marker = " ";
+              type = {
+                layout = "ide";
+                min_completion_width = 0;
+                max_completion_width = 150;
+                max_completion_height = 25;
+                padding = 0;
+                border = false;
+                cursor_offset = 0;
+                description_mode = "prefer_right";
+                min_description_width = 0;
+                max_description_width = 50;
+                max_description_height = 10;
+                description_offset = 1;
+                correct_cursor_pos = true;
+              };
+              style = {
+                text = "white";
+                selected_text = "white_reverse";
+                description_text = "yellow";
+                match_text = "{ attr: u }";
+                selected_match_text = "{ attr: ur }";
+              };
+            }
+          ];
         };
 
         extraConfig = ''
@@ -93,6 +132,14 @@ let
           $env.PROMPT_INDICATOR_VI_INSERT = ""
           $env.PROMPT_INDICATOR_VI_NORMAL = ""
           $env.PROMPT_MULTILINE_INDICATOR = "::: "
+
+          # Store last command output in $env.last, retrieve with `_`
+          $env.config.hooks.display_output = {||
+            tee { table --expand | print }
+            | try { if $in != null { $env.last = $in } }
+          }
+
+          def _ []: nothing -> any { $env.last? }
         '';
 
         extraEnv = ''

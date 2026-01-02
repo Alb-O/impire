@@ -17,6 +17,7 @@ let
         nano
         nmap
         lsof
+        tmux
       ];
     };
 in
