@@ -5,7 +5,7 @@
 */
 let
   mod =
-    { lib, pkgs, ... }:
+    { lib, pkgs, config, ... }:
     let
       scripts = pkgs.symlinkJoin {
         name = "nushell-scripts";
@@ -86,6 +86,10 @@ let
         extraConfig = ''
           # Custom scripts
           use ${scripts}/nerd-grep.nu
+
+          # imp modules (Nu-only)
+          use ${config.home.profileDirectory}/lib/imp *
+          use ${config.home.profileDirectory}/lib/imp-gits *
 
           def create_left_prompt [] {
             let last_exit = $env.LAST_EXIT_CODE
