@@ -3,12 +3,12 @@ keys:
 
 creation_rules:
   # User secrets
-  - path_regex: ^nix/registry/users/[^/]+/(?:secrets/.*\.yaml|secrets\.yaml)$
+  - path_regex: ^users/[^/]+/secrets\.yaml$
     key_groups:
       - age:
           - *albert
   # Host secrets
-  - path_regex: ^nix/registry/hosts/[^/]+/secrets\.yaml$
+  - path_regex: ^hosts/[^/]+/secrets\.yaml$
     key_groups:
       - age:
           - *albert

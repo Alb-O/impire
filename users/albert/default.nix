@@ -5,6 +5,7 @@
 */
 {
   lib,
+  config,
   ...
 }:
 {
@@ -15,7 +16,16 @@
     stateVersion = "24.05";
   };
 
-  sops.defaultSopsFile = ./secrets.yaml;
+  sops = {
+    defaultSopsFile = ./secrets.yaml;
+    secrets."nix/github-access-tokens" = {
+      path = "${config.home.homeDirectory}/.config/nix/access-tokens";
+    };
+  };
+
+  nix.extraOptions = ''
+    !include ${config.home.homeDirectory}/.config/nix/access-tokens
+  '';
 
   programs.git.settings.user = {
     name = lib.mkDefault "Albert O'Shea";
