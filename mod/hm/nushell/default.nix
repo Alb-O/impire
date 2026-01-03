@@ -113,6 +113,7 @@
             extraConfig = ''
               # Custom scripts
               use ${scripts}/nerd-grep.nu
+              use ${scripts}/icons.nu *
 
               # imp modules (Nu-only)
               use ${config.home.profileDirectory}/lib/imp *
@@ -128,25 +129,17 @@
                 let git_branch = do {
                   let branch = (do { git branch --show-current } | complete)
                   if $branch.exit_code == 0 and ($branch.stdout | str trim) != "" {
-                    $" (ansi magenta_bold)󰘬 ($branch.stdout | str trim)(ansi reset)"
+                    $" (ansi magenta_bold)($ICON_GIT_BRANCH) ($branch.stdout | str trim)(ansi reset)"
                   } else {
                     ""
                   }
                 }
 
                 let nix_shell = if ($env.IN_NIX_SHELL? | default "" | is-not-empty) {
-                  $" (ansi blue_bold) (ansi reset)"
+                  $" (ansi blue_bold)($ICON_NIX) (ansi reset)"
                 } else {
                   ""
                 }
-
-                let suffix = if $last_exit != 0 {
-                  $"(ansi red_bold)   (ansi reset)"
-                } else {
-                  $"(ansi blue_bold)   (ansi reset)"
-                }
-
-                $"($git_branch)($nix_shell)($suffix)"
 
                 let corner_color = if $last_exit != 0 { ansi red } else { ansi dark_gray }
                 let bottom_line = $"($corner_color)╰─(ansi reset)($git_branch)($nix_shell) "

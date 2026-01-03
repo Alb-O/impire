@@ -17,10 +17,14 @@
     awww.inputs.nixpkgs.follows = "nixpkgs";
     helium-browser.url = "github:Alb-O/helium-browser-flake";
     helium-browser.inputs.nixpkgs.follows = "nixpkgs";
+    imp-cli.url = "github:imp-nix/imp.cli";
+    imp-cli.inputs.nixpkgs.follows = "nixpkgs";
     imp-fmt.url = "github:imp-nix/imp.fmt";
     imp-fmt.inputs.nixpkgs.follows = "nixpkgs";
-    mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
-    mcp-servers-nix.inputs.nixpkgs.follows = "nixpkgs";
+    imp-gits.url = "github:imp-nix/imp.gits";
+    imp-gits.inputs.nixpkgs.follows = "nixpkgs";
+    imp-lint.url = "github:imp-nix/imp.lint";
+    imp-lint.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     neovim-nightly-overlay.inputs.nixpkgs.follows = "nixpkgs";
     nix-colorizer.url = "github:nutsalhan87/nix-colorizer";
@@ -32,7 +36,7 @@
     nur.inputs.nixpkgs.follows = "nixpkgs";
     oc-bin-flake.url = "github:bogorad/oc-bin-flake";
     oc-bin-flake.inputs.nixpkgs.follows = "nixpkgs";
-    opencode-flake.url = "github:sst/opencode/v1.0.191";
+    opencode-flake.url = "github:sst/opencode/v1.0.201";
     opencode-flake.inputs.nixpkgs.follows = "nixpkgs";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
