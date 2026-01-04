@@ -72,7 +72,7 @@ def nerd-grep-load-icons [json_path: path]: nothing -> table {
 
 # Format icon for display in list
 def nerd-grep-format-line [icon: record]: nothing -> string {
-    $"($icon.char)  ($icon.name) \(($icon.code)\)"
+    $"($icon.char)  ($icon.name)  (ansi dark_gray)($icon.code)(ansi reset)"
 }
 
 # Format icon with full details
@@ -120,7 +120,7 @@ export def main [
             ...$icon
         }}
 
-        let selected = $formatted | input list --fuzzy -d display "Select icon"
+        let selected = $formatted | input list --fuzzy -d display "Select icon:"
 
         if $selected == null {
             return

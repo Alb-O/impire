@@ -51,6 +51,7 @@
             ];
 
             shellAliases = {
+              j = "worktree-jump";
               l = "lazygit";
               o = "opencode";
               y = "yazi";
@@ -113,6 +114,7 @@
             extraConfig = ''
               # Custom scripts
               use ${scripts}/nerd-grep.nu
+              use ${scripts}/worktree-jump.nu
               use ${scripts}/icons.nu *
 
               # imp modules (Nu-only)
