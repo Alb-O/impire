@@ -17,14 +17,22 @@ A spec is a markdown document defining persona, constraints, architecture, and o
 
 ## Key Patterns
 
-### Explicit Task Roadmaps
+### Explicit Task Roadmaps with Checkboxes
 
-Every spec should include an objective, actionable sequence of tasks. GPT-5.2 performs best with concrete work items and clear completion criteria, not abstract guidance.
+Every spec should include an objective, actionable sequence of tasks using **markdown checkboxes** (`- [ ]`). GPT-5.2 performs best with concrete work items and clear completion criteria, not abstract guidance.
 
+- Use `- [ ]` checkboxes for all tasks—GPT-5.2 tracks and checks them off as work completes
 - Numbered phases with measurable objectives
 - Specific file paths and function names
 - Concrete steps: Read X -> Edit Y -> Run Z
 - Completion criteria for each task
+
+Example:
+```markdown
+- [ ] 1.1 Fix null check in `parse_config()` at line 42
+- [ ] 1.2 Add error handling to `load_settings()`
+- [ ] 1.3 Run tests and verify all pass
+```
 
 Avoid vague instructions like "improve the code". Be specific: "Fix the null check in parse_config() at line 42".
 

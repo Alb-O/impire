@@ -50,7 +50,7 @@ ______________________________________________________________________
 
 ## Implementation Roadmap
 
-[Define concrete, numbered phases with explicit tasks]
+[Define concrete, numbered phases with explicit tasks using markdown checkboxes]
 
 ### Phase 1: [Phase Name]
 
@@ -58,8 +58,8 @@ Objective: [What this phase accomplishes]
 
 Tasks:
 
-- 1.1 \[Task\]: File `path/to/file` -> Steps: Read, Edit X, Run check -> Done: builds pass
-- 1.2 \[Task\]: ...
+- [ ] 1.1 \[Task\]: File `path/to/file` -> Steps: Read, Edit X, Run check -> Done: builds pass
+- [ ] 1.2 \[Task\]: ...
 
 ### Phase 2: [Phase Name]
 

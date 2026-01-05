@@ -47,7 +47,7 @@ let
 
         # Compute project name from git root
         # Handles: worktrees (uses main worktree name), submodules (uses submodule dir name),
-        # and bare repo subdirectories (orchestration dirs)
+        # bare repo subdirectories, and @ orchestration dirs (uses parent bare repo name)
         def __cargo_project_name []: nothing -> string {
           let git_root = (do { git rev-parse --show-toplevel } | complete)
           if $git_root.exit_code != 0 {
@@ -89,7 +89,15 @@ let
             }
           }
 
-          $git_root | path basename
+          let name = ($git_root | path basename)
+          if $name == "@" {
+            # @ is an orchestration directory, check if parent is a bare repo
+            let parent = ($git_root | path dirname)
+            if (__is_bare_repo $parent) {
+              return (__bare_repo_name $parent)
+            }
+          }
+          $name
         }
 
         def --env __update_cargo_target_dir [] {
