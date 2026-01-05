@@ -13,68 +13,105 @@ let
       # Shell function to compute project name from git root
       # Handles: worktrees (uses main worktree name), submodules (uses submodule dir name)
       cargoTargetDirScript = ''
-        function __cargo_project_name
-          set -l git_root (git rev-parse --show-toplevel 2>/dev/null)
-          if test -z "$git_root"
-            return 1
-          end
+        # Check if a directory is a bare git repo (has HEAD, objects/, refs/)
+        def __is_bare_repo [dir: string]: nothing -> bool {
+          ([
+            (($"($dir)/HEAD" | path type) == "file")
+            (($"($dir)/objects" | path type) == "dir")
+            (($"($dir)/refs" | path type) == "dir")
+          ] | all { $in })
+        }
 
-          set -l git_path "$git_root/.git"
+        # Walk up directory tree to find a bare repo
+        def __find_bare_repo []: nothing -> string {
+          mut current = (pwd)
+          mut result = ""
+          while true {
+            if (__is_bare_repo $current) {
+              $result = $current
+              break
+            }
+            let parent = ($current | path dirname)
+            if $parent == $current {
+              break
+            }
+            $current = $parent
+          }
+          $result
+        }
 
-          if test -f "$git_path"
-            set -l gitdir_content (cat "$git_path" | string replace "gitdir: " "")
+        # Extract project name from bare repo path (strips .git suffix if present)
+        def __bare_repo_name [path: string]: nothing -> string {
+          $path | path basename | str replace --regex '\.git$' ""
+        }
+
+        # Compute project name from git root
+        # Handles: worktrees (uses main worktree name), submodules (uses submodule dir name),
+        # and bare repo subdirectories (orchestration dirs)
+        def __cargo_project_name []: nothing -> string {
+          let git_root = (do { git rev-parse --show-toplevel } | complete)
+          if $git_root.exit_code != 0 {
+            # Not in a worktree - check if we're inside a bare repo structure
+            let bare_repo = (__find_bare_repo)
+            if ($bare_repo | is-not-empty) {
+              return (__bare_repo_name $bare_repo)
+            }
+            return ""
+          }
+          let git_root = ($git_root.stdout | str trim)
+
+          let git_path = $"($git_root)/.git"
+
+          if ($git_path | path type) == "file" {
+            let gitdir_content = (open --raw $git_path | str replace "gitdir: " "" | str trim)
 
             # Resolve relative gitdir paths (relative to the .git file location)
-            set -l gitdir_path "$gitdir_content"
-            if not string match -q "/*" "$gitdir_path"
-              set gitdir_path (path resolve (dirname "$git_path")/"$gitdir_path")
-            end
+            let gitdir_path = if ($gitdir_content | str starts-with "/") {
+              $gitdir_content
+            } else {
+              $"($git_path | path dirname)/($gitdir_content)" | path expand
+            }
 
-            if string match -q "*/.git/modules/*" "$gitdir_path"
-              set -l module_path (string replace -r ".*/\\.git/modules/" "" "$gitdir_path")
-              echo (string replace -r "/worktrees/.*" "" "$module_path")
-              return 0
+            if ($gitdir_path =~ "/.git/modules/") {
+              let module_path = ($gitdir_path | str replace --regex '.*/\.git/modules/' "")
+              return ($module_path | str replace --regex "/worktrees/.*" "")
 
-            else if string match -q "*/worktrees/*" "$gitdir_path"
-              set -l repo_git_dir (string replace -r "/worktrees/.*" "" "$gitdir_path")
+            } else if ($gitdir_path =~ "/worktrees/") {
+              let repo_git_dir = ($gitdir_path | str replace --regex "/worktrees/.*" "")
 
-              if test (basename "$repo_git_dir") = ".git"
+              if ($repo_git_dir | path basename) == ".git" {
                 # non-bare worktree: ".../repo/.git/worktrees/<name>"
-                echo (basename (dirname "$repo_git_dir"))
-              else
+                return ($repo_git_dir | path dirname | path basename)
+              } else {
                 # bare worktree: ".../evildoer.git/worktrees/<name>"
-                echo (basename "$repo_git_dir")
-                # if you want to strip ".git", use:
-                # echo (basename "$repo_git_dir" | string replace -r "\\.git\$" "")
-              end
-              return 0
-            end
-          end
+                return ($repo_git_dir | path basename | str replace --regex '\.git$' "")
+              }
+            }
+          }
 
-          echo (basename "$git_root")
-        end
+          $git_root | path basename
+        }
 
-        function __update_cargo_target_dir --on-variable PWD
-          # Only set in directories with Cargo.toml
-          if not test -f Cargo.toml
-            if set -q CARGO_TARGET_DIR
-              set -e CARGO_TARGET_DIR
-            end
-            return
-          end
+        def --env __update_cargo_target_dir [] {
+          let project_name = (__cargo_project_name)
+          if ($project_name | is-not-empty) {
+            $env.CARGO_TARGET_DIR = $"${cacheHome}/cargo/targets/($project_name)"
+          } else if "CARGO_TARGET_DIR" in $env {
+            hide-env CARGO_TARGET_DIR
+          }
+        }
 
-          set -l project_name (__cargo_project_name)
-          if test -n "$project_name"
-            set -gx CARGO_TARGET_DIR "${cacheHome}/cargo/targets/$project_name"
-          end
-        end
+        # Hook to update CARGO_TARGET_DIR on directory change
+        $env.config.hooks.env_change.PWD = (
+          ($env.config.hooks.env_change.PWD? | default []) | append {|before, after| __update_cargo_target_dir }
+        )
 
         # Run once on shell startup
         __update_cargo_target_dir
       '';
     in
     {
-      programs.fish.interactiveShellInit = cargoTargetDirScript;
+      programs.nushell.extraConfig = cargoTargetDirScript;
 
       # Ensure the cache directory exists
       home.file."${cacheHome}/cargo/targets/.keep".text = "";
