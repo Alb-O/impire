@@ -40,6 +40,7 @@
             impCli
             impGits
             impLint
+            pkgs.pandoc
           ];
 
           programs.nushell = {
@@ -115,6 +116,7 @@
               # Custom scripts
               use ${scripts}/nerd-grep.nu
               use ${scripts}/worktree-jump.nu
+              use ${scripts}/pandoc-media.nu
               use ${scripts}/icons.nu *
 
               # imp modules (Nu-only)
