@@ -64,6 +64,32 @@ def process-files [
 }
 ```
 
+### Wrapped Commands (--wrapped)
+
+Use `--wrapped` to pass arguments verbatim to external commands without Nushell parsing flags:
+
+```nu
+# Without --wrapped: FAILS - Nushell parses -s as flag to wrapper
+def my-wrapper [...args: string] { ^tool ...$args }
+my-wrapper cmd -s value  # Error: unknown flag -s
+
+# With --wrapped: WORKS - args passed through unparsed  
+def --wrapped my-wrapper [...args: string] { ^tool ...$args }
+my-wrapper cmd -s value  # Runs: tool cmd -s value
+```
+
+Common pattern for CLI wrappers:
+
+```nu
+def --wrapped git-safe [...args: string] {
+    let result = (^git ...$args | complete)
+    if $result.exit_code != 0 { error make { msg: $result.stderr } }
+    $result.stdout
+}
+```
+
+**Note**: Rest args are always strings with `--wrapped`. Convert types explicitly: `--timeout ($seconds | into string)`
+
 ### Documentation
 
 ```nu
