@@ -32,6 +32,7 @@
     nix-wallpaper.inputs.nixpkgs.follows = "nixpkgs";
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nur.url = "github:nix-community/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";
     oc-bin-flake.url = "github:bogorad/oc-bin-flake";
