@@ -2,7 +2,7 @@
 description: Un-shittify Rust code
 ---
 
-The changes look to be working fine, but we'd like to limit the ammount of 'code churn' and unnecessary content in the repository.
+The changes look to be working fine, but we'd like to limit the amount of 'code churn' and unnecessary content in the repository.
 
 Start by inspecting what you are actually changing:
 

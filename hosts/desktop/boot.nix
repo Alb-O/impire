@@ -1,6 +1,10 @@
 # Boot configuration for desktop
 # Limine bootloader, nvidia kernel params, AMD/nvidia modules
 {
+  # Blacklist Logitech HID++ drivers to test if they cause MX Master 4 stutter
+  # Forces generic HID handling instead
+  blacklistedKernelModules = [ "hid-logitech-hidpp" "hid-logitech-dj" ];
+
   kernelParams = [
     "processor.ignore_ppc=1"
     "initcall_blacklist=amd_pstate_init"
