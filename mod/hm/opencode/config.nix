@@ -48,7 +48,7 @@
   plugin = [
     "opencode-openai-codex-auth@latest"
     "opencode-antigravity-auth@latest"
-    "@tarquinen/opencode-dcp@latest"
+    #"@tarquinen/opencode-dcp@latest"
   ];
   provider =
     (builtins.fromJSON (builtins.readFile ./codex.json))
