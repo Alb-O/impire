@@ -35,10 +35,10 @@
               source = ../../../agents/skills;
               recursive = true;
             };
-            "opencode/command" = {
-              source = ./command;
-              recursive = true;
-            };
+            #"opencode/command" = {
+            #  source = ./command;
+            #  recursive = true;
+            #};
           };
         };
     in

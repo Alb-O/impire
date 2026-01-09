@@ -46,6 +46,7 @@
     };
   };
   plugin = [
+    "opencode-anthropic-auth@latest"
     "opencode-openai-codex-auth@latest"
     "opencode-antigravity-auth@latest"
     #"@tarquinen/opencode-dcp@latest"
