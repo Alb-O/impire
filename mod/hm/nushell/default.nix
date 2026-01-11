@@ -31,7 +31,7 @@
           };
           impCli = inputs.imp-cli.packages.${pkgs.system}.default;
           impGits = inputs.imp-gits.packages.${pkgs.system}.default;
-          impLint = inputs.imp-lint.packages.${pkgs.system}.default;
+          impLint = inputs.imp-lint.packages.${pkgs.system}.imp-lint;
         in
         {
           home.shell.enableNushellIntegration = true;
