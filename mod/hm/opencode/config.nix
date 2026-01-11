@@ -47,12 +47,10 @@
   };
   plugin = [
     "opencode-anthropic-auth@latest"
-    "opencode-openai-codex-auth@latest"
     "opencode-antigravity-auth@latest"
     #"@tarquinen/opencode-dcp@latest"
   ];
   provider =
-    (builtins.fromJSON (builtins.readFile ./codex.json))
-    #// (builtins.fromJSON (builtins.readFile ./proxy.json));
-    // (builtins.fromJSON (builtins.readFile ./antigravity.json));
+    #(builtins.fromJSON (builtins.readFile ./proxy.json));
+    (builtins.fromJSON (builtins.readFile ./antigravity.json));
 }
