@@ -17,9 +17,10 @@
     serviceConfig = {
       Type = "simple";
       # --free=10%: evict cache when disk drops below 10% free
-      # Cache stored in /var/cache/catfs-nas
-      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /var/cache/catfs-nas /home/albert/@/mount";
-      ExecStart = "${pkgs.catfs}/bin/catfs --free=10% /var/cache/catfs-nas /home/albert/@/mount-raw /home/albert/@/mount";
+      CacheDirectory = "catfs-nas"; # systemd creates /var/cache/catfs-nas owned by User
+      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p /home/albert/@/mount";
+      # catfs <from> <to> <mountpoint> - cache reads from mount-raw into /var/cache/catfs-nas
+      ExecStart = "${pkgs.catfs}/bin/catfs -f --free=10% /home/albert/@/mount-raw /var/cache/catfs-nas /home/albert/@/mount";
       ExecStop = "/run/wrappers/bin/fusermount -u /home/albert/@/mount";
       Restart = "on-failure";
       User = "albert";
