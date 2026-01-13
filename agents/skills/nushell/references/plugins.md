@@ -336,7 +336,7 @@ ______________________________________________________________________
 ## Debugging
 
 1. **Use JsonSerializer** temporarily to inspect protocol messages
-1. **Log to file** (plugins can't use stdout/stderr):
+2. **Log to file** (plugins can't use stdout/stderr):
    ```rust
    fn debug_log(msg: &str) {
        std::fs::OpenOptions::new()
@@ -345,8 +345,8 @@ ______________________________________________________________________
            .write_all(format!("{}\n", msg).as_bytes()).ok();
    }
    ```
-1. **Run with backtrace**: `RUST_BACKTRACE=1 nu`
-1. **Check registration**: `plugin list | where name == myplugin`
+3. **Run with backtrace**: `RUST_BACKTRACE=1 nu`
+4. **Check registration**: `plugin list | where name == myplugin`
 
 ______________________________________________________________________
 

@@ -10,14 +10,14 @@ Query Rust docs and crate APIs from the command line.
 
 ## Commands
 
-| Command | Purpose |
-|---------|---------|
-| `print` | Render items as Markdown |
-| `list` | List items with source locations |
-| `skelebuild` | Stateful context builder |
-| `raw` | Output raw rustdoc JSON |
-| `readme` | Fetch crate README |
-| `agents` | Print AI agent guides |
+| Command      | Purpose                          |
+| ------------ | -------------------------------- |
+| `print`      | Render items as Markdown         |
+| `list`       | List items with source locations |
+| `skelebuild` | Stateful context builder         |
+| `raw`        | Output raw rustdoc JSON          |
+| `readme`     | Fetch crate README               |
+| `agents`     | Print AI agent guides            |
 
 ## Targets
 
@@ -69,16 +69,16 @@ Defaults: `--implementation` ON, `--private` ON. Opt-out with `--no-implementati
 
 ## Common Options
 
-| Option | Effect |
-|--------|--------|
-| `--search <regex>` | Filter by pattern |
-| `--search-spec name,doc,signature,path` | Search domains |
-| `--implementation` | Include method bodies |
-| `--raw-source` | Include full source files |
-| `--private` | Include private items |
-| `--features <list>` | Enable crate features |
-| `--all-features` | Enable all features |
-| `--no-default-features` | Disable defaults |
+| Option                                  | Effect                    |
+| --------------------------------------- | ------------------------- |
+| `--search <regex>`                      | Filter by pattern         |
+| `--search-spec name,doc,signature,path` | Search domains            |
+| `--implementation`                      | Include method bodies     |
+| `--raw-source`                          | Include full source files |
+| `--private`                             | Include private items     |
+| `--features <list>`                     | Enable crate features     |
+| `--all-features`                        | Enable all features       |
+| `--no-default-features`                 | Disable defaults          |
 
 ## Path Resolution
 
@@ -95,11 +95,13 @@ ripdoc list serde --search "Deserialize" --search-spec path --private
 ## Troubleshooting
 
 **No matches found:**
+
 1. Check path: `ripdoc list <target> --search "<name>" --search-spec path --private`
 2. Item may be re-exported; search by name for definition path
 3. Private items need `--private`
 
 **Missing items:**
+
 - Feature-gated: use `--features`
 - Private: use `--private`
 - Not in rustdoc: use `add-raw` or `add-file`

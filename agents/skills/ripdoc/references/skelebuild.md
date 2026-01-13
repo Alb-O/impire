@@ -72,6 +72,7 @@ ripdoc skelebuild add serde::de::Deserialize
 ```
 
 **Resolution rules:**
+
 - Inside Cargo workspace: resolves workspace members and dependencies by name
 - Outside workspace: tries crates.io / local cache
 - For bin crates, the `crate::` prefix is often the *bin name*, not the package name
@@ -84,11 +85,12 @@ ripdoc list ./path/to/crate --search TerminalState --search-spec path --private
 ```
 
 **Inherent vs trait methods:** If ambiguous, use a more specific path:
+
 - Inherent: `crate::Type::method`
 - Trait: `crate::Trait::method`
 - Fully-qualified: `<crate::Type as crate::Trait>::method`
 
-## Speed Guide: 1000+ Lines in <60s
+## Speed Guide: 1000+ Lines in \<60s
 
 Execute multiple **parallel bash calls**, each containing **sequential `&&` chains**.
 
@@ -101,6 +103,7 @@ ripdoc skelebuild add ./crate Path2::Item1 && ripdoc skelebuild add ./crate Path
 ```
 
 **Strategy:**
+
 1. Initialize: `ripdoc skelebuild reset --output <file>.md`
 2. Parallel blast: Launch 5-10 parallel bash tools covering:
    - Core structs & lifecycle methods
@@ -110,6 +113,7 @@ ripdoc skelebuild add ./crate Path2::Item1 && ripdoc skelebuild add ./crate Path
 3. Read output: The file auto-updates after each command
 
 **Rules:**
+
 - Sequential (`&&`): Within a single code path where order matters
 - Parallel: For unrelated paths or different subsystems
 - Use `--no-implementation` when you need ONLY signatures
@@ -123,6 +127,7 @@ Warning: 5 target entries exist but rebuilt output is nearly empty (0 chars).
 ```
 
 **Causes & solutions:**
+
 1. Feature-gated code: use `--features my_feature` when adding
 2. Code not in rustdoc: use `add-raw` or `add-file` instead
 3. Wrong paths: discover exact path with `ripdoc list --search <name> --private`

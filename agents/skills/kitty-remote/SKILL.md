@@ -25,9 +25,9 @@ Drive kitty instances via the remote control protocol and kitty-test-harness.
 ## Quick start
 
 1. Launch kitty with a unix socket (`--listen-on unix:/abs/path.sock` or `KITTY_LISTEN_ON`).
-1. Wait for `@ ls` to succeed before sending input.
-1. Send input with `send-text` and capture output with `get-text --extent screen`.
-1. Close with `close-window` and remove the socket.
+2. Wait for `@ ls` to succeed before sending input.
+3. Send input with `send-text` and capture output with `get-text --extent screen`.
+4. Close with `close-window` and remove the socket.
 
 ## Harness usage
 

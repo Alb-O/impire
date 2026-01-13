@@ -201,10 +201,10 @@ Note: default reasoning level for GPT-5 is medium, and for GPT-5.1 and GPT-5.2 i
 General steps to migrate to a new model:
 
 1. Switch models, don't change prompts yet. Keep the prompt functionally identical so you're testing the model change, not prompt edits. Make one change at a time.
-1. Pin reasoning_effort. Explicitly set GPT-5.2 reasoning_effort to match the prior model's latency/depth profile.
-1. Run evals for a baseline. After model + effort are aligned, run your eval suite. If results look good, you're ready to ship.
-1. If regressions, tune the prompt. Use targeted constraints (verbosity/format/schema, scope discipline) to restore parity or improve.
-1. Re-run evals after each small change. Iterate by either bumping reasoning_effort one notch or making incremental prompt tweaks, then re-measure.
+2. Pin reasoning_effort. Explicitly set GPT-5.2 reasoning_effort to match the prior model's latency/depth profile.
+3. Run evals for a baseline. After model + effort are aligned, run your eval suite. If results look good, you're ready to ship.
+4. If regressions, tune the prompt. Use targeted constraints (verbosity/format/schema, scope discipline) to restore parity or improve.
+5. Re-run evals after each small change. Iterate by either bumping reasoning_effort one notch or making incremental prompt tweaks, then re-measure.
 
 GPT-5.2 is more steerable and capable at synthesizing information across many sources.
 

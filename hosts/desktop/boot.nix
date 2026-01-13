@@ -3,7 +3,10 @@
 {
   # Blacklist Logitech HID++ drivers to test if they cause MX Master 4 stutter
   # Forces generic HID handling instead
-  blacklistedKernelModules = [ "hid-logitech-hidpp" "hid-logitech-dj" ];
+  blacklistedKernelModules = [
+    "hid-logitech-hidpp"
+    "hid-logitech-dj"
+  ];
 
   kernelParams = [
     "processor.ignore_ppc=1"

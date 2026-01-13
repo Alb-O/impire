@@ -5,11 +5,11 @@
 Every public function needs:
 
 1. Single-line summary - what it does
-1. Detailed description - how it behaves
-1. Parameter descriptions - inline (simple) or explicit (complex)
-1. Return value - in main text
-1. Error conditions - `# Errors` section if fallible
-1. Examples - `# Examples` section for public APIs
+2. Detailed description - how it behaves
+3. Parameter descriptions - inline (simple) or explicit (complex)
+4. Return value - in main text
+5. Error conditions - `# Errors` section if fallible
+6. Examples - `# Examples` section for public APIs
 
 ______________________________________________________________________
 

@@ -51,7 +51,7 @@ Separate behavioural changes from churn. As you review, actively avoid Rust-shap
 
 Once non-essential lines are identified, clean them up while keeping identical observable behaviour. Prefer minimal diffs: keep signatures stable, keep error shapes stable, keep logging consistent, keep module and crate boundaries clean.
 
----
+______________________________________________________________________
 
 ## Documentation Practices
 

@@ -16,7 +16,7 @@ $nu.default-config-dir        # Shows config path
 ### Startup Sequence
 
 1. **env.nu** - Loaded first, sets environment variables
-1. **config.nu** - Main configuration (aliases, commands, settings)
+2. **config.nu** - Main configuration (aliases, commands, settings)
 
 ```nu
 # env.nu - Environment setup

@@ -96,8 +96,8 @@ Static resources: templates, images, data files, schemas.
 ## Progressive disclosure
 
 1. Metadata (~100 tokens) - loaded at startup for all skills
-1. Instructions (\<5000 tokens) - loaded when skill activates
-1. Resources (as needed) - loaded only when required
+2. Instructions (\<5000 tokens) - loaded when skill activates
+3. Resources (as needed) - loaded only when required
 
 Keep SKILL.md under 500 lines. Move detailed content to separate files.
 

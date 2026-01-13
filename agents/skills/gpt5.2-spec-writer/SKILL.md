@@ -12,8 +12,8 @@ Guide for writing prompt specifications tailored for GPT-5.2. The model excels a
 A spec is a markdown document defining persona, constraints, architecture, and operational rules for an agent.
 
 1. Start with [references/spec-template.md](references/spec-template.md)
-1. Fill in project-specific sections (directive, architecture, conventions)
-1. Verify coverage: task structure, verbosity/scope constraints, tool usage guidance, context handling for large inputs
+2. Fill in project-specific sections (directive, architecture, conventions)
+3. Verify coverage: task structure, verbosity/scope constraints, tool usage guidance, context handling for large inputs
 
 ## Key Patterns
 
@@ -28,6 +28,7 @@ Every spec should include an objective, actionable sequence of tasks using **mar
 - Completion criteria for each task
 
 Example:
+
 ```markdown
 - [ ] 1.1 Fix null check in `parse_config()` at line 42
 - [ ] 1.2 Add error handling to `load_settings()`

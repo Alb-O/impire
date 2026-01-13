@@ -237,13 +237,13 @@ ls | where $big_files
 ## Common Gotchas
 
 1. **Parentheses for subexpressions**: `(ls | length)` not `ls | length` in expressions
-1. **Closures need parameter**: `each {|it| $it.name }` not `each { $it.name }`
-1. **`$in` for pipeline input**: `"text" | { $in | str upcase }`
-1. **External output is text**: Pipe through `lines` or `from json` to structure
-1. **Semicolons separate statements** on same line, not for line endings
-1. **`^` prefix**: Force system command over Nushell builtin
-1. **`each` on records**: Only runs once! Use `items` or `transpose` instead
-1. **Optional fields**: Use `$record.field?` to avoid errors on missing fields
+2. **Closures need parameter**: `each {|it| $it.name }` not `each { $it.name }`
+3. **`$in` for pipeline input**: `"text" | { $in | str upcase }`
+4. **External output is text**: Pipe through `lines` or `from json` to structure
+5. **Semicolons separate statements** on same line, not for line endings
+6. **`^` prefix**: Force system command over Nushell builtin
+7. **`each` on records**: Only runs once! Use `items` or `transpose` instead
+8. **Optional fields**: Use `$record.field?` to avoid errors on missing fields
 
 ## References
 

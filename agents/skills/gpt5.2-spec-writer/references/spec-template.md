@@ -13,9 +13,9 @@ ______________________________________________________________________
 This is not a review task. When given implementation requests:
 
 1. Edit files using tools to modify actual source files
-1. Debug and fix by running builds, reading errors, iterating until it compiles
-1. Test changes as appropriate
-1. Complete the full implementation; do not stop at partial solutions
+2. Debug and fix by running builds, reading errors, iterating until it compiles
+3. Test changes as appropriate
+4. Complete the full implementation; do not stop at partial solutions
 
 Unacceptable responses:
 
