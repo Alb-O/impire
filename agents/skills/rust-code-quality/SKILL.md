@@ -34,17 +34,18 @@ Separate behavioural changes from churn. As you review, actively avoid Rust-shap
 
 ### Remove
 
-- Inline comments that don't match the project's tone or that narrate obvious control flow
-- Defensive branches that assume impossible states on trusted codepaths (extra `match _ =>`, redundant `if let Some` guards, spurious fallbacks) unless you can point to a concrete invariant break
-- Error handling that's performative: turning simple `?` propagation into verbose `map_err` chains, adding "just in case" `catch_unwind`, or plumbing new error enums when an existing error type already expresses the failure. Consider that it may be better to let some code paths that should theoretically be invalid panic clearly
-- Type escape hatches (`Box<dyn Any>`, casts to silence the compiler) unless the area already uses that pattern and you can justify it mechanically
-- Tramp data and excessive named variables where they should really be inlined
-- Section markers/decorative comments; organization is implied by code structure and naming, not adhoc separators
+✗ Inline comments that don't match the project's tone or that narrate obvious control flow
+✗ Defensive branches that assume impossible states on trusted codepaths (extra `match _ =>`, redundant `if let Some` guards, spurious fallbacks) unless you can point to a concrete invariant break
+✗ Error handling that's performative: turning simple `?` propagation into verbose `map_err` chains, adding "just in case" `catch_unwind`, or plumbing new error enums when an existing error type already expresses the failure. Consider that it may be better to let some code paths that should theoretically be invalid panic clearly
+✗ Type escape hatches (`Box<dyn Any>`, casts to silence the compiler) unless the area already uses that pattern and you can justify it mechanically
+✗ Tramp data and excessive named variables where they should really be inlined
+✗ Section markers/decorative comments (organization is implied by code structure and naming, not adhoc separators)
 
 ### Keep
 
-- Comprehensive, technical docstrings (important for rustdoc, required on all public API)
-- Rustdoc best practices (intra-doc links for type ref, standard headings e.g. `# Errors`, `# Arguments`)
+✓ Comprehensive, technical docstrings (important for rustdoc, required on all public API)
+✓ Rustdoc best practices (intra-doc links for type ref, standard headings e.g. `# Errors`, `# Arguments`)
+✓ All existing docstrings, even if they seem repetitive (do not remove docstrings, especially for pubs!)
 
 ### Principles
 
@@ -56,22 +57,22 @@ Once non-essential lines are identified, clean them up while keeping identical o
 
 ### Do
 
-- Begin every doc comment with single-line summary
-- Use intra-doc links for all type references
-- Document all error conditions with `# Errors`
-- Include practical examples for public APIs
-- Link standard library types: \[`Vec`\], \[`HashMap`\], etc.
-- Use inline parameter descriptions for simple functions (0-2 params)
-- Describe return values in main text, not separate sections
+✓ Begin every doc comment with single-line summary
+✓ Use intra-doc links for all type references
+✓ Document all error conditions with `# Errors`
+✓ Include practical examples for public APIs
+✓ Link standard library types: \[`Vec`\], \[`HashMap`\], etc.
+✓ Use inline parameter descriptions for simple functions (0-2 params)
+✓ Describe return values in main text, not separate sections
 
 ### Don't
 
-- Document standard trait implementations (`Debug`, `Display`, `From`)
-- Add separate `# Returns` sections (inline instead)
-- Mention variable types already in signatures
-- Use comments on same line as code
-- Skip error documentation for fallible functions
-- Sprinkle small inline `//` comments; merge these into a comprehensive docstring if useful, otherwise remove them completely
+✗ Document standard trait implementations (`Debug`, `Display`, `From`)
+✗ Add separate `# Returns` sections (inline instead)
+✗ Mention variable types already in signatures
+✗ Use comments on same line as code
+✗ Skip error documentation for fallible functions
+✗ Sprinkle small inline `//` comments; merge these into a comprehensive docstring if useful, otherwise remove them completely
 
 ## Quick Reference
 
