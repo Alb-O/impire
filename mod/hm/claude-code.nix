@@ -16,7 +16,6 @@
         {
           inputs,
           pkgs,
-          lib,
           ...
         }:
         let
@@ -34,6 +33,10 @@
           home.file = {
             ".claude/skills" = {
               source = ../../agents/skills;
+              recursive = true;
+            };
+            ".claude/commands" = {
+              source = ../../agents/commands;
               recursive = true;
             };
           };
