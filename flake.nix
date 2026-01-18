@@ -19,8 +19,6 @@
     helium-browser.inputs.nixpkgs.follows = "nixpkgs";
     imp-cli.url = "github:imp-nix/imp.cli";
     imp-cli.inputs.nixpkgs.follows = "nixpkgs";
-    imp-fmt.url = "github:imp-nix/imp.fmt";
-    imp-fmt.inputs.nixpkgs.follows = "nixpkgs";
     imp-gits.url = "github:imp-nix/imp.gits";
     imp-gits.inputs.nixpkgs.follows = "nixpkgs";
     imp-lint.url = "github:imp-nix/imp.lint";

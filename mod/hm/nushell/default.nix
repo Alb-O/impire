@@ -168,6 +168,8 @@
             '';
 
             extraEnv = ''
+              $env.EDITOR = "xeno"
+
               # direnv hook
               $env.config = ($env.config? | default {} | merge {
                 hooks: {

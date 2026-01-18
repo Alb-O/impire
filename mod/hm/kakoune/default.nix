@@ -7,7 +7,6 @@ let
     {
       programs.kakoune = {
         enable = true;
-        defaultEditor = true;
       };
 
       xdg.configFile = {
