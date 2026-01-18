@@ -1,3 +1,4 @@
+---
 allowed-tools: Bash
 description: Create a git commit
 ---

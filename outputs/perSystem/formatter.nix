@@ -11,7 +11,7 @@
     nix fmt -- --help # Show treefmt options
 */
 { pkgs, inputs, ... }:
-inputs.imp.formatterLib.make {
+inputs.imp.formatterLib.mk {
   inherit pkgs;
   treefmt-nix = inputs.imp.inputs.treefmt-nix;
 }

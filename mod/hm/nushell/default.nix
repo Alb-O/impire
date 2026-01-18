@@ -4,15 +4,6 @@
   Nushell with direnv integration and fish-style prompt.
 */
 {
-  __inputs = {
-    imp-cli.url = "github:imp-nix/imp.cli";
-    imp-cli.inputs.nixpkgs.follows = "nixpkgs";
-    imp-gits.url = "github:imp-nix/imp.gits";
-    imp-gits.inputs.nixpkgs.follows = "nixpkgs";
-    imp-lint.url = "github:imp-nix/imp.lint";
-    imp-lint.inputs.nixpkgs.follows = "nixpkgs";
-  };
-
   __functor =
     _: _:
     let
@@ -29,9 +20,9 @@
             name = "nushell-scripts";
             paths = [ ./scripts ];
           };
-          impCli = inputs.imp-cli.packages.${pkgs.system}.default;
-          impGits = inputs.imp-gits.packages.${pkgs.system}.default;
-          impLint = inputs.imp-lint.packages.${pkgs.system}.imp-lint;
+          # imp tools are now consolidated in imp-nix
+          impCli = inputs.imp.packages.${pkgs.system}.imp;
+          impGits = inputs.imp.packages.${pkgs.system}.imp-gits;
         in
         {
           home.shell.enableNushellIntegration = true;
@@ -39,7 +30,6 @@
           home.packages = [
             impCli
             impGits
-            impLint
             pkgs.pandoc
           ];
 
@@ -122,7 +112,6 @@
               # imp modules (Nu-only)
               use ${config.home.profileDirectory}/lib/imp *
               use ${config.home.profileDirectory}/lib/imp-gits *
-              use ${config.home.profileDirectory}/lib/imp-lint *
               def create_left_prompt [] {
                 let last_exit = $env.LAST_EXIT_CODE
 

@@ -8,10 +8,4 @@
       exec nix run .#nixosConfigurations.vm.config.system.build.vm
     ''}";
   };
-
-  refactor = {
-    type = "app";
-    meta.description = "Detect and fix broken registry references";
-    program = "${inputs.imp-refactor.packages.${pkgs.system}.default}/bin/imp-refactor";
-  };
 }

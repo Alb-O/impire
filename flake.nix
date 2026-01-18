@@ -7,9 +7,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    imp.url = "github:imp-nix/imp.lib";
-    imp-refactor.url = "github:imp-nix/imp.refactor";
-    imp-refactor.inputs.nixpkgs.follows = "nixpkgs";
+    imp.url = "github:imp-nix/imp-nix";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     # Collected from __inputs
@@ -17,12 +15,6 @@
     awww.inputs.nixpkgs.follows = "nixpkgs";
     helium-browser.url = "github:Alb-O/helium-browser-flake";
     helium-browser.inputs.nixpkgs.follows = "nixpkgs";
-    imp-cli.url = "github:imp-nix/imp.cli";
-    imp-cli.inputs.nixpkgs.follows = "nixpkgs";
-    imp-gits.url = "github:imp-nix/imp.gits";
-    imp-gits.inputs.nixpkgs.follows = "nixpkgs";
-    imp-lint.url = "github:imp-nix/imp.lint";
-    imp-lint.inputs.nixpkgs.follows = "nixpkgs";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     neovim-nightly-overlay.inputs.nixpkgs.follows = "nixpkgs";
     nix-colorizer.url = "github:nutsalhan87/nix-colorizer";
