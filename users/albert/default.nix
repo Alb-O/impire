@@ -21,6 +21,9 @@
     secrets."nix/github-access-tokens" = {
       path = "${config.home.homeDirectory}/.config/nix/access-tokens";
     };
+    secrets."ssh/ddraspi/password" = {
+      path = "${config.home.homeDirectory}/.ssh/ddraspi";
+    };
   };
 
   nix.extraOptions = ''

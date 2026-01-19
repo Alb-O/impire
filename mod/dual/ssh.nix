@@ -19,6 +19,10 @@ let
             user = "alb-o";
             proxyCommand = "cloudflared access ssh --hostname %h";
           };
+          "ddraspi" = {
+            hostname = "192.168.88.144";
+            user = "pivot";
+          };
           "*" = {
             controlMaster = lib.mkDefault "auto";
             controlPersist = lib.mkDefault "10m";
