@@ -2,14 +2,15 @@
 description: Cleanup inline comments into rustdoc docstrings
 ---
 
-Review the current work for inline comments. Consolidate useful technical information into proper rustdoc docstrings:
+1. review the current work for inline comments, consolidate useful technical information into proper rustdoc docstrings:
+- remove trivial inline comments
+- move comments explaining why or tech specs into rust docstrings
+- follow rustdoc conventions: Use `# Examples`, `# Panics`, `# Errors`, `# Safety` sections where appropriate
+- treat docstrings as tech specs with additional (start simple first line(s), move to spec lower, with intra-doc links)
+- remove implementation-specific qualifiers and trailing parenthesized text
+- remove comments used for section markers
+- do NOT outright remove docstrings, especially from pubs
 
-1. Remove inline comments that explain *what* (code should be self-documenting)
-2. Move comments explaining *why* - move these into /// or //! docstrings
-3. Follow rustdoc conventions: Use `# Examples`, `# Panics`, `# Errors`, `# Safety` sections where appropriate
-4. Delete redundant or obvious comments
-5. Delete comments used for section markers
-
-Do NOT outright remove docstrings, especially from pubs
-
-Additionally, briefly rework any inelegant or verbose code (e.g. check for tramp data, unecessary vars that could be inlined, performative error handling, etc.)
+2. briefly rework any inelegant or verbose code
+- check for tramp data, unecessary vars that could be inlined, performative error handling, etc.
+- prefer data-oriented orthogonal approaches
