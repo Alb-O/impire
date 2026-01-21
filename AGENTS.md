@@ -1,26 +1,9 @@
-# Adding SSH Hosts
+# impire
 
-1. Add host to `mod/dual/ssh.nix` matchBlocks:
+personal NixOS config dogfooding my nix library: [imp-nix](https://github.com/imp-nix)
 
-   ```nix
-   "hostname" = {
-     hostname = "1.2.3.4";
-     user = "username";
-   };
-   ```
+## specific topics
 
-2. Store password in sops:
+read when relevant to the session for more guidance:
 
-   ```bash
-   sops set users/<user>/secrets.yaml '["ssh"]["hostname"]["password"]' '"thepassword"'
-   ```
-
-3. Expose in `users/<user>/default.nix` sops.secrets:
-
-   ```nix
-   secrets."ssh/hostname/password" = {
-     path = "${config.home.homeDirectory}/.ssh/hostname-password";
-   };
-   ```
-
-4. Rebuild, then: `sshpass -f ~/.ssh/hostname-password ssh hostname`
+docs/agents/ssh.md
