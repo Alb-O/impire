@@ -109,8 +109,9 @@
               };
             };
             os = {
-              editPreset = "kakoune";
-              open = "xdg-open {{filename}} >/dev/null";
+              edit = "xeno {{filename}}";
+              editAtLine = "xeno {{filename}}:{{line}}";
+              editInTerminal = true;
             };
             keybinding = {
               universal = {
