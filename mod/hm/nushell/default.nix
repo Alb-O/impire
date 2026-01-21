@@ -20,16 +20,11 @@
             name = "nushell-scripts";
             paths = [ ./scripts ];
           };
-          # imp tools are now consolidated in imp-nix
-          impCli = inputs.imp.packages.${pkgs.system}.imp;
-          impGits = inputs.imp.packages.${pkgs.system}.imp-gits;
         in
         {
           home.shell.enableNushellIntegration = true;
 
           home.packages = [
-            impCli
-            impGits
             pkgs.pandoc
           ];
 
@@ -109,9 +104,6 @@
               use ${scripts}/pandoc-media.nu
               use ${scripts}/icons.nu *
 
-              # imp modules (Nu-only)
-              use ${config.home.profileDirectory}/lib/imp *
-              use ${config.home.profileDirectory}/lib/imp-gits *
               def create_left_prompt [] {
                 let last_exit = $env.LAST_EXIT_CODE
 
