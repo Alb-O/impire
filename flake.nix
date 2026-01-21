@@ -3,6 +3,9 @@
 {
   description = "Albert's NixOS configuration using imp";
   inputs = {
+    # Enable git submodules
+    self.submodules = true;
+
     # Core inputs
     flake-parts.url = "github:hercules-ci/flake-parts";
     home-manager.url = "github:nix-community/home-manager";

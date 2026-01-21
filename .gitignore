@@ -1,4 +1,4 @@
-flake.lock
+#flake.lock
 /result
 /tmp
 *.qcow2
