@@ -1,5 +1,5 @@
-use nu_plugin::{EvaluatedCall, MsgPackSerializer, serve_plugin};
 use nu_plugin::{EngineInterface, Plugin, PluginCommand, SimplePluginCommand};
+use nu_plugin::{EvaluatedCall, MsgPackSerializer, serve_plugin};
 use nu_protocol::{LabeledError, Signature, SyntaxShape, Type, Value};
 
 struct PLUGIN_NAMEPlugin;
@@ -56,8 +56,10 @@ impl SimplePluginCommand for PLUGIN_NAMECommand {
                 };
                 Ok(Value::int(text.len() as i64, call.head))
             }
-            _ => Err(LabeledError::new("Expected string input")
-                .with_label("requires string", call.head)),
+            _ => {
+                Err(LabeledError::new("Expected string input")
+                    .with_label("requires string", call.head))
+            }
         }
     }
 }
@@ -70,18 +72,15 @@ mod tests {
 
     #[test]
     fn test_examples() -> Result<(), ShellError> {
-        PluginTest::new("PLUGIN_NAME", PLUGIN_NAMEPlugin.into())?
-            .test_examples(&PLUGIN_NAMECommand)
+        PluginTest::new("PLUGIN_NAME", PLUGIN_NAMEPlugin.into())?.test_examples(&PLUGIN_NAMECommand)
     }
 
     #[test]
     fn test_basic() -> Result<(), ShellError> {
         let plugin_test = PluginTest::new("PLUGIN_NAME", PLUGIN_NAMEPlugin.into())?;
 
-        let result = plugin_test.eval_with(
-            "PLUGIN_NAME",
-            Value::string("hello", Span::test_data()),
-        )?;
+        let result =
+            plugin_test.eval_with("PLUGIN_NAME", Value::string("hello", Span::test_data()))?;
 
         assert_eq!(result, Value::int(5, Span::test_data()));
         Ok(())
