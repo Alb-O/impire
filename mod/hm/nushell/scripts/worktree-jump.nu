@@ -9,7 +9,7 @@ const BRANCH_PRIORITY = ["main", "master", "dev"]
 
 # Scan for worktree directories, preferring main > master > dev branches
 def jump-scan []: nothing -> table {
-    glob "~/@/dev/*/@"
+    let worktrees = glob "~/@/dev/*/@"
     | each {|repo_at|
         let parts = $repo_at | path split
         let dev_idx = $parts | enumerate | where item == "dev" | first | get index
@@ -23,7 +23,17 @@ def jump-scan []: nothing -> table {
         }
     }
     | compact
-    | sort-by name
+
+    # Scan for regular git repos (containing .git file or directory)
+    let regular = glob "~/@/dev/*"
+    | where {|d| ($d | path type) == "dir" and not ($d | str ends-with "@")}
+    | where {|d| ($d | path join ".git" | path exists)}
+    | each {|repo_path|
+        let name = $repo_path | path basename
+        { name: $name, path: $repo_path }
+    }
+
+    $worktrees | append $regular | uniq-by name | sort-by name
 }
 
 # Fuzzy jump to a git worktree
