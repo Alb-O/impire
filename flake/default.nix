@@ -21,7 +21,9 @@ flake-parts.lib.mkFlake { inherit inputs; } {
     args.nixpkgs = nixpkgs;
 
     # Registry: reference modules by name instead of path
-    # Now scans: mod/, hosts/, roles/, users/
+    # Scans parent directory containing mod/, hosts/, users/
+    # Exports are collected from both registry.src and src
+    # Hosts are collected from registry.src
     registry.src = ./..;
 
     # Auto-generate flake.nix from __inputs declarations
@@ -33,20 +35,16 @@ flake-parts.lib.mkFlake { inherit inputs; } {
     };
 
     # Export sinks configuration
-    exports = {
-      # Scan mod/ for exports
-      sources = [ ../mod ];
-      # Use mkMerge for role-based module collections
-      sinkDefaults = {
-        "shared.*" = "mkMerge";
-        "desktop.*" = "mkMerge";
-      };
+    # Exports scanned from registry.src (../mod, etc.) and src (../outputs)
+    exports.sinkDefaults = {
+      "shared.*" = "mkMerge";
+      "desktop.*" = "mkMerge";
     };
 
     # Auto-generate nixosConfigurations from __host declarations
+    # Hosts scanned from registry.src (finds ../hosts)
     hosts = {
       enable = true;
-      sources = [ ../hosts ];
       defaults = {
         system = "x86_64-linux";
         stateVersion = "24.11";
