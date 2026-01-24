@@ -4,9 +4,9 @@ description: Create a git commit
 ---
 
 - Current git status: !`git status`
-- Current git diff (staged and unstaged changes): !`git diff HEAD`
+- Recent commits (replicate msg style): !`git log --oneline -10`
 - Current branch: !`git branch --show-current`
-- Recent commits: !`git log --oneline -10`
+- Current git diff (staged and unstaged changes): !`git diff HEAD`
 
 Also use relevant work done in the conversation context to add useful detail to the commit description.
 
