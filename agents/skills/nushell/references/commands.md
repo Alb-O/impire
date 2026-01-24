@@ -1,7 +1,5 @@
 # Nushell Command Reference
 
-Quick reference for frequently used Nushell commands.
-
 ## File System
 
 | Command | Description        | Example                  |
@@ -178,8 +176,6 @@ help str                       # Subcommand category
 
 ## POSIX to Nushell Translation
 
-Common tasks translated from traditional shell commands:
-
 | Task                    | POSIX                           | Nushell                                                   |
 | ----------------------- | ------------------------------- | --------------------------------------------------------- |
 | Find files recursively  | `find . -name "*.log"`          | `ls **/*.log`                                             |
@@ -199,12 +195,12 @@ Common tasks translated from traditional shell commands:
 | Kill by name            | `pkill -f pattern`              | `ps \| where name =~ pattern \| each { kill $in.pid }`    |
 | Disk usage              | `du -sh *`                      | `ls \| select name size`                                  |
 | Find large files        | `find . -size +100M`            | `ls **/* \| where size > 100mb`                           |
-| Count occurrences       | `grep -c pattern file`          | `open file \| lines \| where $it =~ pattern \| length`    |
+| Count occurrences       | `grep -c pattern file`          | `open file \| lines \| where {$in =~ pattern} \| length`  |
 | Replace in file         | `sed -i 's/old/new/g' file`     | `open file \| str replace -a "old" "new" \| save -f file` |
 | JSON query (jq)         | `cat f \| jq '.items[].name'`   | `open f \| get items.name`                                |
 | Loop over files         | `for f in *.txt; do...`         | `ls *.txt \| each {\|f\| ... }`                           |
 | Parallel execution      | `xargs -P 4`                    | `par-each`                                                |
-| Background job          | `cmd &`                         | Not direct; use `par-each` for parallelism                |
+| Background job          | `cmd &`                         | `job spawn { cmd }` (thread-based)                        |
 
 ## Advanced Glob Patterns
 
@@ -240,7 +236,7 @@ ls | sort-by size --reverse | first 5
 ls **/* | where modified > ((date now) - 1day)
 
 # Find duplicate files by name
-ls **/* | group-by name | where ($it | length) > 1
+ls **/* | group-by name | transpose name files | where {|r| ($r.files | length) > 1}
 
 # Bulk rename: .jpeg to .jpg
 ls *.jpeg | each {|f| mv $f.name ($f.name | str replace ".jpeg" ".jpg")}
@@ -275,7 +271,7 @@ open data.csv | group-by category | transpose key items | insert count {|r| $r.i
 http get https://api.example.com/users | get data.users | select name email
 
 # Log analysis: error frequency
-open app.log | lines | where $it =~ "ERROR" | parse "[{level}] {msg}" | group-by msg | transpose msg count
+open app.log | lines | where {$in =~ "ERROR"} | parse "[{level}] {msg}" | group-by msg | transpose msg entries | insert count {|r| $r.entries | length}
 
 # Aggregate by field
 open sales.json | group-by region | transpose region sales | insert total {|r| $r.sales.amount | math sum}

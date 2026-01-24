@@ -1,7 +1,5 @@
 # Nushell Pipeline Patterns
 
-Advanced patterns for composing Nushell pipelines effectively.
-
 ## Pipeline Composition
 
 ### Branching Pipelines
@@ -141,7 +139,7 @@ ls | select name size | sort-by size | last 10  # Don't compute unused columns
 
 ```nu
 # Find duplicates by content
-ls *.txt | insert hash {|f| open $f.name | hash md5} | group-by hash | where ($it | length) > 1
+ls *.txt | insert hash {|f| open $f.name | hash md5} | group-by hash | transpose hash files | where {|r| ($r.files | length) > 1}
 
 # Bulk rename
 ls *.jpeg | each {|f| mv $f.name ($f.name | str replace ".jpeg" ".jpg")}
@@ -284,12 +282,12 @@ $sales | group-by { |row| $row.date | format date '%Y-%m' }
 def partition [pred: closure]: list -> record {
     let data = $in
     {
-        true: ($data | where $pred)
-        false: ($data | where { |x| not (do $pred $x) })
+        true: ($data | where {|x| do $pred $x})
+        false: ($data | where {|x| not (do $pred $x)})
     }
 }
 
-[1, 2, 3, 4, 5] | partition { |x| $x mod 2 == 0 }
+[1, 2, 3, 4, 5] | partition {|x| $x mod 2 == 0}
 # => {true: [2, 4], false: [1, 3, 5]}
 ```
 
@@ -357,11 +355,11 @@ let filtered = ($data | where active)
 
 ```nu
 # Good: Stream with early exit
-open huge.log | lines | where $it =~ "ERROR" | first 10
+open huge.log | lines | where {$in =~ "ERROR"} | first 10
 
 # Bad: Collect everything first
 let all = (open huge.log | lines)
-$all | where $it =~ "ERROR" | first 10
+$all | where {$in =~ "ERROR"} | first 10
 
 # Good: Streaming aggregation (constant memory)
 open huge.csv | reduce { |row, acc| $acc + $row.value }
@@ -392,25 +390,12 @@ $items
 ## Declarative vs Imperative
 
 ```nu
-# IMPERATIVE (avoid)
-mut sum = 0
-for item in $list {
-    $sum = $sum + $item.value
-}
-$sum
+# Imperative (avoid)                    # Declarative (prefer)
+mut sum = 0                             $list.value | math sum
+for item in $list { $sum += $item.value }
 
-# DECLARATIVE (prefer)
-$list | each { |x| $x.value } | math sum
-
-# IMPERATIVE (avoid)
-mut result = []
+mut result = []                         $users | where active | get name
 for user in $users {
-    if $user.active {
-        $result = ($result | append $user.name)
-    }
+    if $user.active { $result = ($result | append $user.name) }
 }
-$result
-
-# DECLARATIVE (prefer)
-$users | where active | get name
 ```

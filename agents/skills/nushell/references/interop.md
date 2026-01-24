@@ -1,7 +1,5 @@
 # External Command Interoperability
 
-Nushell's ability to seamlessly interact with external text-based commands is critical for practical adoption. This guide covers bridging the structured and unstructured worlds.
-
 ## Execution Basics
 
 Any unrecognized command is executed as an external program:
@@ -15,7 +13,7 @@ Output is captured as text (byte stream interpreted as UTF-8).
 
 ## The Caret Escape Hatch (^)
 
-Nushell provides internal implementations of common commands (`ls`, `ps`, `cp`, `rm`, etc.) that produce structured output. To explicitly run the **system** version:
+Nushell provides internal implementations of common commands (`ls`, `ps`, `cp`, `rm`, etc.) that produce structured output. To explicitly run the system version:
 
 ```nu
 ls                            # Nushell's ls (structured table)

@@ -1,124 +1,225 @@
 # Production Nushell: Testing, Quality, and Observability
 
-Patterns for building reliable, maintainable, production-ready Nushell scripts.
-
 ## Testing Framework
 
-### Assertion Functions
+Nushell's standard library provides a complete testing framework via `std/assert`.
+
+### Stdlib Assert Commands
 
 ```nu
-def assert_equal [actual: any, expected: any, message: string]: nothing -> nothing {
-    if $actual != $expected {
-        error make {
-            msg: $"Assertion failed: ($message)",
-            label: {
-                text: $"Expected ($expected), got ($actual)",
-                span: (metadata $actual).span
-            }
-        }
+use std/assert
+
+# Basic assertion - fails if condition is false
+assert (1 == 1)
+assert ($value > 0) "Value must be positive"
+
+# Equality assertions (better error messages than raw assert)
+assert equal $actual $expected
+assert not equal $a $b
+
+# String assertions
+assert str contains $haystack "needle"
+
+# Length assertions
+assert length $list 5
+
+# Type checking
+assert ($value | describe) == "int"
+```
+
+### Custom Assertions
+
+Extend the stdlib with domain-specific assertions:
+
+```nu
+use std/assert
+
+# Custom assertion with labeled error
+def "assert even" [number: int] {
+    assert ($number mod 2 == 0) --error-label {
+        text: $"($number) is not even",
+        span: (metadata $number).span,
     }
 }
 
-def assert_type [value: any, expected_type: string]: nothing -> nothing {
-    let actual_type = ($value | describe)
-    if $actual_type != $expected_type {
-        error make {
-            msg: "Type assertion failed",
-            label: {
-                text: $"Expected ($expected_type), got ($actual_type)",
-                span: (metadata $value).span
-            }
-        }
+# Custom type assertion
+def "assert type" [value: any, expected: string] {
+    let actual = ($value | describe)
+    assert ($actual == $expected) --error-label {
+        text: $"Expected ($expected), got ($actual)",
+        span: (metadata $value).span,
     }
 }
 
-def assert [condition: bool, message: string]: nothing -> nothing {
-    if not $condition {
-        error make { msg: $"Assertion failed: ($message)" }
+# Range assertion
+def "assert between" [value: number, min: number, max: number] {
+    assert ($value >= $min and $value <= $max) --error-label {
+        text: $"($value) not in range [($min), ($max)]",
+        span: (metadata $value).span,
     }
 }
 ```
 
-### Unit Test Pattern
+### Test File Structure
+
+Option 1: Nupm Package Tests
+
+```
+my-project/
+├── mod.nu              # Main module
+└── tests/
+    └── mod.nu          # Test module (export test functions)
+```
 
 ```nu
-export def test_math_operations [] {
-    assert_equal (add 2 3) 5 "Basic addition"
-    assert_equal (add -1 1) 0 "Addition with negatives"
-    assert_equal (add 0 0) 0 "Addition of zeros"
-    assert_type (add 1 2) "int"
-    print "✓ All math tests passed"
+# tests/mod.nu
+use std/assert
+
+export def "test addition" [] {
+    assert equal (2 + 2) 4
 }
 
-export def run_tests [] {
-    [test_math_operations, test_string_operations, test_file_operations]
-    | each { |test_fn|
+export def "test string ops" [] {
+    assert str contains "hello world" "world"
+}
+
+# Run with: nupm test
+```
+
+Option 2: Standalone Test Script
+
+```nu
+#!/usr/bin/env nu
+# tests.nu
+use std/assert
+
+def "test math operations" [] {
+    assert equal (add 2 3) 5
+    assert equal (add -1 1) 0
+    assert (add 0 0) == 0
+}
+
+def "test string processing" [] {
+    assert equal ("hello" | str upcase) "HELLO"
+    assert str contains "foobar" "bar"
+}
+
+# Auto-discover and run tests
+def main [] {
+    let tests = (scope commands | where name starts-with "test " | get name)
+    mut passed = 0
+    mut failed = 0
+
+    for test_name in $tests {
+        print -n $"Running ($test_name)... "
         try {
-            do $test_fn
-            {test: ($test_fn | describe), status: "PASS"}
-        } catch { |e|
-            {test: ($test_fn | describe), status: "FAIL", error: $e.msg}
+            do (scope commands | where name == $test_name | first | get closure)
+            print "✓"
+            $passed += 1
+        } catch {|e|
+            print $"✗ ($e.msg)"
+            $failed += 1
         }
     }
-    | if ($in | where status == "FAIL" | length) > 0 {
-        print "FAILURES:"
-        $in | where status == "FAIL" | each { |f| print $"  ✗ ($f.test): ($f.error)" }
-        exit 1
-    } else {
-        print $"✓ All ($in | length) tests passed"
+
+    print $"\n($passed) passed, ($failed) failed"
+    if $failed > 0 { exit 1 }
+}
+```
+
+### Data-Driven Tests
+
+```nu
+use std/assert
+
+def "test with cases" [] {
+    let cases = [
+        { input: 0, expected: "zero" }
+        { input: 1, expected: "one" }
+        { input: 2, expected: "two" }
+    ]
+
+    for case in $cases {
+        let result = (number_to_word $case.input)
+        assert equal $result $case.expected
     }
+}
+
+# Table-driven tests with descriptions
+def "test parsing" [] {
+    [[input, expected, desc];
+     ["1,2,3", [1, 2, 3], "comma-separated"]
+     ["a|b|c", ["a", "b", "c"], "pipe-separated"]
+    ] | each {|case|
+        let result = (parse_values $case.input)
+        assert equal $result $case.expected $case.desc
+    }
+}
+```
+
+### Integration Tests with Setup/Teardown
+
+```nu
+use std/assert
+
+def with_temp_file [test: closure] {
+    let path = $"/tmp/test_(random uuid).json"
+    try {
+        do $test $path
+    } catch {|e|
+        rm -f $path
+        error make {msg: $e.msg}
+    }
+    rm -f $path
+}
+
+def "test file processing" [] {
+    with_temp_file {|path|
+        [{name: "Alice"}, {name: "Bob"}] | to json | save $path
+        let result = (process_users $path)
+        assert equal ($result | length) 2
+    }
+}
+
+def "test api integration" [] {
+    let test_data = {name: "test", value: 123}
+    let response = (http post http://localhost:8080/api/test $test_data)
+
+    assert equal $response.status 200
+    assert type $response.body.id "int"
+
+    # Cleanup
+    http delete $"http://localhost:8080/api/test/($response.body.id)"
 }
 ```
 
 ### Property-Based Testing
 
 ```nu
-# Property: map preserves length
-def prop_map_length [f: closure] {
-    let original = [1 2 3 4 5]
-    let mapped = ($original | each $f)
-    assert_equal ($mapped | length) ($original | length) "Map preserves length"
+use std/assert
+
+def "test map preserves length" [] {
+    let original = (1..100 | each {|_| random int 0..1000} | collect)
+    let mapped = ($original | each {|x| $x * 2})
+    assert equal ($mapped | length) ($original | length)
 }
 
-# Property: filter returns subset
-def prop_filter_subset [pred: closure] {
-    let original = [1 2 3 4 5]
-    let filtered = ($original | where $pred)
-    assert (($filtered | length) <= ($original | length)) "Filter returns subset"
+def "test filter returns subset" [] {
+    let original = (1..50 | collect)
+    let filtered = ($original | where {|x| $x mod 2 == 0})
+    assert (($filtered | length) <= ($original | length))
 }
 
-# Property: sort is idempotent
-def prop_sort_idempotent [] {
-    let data = [3 1 4 1 5 9 2 6]
-    let sorted_once = ($data | sort)
-    let sorted_twice = ($sorted_once | sort)
-    assert_equal $sorted_once $sorted_twice "Sort is idempotent"
-}
-```
-
-### Integration Tests
-
-```nu
-def test_api_integration [] {
-    let test_data = {name: "test", value: 123}
-    let response = (http post http://localhost:8080/api/test $test_data)
-
-    assert_equal $response.status 200 "Expected 200 status"
-    assert_type $response.body.id "int"
-
-    # Cleanup
-    http delete $"http://localhost:8080/api/test/($response.body.id)"
+def "test sort idempotent" [] {
+    let data = [3, 1, 4, 1, 5, 9, 2, 6]
+    let once = ($data | sort)
+    let twice = ($once | sort)
+    assert equal $once $twice
 }
 
-def test_file_processing [] {
-    let test_input = [{name: "Alice", age: 30}, {name: "Bob", age: 25}]
-    let temp_file = "/tmp/test_users.json"
-
-    $test_input | to json | save $temp_file
-    let result = (process_users $temp_file)
-
-    assert_equal ($result | length) 2 "Should process all users"
-    rm $temp_file
+def "test reverse involutory" [] {
+    let data = [1, 2, 3, 4, 5]
+    assert equal ($data | reverse | reverse) $data
 }
 ```
 

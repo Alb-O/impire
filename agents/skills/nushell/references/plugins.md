@@ -152,9 +152,9 @@ ______________________________________________________________________
 
 ## Serialization
 
-**MsgPackSerializer** (Recommended) - Binary format, faster, use for production.
+`MsgPackSerializer` (Recommended) - Binary format, faster, use for production.
 
-**JsonSerializer** - Text-based, useful for debugging.
+`JsonSerializer` - Text-based, useful for debugging.
 
 ```rust
 serve_plugin(&MyPlugin, MsgPackSerializer)  // Production
@@ -335,8 +335,8 @@ ______________________________________________________________________
 
 ## Debugging
 
-1. **Use JsonSerializer** temporarily to inspect protocol messages
-2. **Log to file** (plugins can't use stdout/stderr):
+1. Use `JsonSerializer` temporarily to inspect protocol messages
+2. Log to file (plugins can't use stdout/stderr):
    ```rust
    fn debug_log(msg: &str) {
        std::fs::OpenOptions::new()
@@ -345,8 +345,8 @@ ______________________________________________________________________
            .write_all(format!("{}\n", msg).as_bytes()).ok();
    }
    ```
-3. **Run with backtrace**: `RUST_BACKTRACE=1 nu`
-4. **Check registration**: `plugin list | where name == myplugin`
+3. Run with backtrace: `RUST_BACKTRACE=1 nu`
+4. Check registration: `plugin list | where name == myplugin`
 
 ______________________________________________________________________
 
@@ -363,9 +363,9 @@ ______________________________________________________________________
 
 ## Important Constraints
 
-- **Stdio reserved**: Plugins can't use stdin/stdout (protocol uses them)
-- **Path handling**: Always resolve relative to `engine.get_current_dir()`
-- **Version match**: `nu-plugin` and `nu-protocol` versions must match target Nushell
+- Stdio reserved: Plugins can't use stdin/stdout (protocol uses them)
+- Path handling: Always resolve relative to `engine.get_current_dir()`
+- Version match: `nu-plugin` and `nu-protocol` versions must match target Nushell
 
 ______________________________________________________________________
 

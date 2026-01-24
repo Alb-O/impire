@@ -1,7 +1,5 @@
 # Nushell Scripting and Automation
 
-Advanced patterns for writing robust, reusable Nushell scripts and custom commands.
-
 ## Configuration Files
 
 Nushell's configuration lives in the config directory:
@@ -15,8 +13,8 @@ $nu.default-config-dir        # Shows config path
 
 ### Startup Sequence
 
-1. **env.nu** - Loaded first, sets environment variables
-2. **config.nu** - Main configuration (aliases, commands, settings)
+1. `env.nu` - Loaded first, sets environment variables
+2. `config.nu` - Main configuration (aliases, commands, settings)
 
 ```nu
 # env.nu - Environment setup
@@ -59,7 +57,7 @@ def process-files [
         glob $pattern
     }
 
-    $files | where ($it | path type) == "file"
+    $files | where {|f| ($f | path type) == "file"}
            | if $max_size != null { where size < $max_size } else { $in }
 }
 ```
@@ -88,7 +86,7 @@ def --wrapped git-safe [...args: string] {
 }
 ```
 
-**Note**: Rest args are always strings with `--wrapped`. Convert types explicitly: `--timeout ($seconds | into string)`
+Note: Rest args are always strings with `--wrapped`. Convert types explicitly: `--timeout ($seconds | into string)`
 
 ### Documentation
 
@@ -280,29 +278,6 @@ def divide [a: int, b: int] {
         }
     }
     $a / $b
-}
-```
-
-### Result Pattern
-
-```nu
-def safe-open [path: string] {
-    if not ($path | path exists) {
-        {ok: false, error: "File not found"}
-    } else {
-        try {
-            {ok: true, value: (open $path)}
-        } catch {|e|
-            {ok: false, error: $e.msg}
-        }
-    }
-}
-
-let result = safe-open "config.json"
-if $result.ok {
-    process $result.value
-} else {
-    print $"Failed: ($result.error)"
 }
 ```
 

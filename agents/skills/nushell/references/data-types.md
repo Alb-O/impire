@@ -1,7 +1,5 @@
 # Nushell Data Types
 
-Deep dive into Nushell's structured data types and manipulation.
-
 ## Type Hierarchy
 
 ```
@@ -91,7 +89,7 @@ $nums.0                         # First element
 $nums | first                   # First element
 $nums | last 2                  # Last 2 elements
 $nums | get 2                   # Third element (0-indexed)
-$nums | range 1..3              # Slice
+$nums | skip 1 | first 3        # Slice (skip 1, take 3)
 
 # Modification
 $nums | append 6
@@ -155,8 +153,8 @@ let name = "world"
 $"Hello ($name)!"               # => Hello world!
 $"Math: (1 + 2)"                # => Math: 3
 
-# Raw strings (no escapes)
-r#'Path: C:\Users\name'#
+# Raw strings (single quotes - no escapes except '')
+'Path: C:\Users\name'
 
 # Multi-line
 let text = "line 1
