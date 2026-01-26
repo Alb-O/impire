@@ -131,6 +131,27 @@
           ]
         }
       },
+      "ant_gemini-3-flash": {
+        "id": "antigravity/gemini-3-flash",
+        "name": "ANT Gemini 3 Flash",
+        "limit": {
+          "context": 1048576,
+          "output": 64000
+        },
+        "reasoning": true,
+        "options": {
+          "reasoningEffort": "low"
+        },
+        "modalities": {
+          "input": [
+            "image",
+            "text"
+          ],
+          "output": [
+            "text"
+          ]
+        }
+      },
       "cli_gemini-3-pro-low": {
         "id": "gemini_cli/gemini-3-pro-preview",
         "name": "CLI Gemini 3 Pro Low",

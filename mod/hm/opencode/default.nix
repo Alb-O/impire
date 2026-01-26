@@ -17,7 +17,6 @@
         {
           inputs,
           pkgs,
-          lib,
           ...
         }:
         {
@@ -27,14 +26,14 @@
           };
 
           xdg.configFile = {
-            "opencode/opencode.json".text = builtins.toJSON (
+            "opencode/opencode.jsonc".text = builtins.toJSON (
               { "$schema" = "https://opencode.ai/config.json"; } // import ./config.nix
             );
             "opencode/dcp.jsonc".source = ./dcp.jsonc;
-            "opencode/skill" = {
-              source = ../../../agents/skills;
-              recursive = true;
-            };
+            #"opencode/skill" = {
+            #  source = ../../../agents/skills;
+            #  recursive = true;
+            #};
             "opencode/command" = {
               source = ../../../agents/commands;
               recursive = true;

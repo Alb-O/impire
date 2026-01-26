@@ -5,7 +5,7 @@
       model = "anthropic/claude-haiku-4-5";
     };
     explore = {
-      disable = false;
+      disable = true;
       model = "anthropic/claude-haiku-4-5";
       tools = {
         write = false;
@@ -15,6 +15,7 @@
       };
     };
     docfinder = {
+      disable = true;
       model = "anthropic/claude-haiku-4-5";
       description = ''
         Technical documentation researcher agent, give it a techincal research task (e.g. libraries, APIs, languages).
@@ -46,11 +47,10 @@
     };
   };
   plugin = [
-    "opencode-anthropic-auth@latest"
-    "opencode-antigravity-auth@latest"
+    #"opencode-anthropic-auth@latest"
+    #"opencode-antigravity-auth@latest"
     #"@tarquinen/opencode-dcp@latest"
   ];
-  provider =
-    #(builtins.fromJSON (builtins.readFile ./proxy.json));
-    (builtins.fromJSON (builtins.readFile ./antigravity.json));
+  provider = (builtins.fromJSON (builtins.readFile ./proxy.json));
+  #(builtins.fromJSON (builtins.readFile ./antigravity.json));
 }
