@@ -2,11 +2,11 @@
   Claude Code feature.
 
   Anthropic's Claude Code CLI - AI-powered coding assistant.
-  Uses nixpkgs master branch for the latest package version.
+  Uses claude-code-nix flake for always up-to-date native binary.
 */
 {
   __inputs = {
-    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
+    claude-code-nix.url = "github:sadjow/claude-code-nix";
   };
 
   __functor =
@@ -18,16 +18,9 @@
           pkgs,
           ...
         }:
-        let
-          # Custom overlay functor: apply claude-code from nixpkgs master
-          masterPkgs = import inputs.nixpkgs-master {
-            inherit (pkgs) system;
-            config.allowUnfree = true;
-          };
-        in
         {
           home.packages = [
-            masterPkgs.claude-code
+            inputs.claude-code-nix.packages.${pkgs.system}.default
           ];
 
           home.file = {
