@@ -17,6 +17,7 @@
     # Collected from __inputs
     awww.url = "git+https://codeberg.org/LGFae/awww";
     awww.inputs.nixpkgs.follows = "nixpkgs";
+    codex-cli-nix.url = "github:sadjow/codex-cli-nix";
     helium-browser.url = "github:Alb-O/helium-browser-flake";
     helium-browser.inputs.nixpkgs.follows = "nixpkgs";
     nix-colorizer.url = "github:nutsalhan87/nix-colorizer";

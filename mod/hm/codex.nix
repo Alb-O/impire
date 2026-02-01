@@ -2,11 +2,11 @@
   Codex feature.
 
   OpenAI Codex CLI - AI-powered coding assistant.
-  Uses nixpkgs master branch for the latest package version.
+  Uses codex-cli-nix flake for always up-to-date native Rust binary.
 */
 {
   __inputs = {
-    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
+    codex-cli-nix.url = "github:sadjow/codex-cli-nix";
   };
 
   __functor =
@@ -16,17 +16,11 @@
         {
           inputs,
           pkgs,
-          lib,
           ...
         }:
-        let
-          masterPkgs = import inputs.nixpkgs-master {
-            inherit (pkgs) system;
-          };
-        in
         {
           home.packages = [
-            masterPkgs.codex
+            inputs.codex-cli-nix.packages.${pkgs.system}.default
             pkgs.python314
           ];
 
