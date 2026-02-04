@@ -1,8 +1,7 @@
 # File systems for WSL
 { config, ... }:
 {
-  # NAS CIFS mount (raw, before catfs caching layer)
-  "/home/albert/@/mount-raw" = {
+  "/home/albert/@/mount" = {
     device = "//192.168.88.162/pivot share";
     fsType = "cifs";
     options = [

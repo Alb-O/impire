@@ -18,6 +18,7 @@ let
         nmap
         lsof
         tmux
+        dua
       ];
     };
 in
